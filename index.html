@@ -55,6 +55,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{min-width:46px;height:46px;padding:0 10px;font-size:1.5rem;line-height:1;display:grid;place-items:center}
 .chip.txt{font-size:.9rem}
+.chip svg{width:30px;height:30px}
 .chip[aria-pressed=true]{border-color:var(--brass);box-shadow:0 0 0 2px var(--brass) inset}
 .swatch{width:34px;height:34px;min-width:0;padding:0;border-radius:50%}
 .editor{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
@@ -70,6 +71,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .av .face{font-size:calc(var(--s)*.6);line-height:1}
 .av .hat{position:absolute;top:calc(var(--s)*-.34);left:50%;transform:translateX(-50%);font-size:calc(var(--s)*.52);line-height:1;pointer-events:none}
 .av .mask{position:absolute;top:36%;left:50%;transform:translateX(-50%);font-size:calc(var(--s)*.46);line-height:1;pointer-events:none}
+.av.sil .sil-svg{width:100%;height:100%;display:block;clip-path:circle(50%)}
+.av.sil .mask{top:13%;font-size:calc(var(--s)*.4)}
+.av.dead.sil{background:#8a928c!important}
+.av.dead .sil-svg{opacity:.55}
 .av.dead{background:#3a403d!important}
 .av.dead>.face,.av.dead>img,.av.dead>.mask,.av.dead>.hat{filter:grayscale(1) brightness(.65)}
 .av .xmark{position:absolute;inset:0;pointer-events:none;z-index:3}
@@ -172,6 +177,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
         <button id="joinBtn" class="ghost" type="button">Unirme</button>
       </div>
     </div>
+    <div class="row" style="margin-top:14px">
+      <button id="botsBtn" class="ghost" type="button">Jugar contra 4 bots</button>
+      <span class="tag">Práctica sin amigos</span>
+    </div>
     <p id="homeMsg" class="msg" role="status"></p>
   </div>
 
@@ -188,9 +197,12 @@ button:disabled{opacity:.4;cursor:not-allowed}
     <button id="leave1" class="ghost iconbtn" type="button">Salir</button>
   </div>
   <div class="panel">
-    <span class="label">Comparte este código con tus amigos</span>
-    <div class="code" id="roomcode">····</div>
-    <button id="copy" class="ghost" type="button">Copiar código</button>
+    <div id="codebox">
+      <span class="label">Comparte este código con tus amigos</span>
+      <div class="code" id="roomcode">····</div>
+      <button id="copy" class="ghost" type="button">Copiar código</button>
+    </div>
+    <span class="label" id="botnote" hidden>Práctica contra 4 bots</span>
     <div id="plist" class="plist"></div>
   </div>
   <div class="panel">
@@ -209,7 +221,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 <!-- PARTIDA -->
 <section id="game" class="screen" hidden>
   <div class="top">
-    <span class="pill">Sala <b id="gcode"></b></span>
+    <span class="pill"><span id="gpre">Sala </span><b id="gcode"></b></span>
     <div class="row">
       <button id="mute" class="ghost iconbtn" type="button" aria-pressed="false">Sonido: sí</button>
       <button id="leave2" class="ghost iconbtn" type="button">Salir</button>
@@ -264,10 +276,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 <!-- Lógica pura del juego: no toca la pantalla ni la red -->
 <script id="logic">
 const MAX_PLAYERS = 8, CHAMBERS = 6;
-const BASES = ['😀','😎','🤓','😈','👽','🤖','👻','🐵','🐱','🐸','🦊','🐼'];
+const BASES = ['silueta','😀','😎','🤓','😈','👽','🤖','👻','🐵','🐱','🐸','🦊','🐼'];
 const HATS = ['','🎩','👑','🧢','🎓','🤠','👒','🪖','⛑️','🎅'];
 const MASKS = ['','😷','🥸','🕶️','🤡','👺','🎭','🥽'];
-const COLORS = ['#d9482b','#d4a640','#4f9d6b','#3f8fb5','#7a63c9','#c25b8f','#8a8f98','#e8e0cc'];
+const COLORS = ['#e8e0cc','#d9482b','#d4a640','#4f9d6b','#3f8fb5','#7a63c9','#c25b8f','#8a8f98'];
 
 function cleanAvatar(a){
   a = a || {};
@@ -332,20 +344,36 @@ function dropPlayer(g, players, id){
 <script>
 const $ = s => document.querySelector(s);
 const PREFIX = 'ruletarusa-';
+/* Icono de persona por defecto: cabeza y hombros en contorno */
+const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
+  + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
+  + '<path d="M22 108V88C22 74 30 66 40 66C46 66 46 72 50 72C54 72 54 66 60 66C70 66 78 74 78 88V108Z"/></g></svg>';
+const BOT_LOOKS = [
+  { name:'Bot Rex',  hat:'🎩', mask:'',   color:'#3f8fb5' },
+  { name:'Bot Luna', hat:'',   mask:'🕶️', color:'#7a63c9' },
+  { name:'Bot Nova', hat:'🧢', mask:'',   color:'#c25b8f' },
+  { name:'Bot Zeta', hat:'🤠', mask:'🥸', color:'#4f9d6b' }
+];
 let peer = null, conn = null, conns = {};
 let isHost = false, myId = null, roomCode = '';
 let players = [], game = { phase:'lobby', bullets:1 }, view = null;
 let lastSeq = 0, log = [], muted = false, joinTimer = null;
 // Presentación de la partida (solo visual)
 let busy = false, holdId = null, freshId = null, gunRot = 0, gunReady = false, timers = [];
+let botMode = false, botTimer = null;
 let me = loadProfile();
 
 /* ---------- Perfil ---------- */
 function loadProfile(){
-  try { const s = localStorage.getItem('ruleta-perfil'); if (s) return cleanAvatar(JSON.parse(s)); } catch(e){}
-  return cleanAvatar({ name:'', base:BASES[0], color:COLORS[0] });
+  try {
+    let s = localStorage.getItem('ruleta-perfil-2');
+    if (s) return cleanAvatar(JSON.parse(s));
+    s = localStorage.getItem('ruleta-perfil');          // versión anterior: se conserva nombre, foto, sombrero y máscara
+    if (s){ const o = JSON.parse(s); return cleanAvatar({ name:o.name, hat:o.hat, mask:o.mask, photo:o.photo }); }
+  } catch(e){}
+  return cleanAvatar({});
 }
-function saveProfile(){ try { localStorage.setItem('ruleta-perfil', JSON.stringify(me)); } catch(e){} }
+function saveProfile(){ try { localStorage.setItem('ruleta-perfil-2', JSON.stringify(me)); } catch(e){} }
 
 /* ---------- Dibujo del personaje ---------- */
 function avatarEl(av, size, dead, fresh){
@@ -355,6 +383,8 @@ function avatarEl(av, size, dead, fresh){
   d.style.background = av.color;
   if (av.photo){
     const im = new Image(); im.src = av.photo; im.alt = ''; d.appendChild(im);
+  } else if (av.base === 'silueta'){
+    d.classList.add('sil'); d.insertAdjacentHTML('beforeend', SIL('#16120d'));
   } else {
     const f = document.createElement('span'); f.className = 'face'; f.textContent = av.base; d.appendChild(f);
   }
@@ -369,6 +399,7 @@ function chips(box, items, key, label){
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'chip';
     if (key === 'color'){ b.classList.add('swatch'); b.style.background = v; b.setAttribute('aria-label', 'Color ' + v); }
+    else if (v === 'silueta'){ b.innerHTML = SIL('currentColor'); b.setAttribute('aria-label', 'Silueta'); }
     else { b.textContent = v || label; if (!v) b.classList.add('txt'); }
     b.setAttribute('aria-pressed', String(me[key] === v));
     b.addEventListener('click', () => { me[key] = v; saveProfile(); drawEditor(); });
@@ -418,7 +449,7 @@ function later(fn, ms){
   const id = setTimeout(() => { timers = timers.filter(x => x !== id); fn(); }, ms);
   timers.push(id);
 }
-function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+function clearTimers(){ timers.forEach(clearTimeout); timers = []; clearTimeout(botTimer); botTimer = null; }
 function snd(kind){
   if (muted) return;
   try {
@@ -542,7 +573,7 @@ function leave(msg){
   clearTimeout(joinTimer);
   const p = peer; peer = null; conn = null; conns = {};
   try { if (p) p.destroy(); } catch(e){}
-  players = []; view = null; isHost = false;
+  players = []; view = null; isHost = false; botMode = false;
   resetScene();
   $('#joinBtn').disabled = false;
   show('home'); setHomeMsg(msg || '');
@@ -582,6 +613,7 @@ function seatList(box, v){
 }
 function renderLobby(v){
   $('#roomcode').textContent = v.code;
+  $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
   seatList($('#plist'), v);
   $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost;
   if (isHost){
@@ -638,10 +670,31 @@ function aimAt(deg, o){
   }
 }
 function renderGame(v){
-  $('#gcode').textContent = v.code;
+  $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala ';
+  $('#gcode').textContent = botMode ? 'contra bots' : v.code;
   if (busy) return;                       // se termina la animación y luego se pone al día
   if (v.last && v.last.seq !== lastSeq){ playShot(v); return; }
   drawScene(v);
+  scheduleBot();
+}
+/* Bots: cuando le toca a uno, espera un poco y dispara (a veces gira el tambor) */
+function scheduleBot(){
+  clearTimeout(botTimer); botTimer = null;
+  if (!botMode || !isHost || game.phase !== 'play') return;
+  const p = players[game.turn];
+  if (!p || !p.bot) return;
+  botTimer = setTimeout(() => {
+    botTimer = null;
+    if (!busy && game.phase === 'play' && players[game.turn] === p) doShot(Math.random() < 0.35);
+  }, 1100 + Math.random() * 900);
+}
+function startBots(){
+  setHomeMsg('');
+  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null; conn = null;
+  players = [{ id:'host', avatar:myAvatar(), alive:true }]
+    .concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
+  game = { phase:'lobby', bullets:1 };
+  view = null; broadcast();
 }
 function drawScene(v){
   const n = v.players.length;
@@ -705,6 +758,7 @@ window.addEventListener('resize', () => { if (view && view.phase !== 'lobby' && 
 
 /* ---------- Botones ---------- */
 $('#create').addEventListener('click', () => { setHomeMsg(''); startHost(0); });
+$('#botsBtn').addEventListener('click', startBots);
 $('#joinBtn').addEventListener('click', () => joinRoom($('#code').value));
 $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') joinRoom($('#code').value); });
 $('#code').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase(); });
