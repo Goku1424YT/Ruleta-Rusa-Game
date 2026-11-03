@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ruleta Rusa</title>
+<title>Ruleta Rusa - Navidad</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Rye&display=swap" rel="stylesheet">
@@ -139,80 +139,61 @@ button:disabled{opacity:.4;cursor:not-allowed}
   #gun{transition:none}#banner.show,.shake,.av .xmark.fresh,#flash.fire,.wis,.reveal{animation:none}
   #banner.show{opacity:1}
 }
-/* ===== TEMÁTICA NAVIDEÑA ===== */
 
+/* ===== TEMA NAVIDEÑO ===== */
 :root{
---ink:#101b19;
---felt:#17452f;
---felt-2:#0d3023;
---paper:#fff4df;
---muted:#c0c9b8;
---brass:#d9b45b;
---danger:#b92d35;
---line:rgba(255,244,223,.2);
+  --ink:#101b19; --felt:#17452f; --felt-2:#0d3023;
+  --paper:#fff4df; --muted:#c0c9b8; --brass:#d9b45b;
+  --danger:#b92d35; --line:rgba(255,244,223,.2);
 }
-
-/* Fondo navideño */
 body{
-background:
-radial-gradient(ellipse at 50% 0%,rgba(35,105,66,.65),transparent 65%),
-linear-gradient(145deg,#101b19,#07130f 75%) fixed;
+  background:
+    linear-gradient(rgba(5,18,12,.72),rgba(5,18,12,.84)),
+    url("assets/fondo-navidad.jpg") center / cover fixed,
+    radial-gradient(ellipse at 50% 0%,#236941 0%,#07130f 75%) fixed;
 }
+h1{color:#e8c66d;text-shadow:0 0 18px rgba(217,180,91,.25)}
+.panel{background:rgba(13,38,27,.88);border-color:rgba(217,180,91,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
+.table{background:radial-gradient(ellipse at center,#1d583a 0%,#103522 75%);border:2px solid rgba(217,180,91,.45);box-shadow:0 0 25px rgba(0,0,0,.25)}
+.btn{background:linear-gradient(145deg,#e6c66f,#bd913b);border-color:#e6c66f;color:#201807}
+.btn.danger{background:linear-gradient(145deg,#d84b4b,#96252d);border-color:#d84b4b;color:#fff}
+.code{color:#e8c66d;text-shadow:0 0 15px rgba(232,198,109,.2)}
+.seat2.turn .av{box-shadow:0 0 0 3px #e8c66d,0 0 24px rgba(232,198,109,.5)}
+.over{background:radial-gradient(ellipse at 50% 40%,rgba(24,83,51,.97),rgba(7,19,15,.98))}
 
-/* Títulos */
-h1{
-color:#e8c66d;
-text-shadow:0 0 18px rgba(217,180,91,.25);
-}
+/* Nieve decorativa: no bloquea los clics */
+#snowCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1000}
 
-/* Paneles */
-.panel{
-background:rgba(13,38,27,.82);
-border-color:rgba(217,180,91,.3);
-box-shadow:0 8px 25px rgba(0,0,0,.2);
-}
-
-/* Mesa */
-.table{
-background:
-radial-gradient(ellipse at center,#1d583a 0%,#103522 75%);
-border:2px solid rgba(217,180,91,.45);
-box-shadow:0 0 25px rgba(0,0,0,.25);
-}
-
-/* Botones */
-.btn{
-background:linear-gradient(145deg,#e6c66f,#bd913b);
-border-color:#e6c66f;
-color:#201807;
-}
-
-.btn.danger{
-background:linear-gradient(145deg,#d84b4b,#96252d);
-border-color:#d84b4b;
-color:white;
-}
-
-/* Código de sala */
-.code{
-color:#e8c66d;
-text-shadow:0 0 15px rgba(232,198,109,.2);
-}
-
-/* Detalles decorativos */
-.seat2.turn .av{
-box-shadow:0 0 0 3px #e8c66d,0 0 24px rgba(232,198,109,.5);
-}
-
-/* Ventana del ganador */
-.over{
-background:
-radial-gradient(ellipse at 50% 40%,rgba(24,83,51,.97),rgba(7,19,15,.98));
-}
+/* Reproductor musical */
+.music-dock{position:fixed;right:14px;bottom:14px;z-index:1001;width:min(320px,calc(100vw - 28px));
+  padding:12px;background:rgba(8,25,17,.94);border:1px solid rgba(217,180,91,.55);border-radius:14px;
+  box-shadow:0 8px 28px rgba(0,0,0,.35);backdrop-filter:blur(8px)}
+.music-dock .music-title{font-weight:700;color:#e8c66d;margin:0 0 8px;font-size:.9rem}
+.music-controls{display:flex;gap:8px;align-items:center}
+.music-controls select{min-width:0;flex:1;background:#101b19;color:#fff4df;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+.music-controls button{padding:8px 11px}
+.music-note{font-size:.72rem;color:var(--muted);margin:7px 0 0}
+@media(max-width:520px){.music-dock{right:8px;bottom:8px}}
+@media(prefers-reduced-motion:reduce){#snowCanvas{display:none}}
 
 </style>
 </head>
 <body>
+<canvas id="snowCanvas" aria-hidden="true"></canvas>
+<div class="music-dock" aria-label="Música navideña">
+  <p class="music-title">🎄 Música navideña</p>
+  <div class="music-controls">
+    <select id="musicSelect" aria-label="Elegir música">
+      <option value="">Sin música</option>
+      <option value="assets/music/jingle-bells.mp3">Jingle Bells</option>
+      <option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero</option>
+      <option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas (acústica)</option>
+    </select>
+    <button id="musicToggle" class="btn" type="button">▶</button>
+  </div>
+  <p class="music-note" id="musicStatus">Elegí una canción y presioná ▶.</p>
+  <audio id="bgMusic" loop preload="none"></audio>
+</div>
 <main>
 
 <!-- INICIO -->
@@ -854,6 +835,62 @@ $('#spin').addEventListener('click', () => act(true));
 $('#mute').addEventListener('click', e => {
   muted = !muted; e.target.setAttribute('aria-pressed', String(muted)); e.target.textContent = 'Sonido: ' + (muted ? 'no' : 'sí');
 });
+
+
+/* ---------- Música navideña (los MP3 se agregan en assets/music) ---------- */
+const musicAudio = $('#bgMusic');
+const musicSelect = $('#musicSelect');
+const musicToggle = $('#musicToggle');
+const musicStatus = $('#musicStatus');
+function setMusicStatus(message){ musicStatus.textContent = message; }
+musicSelect.addEventListener('change', () => {
+  const src = musicSelect.value;
+  musicAudio.pause(); musicAudio.removeAttribute('src'); musicAudio.load();
+  musicToggle.textContent = '▶';
+  if (!src){ setMusicStatus('Música desactivada.'); return; }
+  musicAudio.src = src; musicAudio.load();
+  setMusicStatus('Lista: ' + musicSelect.options[musicSelect.selectedIndex].text + '. Presioná ▶.');
+});
+musicToggle.addEventListener('click', async () => {
+  if (!musicAudio.src){
+    if (musicSelect.value) musicAudio.src = musicSelect.value;
+    else { setMusicStatus('Primero elegí una canción.'); return; }
+  }
+  if (musicAudio.paused){
+    try { await musicAudio.play(); musicToggle.textContent = 'Ⅱ'; setMusicStatus('Reproduciendo música navideña.'); }
+    catch(e){ setMusicStatus('No se pudo reproducir. Revisá que el MP3 esté en assets/music.'); }
+  } else { musicAudio.pause(); musicToggle.textContent = '▶'; setMusicStatus('Música pausada.'); }
+});
+musicAudio.addEventListener('ended', () => { musicToggle.textContent = '▶'; });
+
+/* ---------- Nieve animada ---------- */
+(function snowEffect(){
+  const canvas = document.getElementById('snowCanvas');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx = canvas.getContext('2d');
+  let flakes = [], width = 0, height = 0, raf = 0;
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count = Math.min(100, Math.max(35, Math.floor(width/12)));
+    flakes = Array.from({length:count}, () => ({x:Math.random()*width,y:Math.random()*height,r:1+Math.random()*2.3,v:.5+Math.random()*1.2,w:(Math.random()-.5)*.55,a:.35+Math.random()*.55}));
+  }
+  function draw(){
+    ctx.clearRect(0,0,width,height);
+    for(const f of flakes){
+      f.y += f.v; f.x += f.w + Math.sin(f.y/35)*.25;
+      if(f.y > height+5){f.y=-5;f.x=Math.random()*width;}
+      if(f.x < -5) f.x=width+5; if(f.x > width+5) f.x=-5;
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+f.a+')';ctx.fill();
+    }
+    raf = requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize,{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden) cancelAnimationFrame(raf); else draw();});
+  resize();draw();
+})();
 
 drawEditor();
 </script>
