@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ruleta Rusa - Navidad</title>
+<title>Ruleta Rusa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Rye&display=swap" rel="stylesheet">
@@ -140,107 +140,60 @@ button:disabled{opacity:.4;cursor:not-allowed}
   #banner.show{opacity:1}
 }
 
-/* ===== TEMA NAVIDEÑO ===== */
-:root{
-  --ink:#101b19; --felt:#17452f; --felt-2:#0d3023;
-  --paper:#fff4df; --muted:#c0c9b8; --brass:#d9b45b;
-  --danger:#b92d35; --line:rgba(255,244,223,.2);
-}
-body{
-  background:
-    linear-gradient(rgba(5,18,12,.72),rgba(5,18,12,.84)),
-    url("assets/fondo-navidad.jpg") center / cover fixed,
-    radial-gradient(ellipse at 50% 0%,#236941 0%,#07130f 75%) fixed;
-}
-h1{color:#e8c66d;text-shadow:0 0 18px rgba(217,180,91,.25)}
-.panel{background:rgba(13,38,27,.88);border-color:rgba(217,180,91,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
-.table{background:radial-gradient(ellipse at center,#1d583a 0%,#103522 75%);border:2px solid rgba(217,180,91,.45);box-shadow:0 0 25px rgba(0,0,0,.25)}
-.btn{background:linear-gradient(145deg,#e6c66f,#bd913b);border-color:#e6c66f;color:#201807}
-.btn.danger{background:linear-gradient(145deg,#d84b4b,#96252d);border-color:#d84b4b;color:#fff}
-.code{color:#e8c66d;text-shadow:0 0 15px rgba(232,198,109,.2)}
-.seat2.turn .av{box-shadow:0 0 0 3px #e8c66d,0 0 24px rgba(232,198,109,.5)}
-.over{background:radial-gradient(ellipse at 50% 40%,rgba(24,83,51,.97),rgba(7,19,15,.98))}
+/* ACTUALIZACIÓN NAVIDEÑA */
+:root{--ink:#170709;--felt:#351016;--felt-2:#21090e;--paper:#f7e8df;--muted:#d0a9a5;--brass:#d8b4a0;--danger:#c52b32;--line:rgba(255,230,220,.18)}
+body{background:radial-gradient(ellipse at 50% 0%,#64151d 0%,#21080d 58%,#090406 100%) fixed}
+.panel,.table{background:linear-gradient(145deg,rgba(90,12,22,.88),rgba(25,5,10,.94));border-color:rgba(230,180,160,.28);box-shadow:0 12px 32px #0008}
+h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
+.btn{background:linear-gradient(#d9b2a1,#8c3038);color:#fff;border-color:#e5b7a8}.ghost:hover:not(:disabled){border-color:#e6b9a8}
+.av{border:2px solid #d8b7a5;overflow:visible}.av .hat{z-index:5;top:-.28em;text-shadow:0 2px 4px #000}.av .holiday-frame{position:absolute;inset:-7px;border:3px solid #b88952;border-radius:50%;pointer-events:none;z-index:4}
+.av .holiday-frame.reindeer:before,.av .holiday-frame.reindeer:after{content:'♢';position:absolute;top:-13px;color:#9a5b2e;font-size:22px;font-weight:bold;text-shadow:0 1px #321}
+.av .holiday-frame.reindeer:before{left:-3px;transform:rotate(-35deg)}.av .holiday-frame.reindeer:after{right:-3px;transform:rotate(35deg)}
+.snowflake{position:fixed;top:-20px;z-index:1000;pointer-events:none;color:#fff;text-shadow:0 0 6px #fff;animation:snowfall linear infinite;opacity:.85}
+@keyframes snowfall{to{transform:translate3d(var(--drift),110vh,0) rotate(360deg)}}
+.modal{position:fixed;inset:0;background:#080306df;z-index:100;display:grid;place-items:center;padding:18px}.modal[hidden]{display:none}.modal-card{width:min(560px,100%);max-height:85vh;overflow:auto;background:linear-gradient(145deg,#5b111b,#17070b);border:1px solid #c18b76;border-radius:18px;padding:22px;box-shadow:0 20px 70px #000}
+.modal-card h2{font-family:var(--display);font-size:1.8rem;margin-bottom:12px}.modal-card p{color:#f1d6ca}.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode-grid button{min-height:74px;font-weight:700}.socials{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:16px 0}.socials a{color:#ffe8df;text-decoration:none;border:1px solid #a66a60;border-radius:9px;padding:8px 12px;background:#330d14}.snow-head{font-size:1.2rem}
+.chatbox{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#100509}.chat-messages{height:150px;overflow:auto;display:flex;flex-direction:column;gap:6px;font-size:.9rem}.chat-line{overflow-wrap:anywhere}.chat-send{display:flex;gap:8px;margin-top:8px}.chat-send input{flex:1;min-width:0}.musicbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;margin:14px auto}.musicbar select{max-width:220px;background:#23080e;color:#fff;padding:8px;border-radius:8px}.countdown{font-size:2rem;color:#ffd7c7;font-family:var(--display);text-align:center}
+@media(max-width:520px){.mode-grid{grid-template-columns:1fr}}
 
-/* Nieve decorativa: no bloquea los clics */
-#snowCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1000}
-
-/* Reproductor musical */
-.music-dock{position:fixed;right:14px;bottom:14px;z-index:1001;width:min(320px,calc(100vw - 28px));
-  padding:12px;background:rgba(8,25,17,.94);border:1px solid rgba(217,180,91,.55);border-radius:14px;
-  box-shadow:0 8px 28px rgba(0,0,0,.35);backdrop-filter:blur(8px)}
-.music-dock .music-title{font-weight:700;color:#e8c66d;margin:0 0 8px;font-size:.9rem}
-.music-controls{display:flex;gap:8px;align-items:center}
-.music-controls select{min-width:0;flex:1;background:#101b19;color:#fff4df;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
-.music-controls button{padding:8px 11px}
-.music-note{font-size:.72rem;color:var(--muted);margin:7px 0 0}
-@media(max-width:520px){.music-dock{right:8px;bottom:8px}}
-@media(prefers-reduced-motion:reduce){#snowCanvas{display:none}}
+/* Menú de imagen navideña con botones transparentes accesibles */
+.christmas-menu{position:relative;width:100%;max-width:1456px;aspect-ratio:1456/816;margin:0 auto;background:url("assets/menu-navidad.png") center/100% 100% no-repeat;overflow:hidden;border-radius:14px;box-shadow:0 16px 48px #0009}
+.hotspot{position:absolute;display:block;padding:0;border:0;border-radius:12px;background:transparent;z-index:2;cursor:pointer}
+.hotspot:hover,.hotspot:focus-visible{background:rgba(255,230,210,.13);box-shadow:0 0 0 2px #f4d4c6,0 0 22px #f4d4c688;outline:none}
+.hs-updates{left:4.5%;top:35%;width:20%;height:17%}.hs-donate{left:4.5%;top:57%;width:20%;height:17%}.hs-play{left:31%;top:67%;width:38%;height:19%}.hs-profile{right:4%;top:35%;width:20%;height:18%}.hs-how{right:4%;top:57%;width:20%;height:18%}
+.hs-youtube{left:37%;top:87%;width:5.5%;height:11%}.hs-x{left:45.5%;top:87%;width:5.5%;height:11%}.hs-tiktok{left:53.5%;top:87%;width:5.5%;height:11%}.hs-twitch{left:62%;top:87%;width:5.5%;height:11%}
+.musicbar{max-width:700px;padding:10px 14px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
+.musicbar select{background:#23080e;color:#fff;padding:8px;border:1px solid #a66a60;border-radius:8px}
+@media(max-width:600px){.christmas-menu{border-radius:8px}.musicbar{font-size:.85rem}.musicbar select{max-width:175px}}
 
 </style>
 </head>
 <body>
-<canvas id="snowCanvas" aria-hidden="true"></canvas>
-<div class="music-dock" aria-label="Música navideña">
-  <p class="music-title">🎄 Música navideña</p>
-  <div class="music-controls">
-    <select id="musicSelect" aria-label="Elegir música">
-      <option value="">Sin música</option>
-      <option value="assets/music/jingle-bells.mp3">Jingle Bells</option>
-      <option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero</option>
-      <option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas (acústica)</option>
-    </select>
-    <button id="musicToggle" class="btn" type="button">▶</button>
-  </div>
-  <p class="music-note" id="musicStatus">Elegí una canción y presioná ▶.</p>
-  <audio id="bgMusic" loop preload="none"></audio>
-</div>
 <main>
 
-<!-- INICIO -->
+<!-- MENÚ PRINCIPAL: imagen de referencia con zonas interactivas -->
 <section id="home" class="screen">
-  <h1>Ruleta Rusa</h1>
-  <p class="sub">Entre amigos, con código de sala. El tambor es de mentira, los nervios no.</p>
-
-  <div class="panel">
-    <div class="editor">
-      <div id="prev" aria-label="Vista previa de tu personaje"></div>
-      <div class="field">
-        <label class="label" for="name">Tu nombre</label>
-        <input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador">
-      </div>
-    </div>
-    <span class="label">Personaje</span><div id="bases" class="chips"></div>
-    <span class="label">Sombrero</span><div id="hats" class="chips"></div>
-    <span class="label">Máscara</span><div id="masks" class="chips"></div>
-    <span class="label">Color de fondo</span><div id="colors" class="chips"></div>
-    <span class="label">Foto de perfil</span>
-    <div class="row">
-      <button id="pick" class="ghost" type="button">Elegir foto del ordenador</button>
-      <button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button>
-      <input type="file" id="file" accept="image/*" hidden>
-    </div>
+  <div class="christmas-menu" role="navigation" aria-label="Menú principal de Ruleta Rusa">
+    <button id="updatesBtn" class="hotspot hs-updates" type="button" aria-label="Updates" title="Updates"></button>
+    <a class="hotspot hs-donate" href="https://www.paypal.com/donate/?hosted_button_id=7BZL4Q3MP62WW" target="_blank" rel="noopener noreferrer" aria-label="Donar" title="Donar"></a>
+    <button id="playMenu" class="hotspot hs-play" type="button" aria-label="Play" title="Play"></button>
+    <button id="profileBtn" class="hotspot hs-profile" type="button" aria-label="Personalizar personaje" title="Personalizar personaje"></button>
+    <button id="howBtn" class="hotspot hs-how" type="button" aria-label="Cómo jugar" title="Cómo jugar"></button>
+    <a class="hotspot hs-youtube" href="https://www.youtube.com/@goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube"></a>
+    <a class="hotspot hs-x" href="https://x.com/Papi_goku_edits" target="_blank" rel="noopener noreferrer" aria-label="X"></a>
+    <a class="hotspot hs-tiktok" href="https://www.tiktok.com/@gokuletoyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
+    <a class="hotspot hs-twitch" href="https://www.twitch.tv/goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="Twitch"></a>
   </div>
-
-  <div class="panel">
-    <div class="row">
-      <button id="create" class="btn" type="button">Crear sala</button>
-      <div class="join">
-        <input type="text" id="code" maxlength="4" placeholder="CÓDIGO" autocomplete="off" aria-label="Código de sala">
-        <button id="joinBtn" class="ghost" type="button">Unirme</button>
-      </div>
-    </div>
-    <div class="row" style="margin-top:14px">
-      <button id="botsBtn" class="ghost" type="button">Jugar contra 4 bots</button>
-      <span class="tag">Práctica sin amigos</span>
-    </div>
-    <p id="homeMsg" class="msg" role="status"></p>
-  </div>
-
-  <p style="text-align:center;margin:0">
-    <a class="btn" href="https://www.paypal.com/donate/?hosted_button_id=7BZL4Q3MP62WW" target="_blank" rel="noopener noreferrer"
-       style="display:inline-block;text-decoration:none;padding:10px 16px;border-radius:10px">Invítame un café ☕</a>
-  </p>
+  <div class="musicbar"><label for="musicTrack">🎵 Música:</label><select id="musicTrack"><option value="">Sin música</option><option value="assets/music/jingle-bells.mp3">Jingle Bells (acústica)</option><option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero (acústica)</option><option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas Is You (acústica)</option></select><button id="musicToggle" type="button">▶ Reproducir</button></div>
+  <p id="homeMsg" class="msg" role="status"></p>
 </section>
+
+<div id="profileModal" class="modal" hidden><div class="modal-card"><h2>🎅 Personalizar personaje</h2>
+  <div class="editor"><div id="prev" aria-label="Vista previa de tu personaje"></div><div class="field"><label class="label" for="name">Tu nombre</label><input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador"></div></div>
+  <span class="label">Personaje</span><div id="bases" class="chips"></div><span class="label">Sombrero / accesorio</span><div id="hats" class="chips"></div><span class="label">Máscara</span><div id="masks" class="chips"></div><span class="label">Color de fondo</span><div id="colors" class="chips"></div>
+  <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
+  <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
+<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> creá una sala o jugá contra bots. En tu turno elegís una acción del juego ficticio; gana quien quede al final.</p><p><b>Pipa Caliente:</b> la ficha pasa al siguiente jugador antes de que termine el temporizador. Si el tiempo llega a cero, ese jugador queda fuera de la ronda.</p><p>Compartí el código de sala con tus amigos. El anfitrión configura la partida y puede iniciar cuando haya suficientes participantes.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
 <!-- SALA DE ESPERA -->
 <section id="lobby" class="screen" hidden>
@@ -266,7 +219,9 @@ h1{color:#e8c66d;text-shadow:0 0 18px rgba(217,180,91,.25)}
         <span id="needmore" class="tag"></span>
       </div>
     </div>
+    <div id="hotSettings" hidden><span class="label">Pipa Caliente · Configuración de sala</span><label class="label">Tiempo para pasar</label><div class="chips" id="passTimes"></div><label class="label">Cooldown anti-spam</label><div class="chips" id="coolTimes"></div></div>
     <p id="guestwait" class="sub" style="margin:0" hidden>Esperando a que el anfitrión empiece la partida…</p>
+    <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="chatSend" class="btn">Enviar</button></div></div>
   </div>
 </section>
 
@@ -307,9 +262,11 @@ h1{color:#e8c66d;text-shadow:0 0 18px rgba(217,180,91,.25)}
       <button id="shoot" class="btn danger" type="button">Disparar</button>
       <button id="spin" class="ghost" type="button">Girar el tambor y disparar</button>
     </div>
+    <div id="hotControls" hidden><p class="countdown" id="hotCountdown">—</p><p id="hotHolder" class="info"></p><button id="passBtn" class="btn" type="button">Pasar ficha</button><p id="passFeedback" class="tag"></p></div>
     <ul class="log" id="log"></ul>
   </div>
 
+  <div class="chatbox"><b>💬 Chat de sala</b><div id="gameChatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="gameChatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="gameChatSend" class="btn">Enviar</button></div></div>
   <div class="over" id="over" hidden>
     <p class="wis" id="wis">Winner is…</p>
     <div class="reveal" id="winbox"><div id="winav"></div><h2 id="wname"></h2></div>
@@ -322,14 +279,17 @@ h1{color:#e8c66d;text-shadow:0 0 18px rgba(217,180,91,.25)}
 </section>
 
 </main>
-
+<div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí un modo</h2><div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse a una sala</button><button class="ghost closeModal">Volver</button></div><div id="joinPanel" hidden><label class="label" for="code">Código de sala</label><div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO"><button id="joinBtn" class="btn">Unirme</button></div></div></div></div>
+<div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2><p>¿Cómo querés jugar?</p><div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
+<div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2><p><b>Interfaz:</b> nueva ambientación navideña, nieve animada y decoración de perfil.</p><p><b>Jugabilidad:</b> se incorpora el modo Pipa Caliente con tiempo límite, pases y cooldown configurable.</p><p><b>Multijugador:</b> chat de sala con colores aleatorios únicos para distinguir participantes.</p><p><b>Personalización:</b> gorro de Santa y marco con cuernos de reno.</p><p><b>Mejoras:</b> selección de modo, creación de sala o práctica con bots, reproductor musical y accesos a redes sociales.</p><button class="btn closeModal">Cerrar</button></div></div>
+<audio id="musicPlayer" preload="none"></audio>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
 
 <!-- Lógica pura del juego: no toca la pantalla ni la red -->
 <script id="logic">
 const MAX_PLAYERS = 8, CHAMBERS = 6;
 const BASES = ['silueta','😀','😎','🤓','😈','👽','🤖','👻','🐵','🐱','🐸','🦊','🐼'];
-const HATS = ['','🎩','👑','🧢','🎓','🤠','👒','🪖','⛑️','🎅'];
+const HATS = ['','🎩','👑','🧢','🎓','🤠','👒','🪖','⛑️','🎅','🎄','🦌'];
 const MASKS = ['','😷','🥸','🕶️','🤡','👺','🎭','🥽'];
 const COLORS = ['#e8e0cc','#d9482b','#d4a640','#4f9d6b','#3f8fb5','#7a63c9','#c25b8f','#8a8f98'];
 
@@ -413,6 +373,8 @@ let lastSeq = 0, log = [], muted = false, joinTimer = null;
 // Presentación de la partida (solo visual)
 let busy = false, holdId = null, freshId = null, gunRot = 0, gunReady = false, timers = [];
 let botMode = false, botTimer = null;
+let selectedMode='classic', hotCfg={passSeconds:10,cooldown:1}, hotTimer=null, hotDeadline=0, hotClicks=0, hotCooling=false, chatLog=[], playerColors={};
+const CHAT_COLORS=['#ff8a80','#80cbc4','#90caf9','#ce93d8','#fff176','#a5d6a7','#ffcc80','#80deea'];
 let me = loadProfile();
 
 /* ---------- Perfil ---------- */
@@ -441,7 +403,10 @@ function avatarEl(av, size, dead, fresh){
     const f = document.createElement('span'); f.className = 'face'; f.textContent = av.base; d.appendChild(f);
   }
   if (av.mask){ const m = document.createElement('span'); m.className = 'mask'; m.textContent = av.mask; d.appendChild(m); }
-  if (av.hat){ const h = document.createElement('span'); h.className = 'hat'; h.textContent = av.hat; d.appendChild(h); }
+  if (av.hat === '🎅'){ const h=document.createElement('span'); h.className='hat'; h.textContent='🎅'; d.appendChild(h); }
+  else if (av.hat && !['🦌','🎄'].includes(av.hat)){ const h=document.createElement('span'); h.className='hat'; h.textContent=av.hat; d.appendChild(h); }
+  if (av.hat === '🦌'){ const f=document.createElement('span'); f.className='holiday-frame reindeer'; d.appendChild(f); }
+  if (av.hat === '🎄'){ const f=document.createElement('span'); f.className='holiday-frame'; d.appendChild(f); }
   if (dead){ const x = document.createElement('span'); x.className = 'xmark' + (fresh ? ' fresh' : ''); d.appendChild(x); }
   return d;
 }
@@ -542,7 +507,8 @@ function startHost(tries){
   p.on('open', () => {
     isHost = true; myId = 'host'; roomCode = code; conns = {};
     players = [{ id:'host', avatar:myAvatar(), alive:true }];
-    game = { phase:'lobby', bullets:1 };
+    playerColors={host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)]}; chatLog=[];
+    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} };
     lastSeq = 0; log = [];
     broadcast();
   });
@@ -564,24 +530,26 @@ function hostOnConn(c){
       if (players.some(p => p.id === c.peer)) return;
       conns[c.peer] = c;
       players.push({ id:c.peer, avatar:cleanAvatar(m.avatar), alive:true });
+      const used=Object.values(playerColors); const free=CHAT_COLORS.filter(x=>!used.includes(x)); playerColors[c.peer]=free.length ? free[Math.floor(Math.random()*free.length)] : '#ffffff';
       broadcast();
     } else if (m.t === 'shoot'){
-      if (game.phase === 'play' && players[game.turn] && players[game.turn].id === c.peer) doShot(!!m.spin);
-    }
+      if (game.phase === 'play' && players[game.turn] && players[game.turn].id === c.peer && game.mode !== 'hot') doShot(!!m.spin);
+    } else if (m.t === 'chat'){ relayChat(c.peer,m.text);
+    } else if (m.t === 'pass'){ if(game.phase==='play' && game.mode==='hot' && players[game.turn]?.id===c.peer) passHot(c.peer); }
   });
   c.on('close', () => {
     if (!conns[c.peer]) return;
     delete conns[c.peer];
-    dropPlayer(game, players, c.peer);
+    dropPlayer(game, players, c.peer); delete playerColors[c.peer];
     broadcast();
   });
 }
 function buildView(){
   return {
-    code:roomCode, phase:game.phase, bullets:game.bullets,
+    code:roomCode, phase:game.phase, bullets:game.bullets, mode:game.mode||'classic', hotCfg:game.hotCfg||hotCfg, holder:game.turn, deadline:hotDeadline,
     turn:game.turn === undefined ? -1 : game.turn, pos:game.pos || 0, round:game.round || 1,
-    last:game.last || null, winner:game.winner || null,
-    players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left }))
+    last:game.last || null, winner:game.winner || null, chat:chatLog.slice(-40),
+    players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left, chatColor:playerColors[p.id]||'#fff' }))
   };
 }
 function broadcast(){
@@ -591,6 +559,12 @@ function broadcast(){
 }
 function doShot(spin){ pullTrigger(game, players, spin, Math.random); broadcast(); }
 
+function relayChat(id, raw){ const p=players.find(x=>x.id===id); if(!p)return; const textMsg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!textMsg)return; chatLog.push({id,name:p.avatar.name,text:textMsg,color:playerColors[id]||'#fff'}); chatLog=chatLog.slice(-40); broadcast(); }
+function sendChat(inputId='chatInput'){const val=$('#'+inputId).value.trim();if(!val)return; if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val}); $('#'+inputId).value='';}
+function passHot(id){ if(game.phase!=='play'||game.mode!=='hot')return; clearTimeout(hotTimer); const from=players.findIndex(p=>p.id===id); const next=nextAlive(players,from); if(next<0)return; game.turn=next; hotDeadline=Date.now()+(game.hotCfg.passSeconds*1000); broadcast(); startHotClock(); }
+function startHotClock(){clearTimeout(hotTimer); if(!isHost||game.phase!=='play'||game.mode!=='hot')return; hotDeadline=Date.now()+game.hotCfg.passSeconds*1000; hotTimer=setTimeout(()=>{const p=players[game.turn];if(!p)return;p.alive=false;const alive=players.filter(x=>x.alive);if(alive.length<=1){game.phase='over';game.winner=alive[0]?.id||null;game.turn=-1;}else game.turn=nextAlive(players,game.turn);broadcast();startHotClock();},game.hotCfg.passSeconds*1000); }
+function paintChat(v){['chatMessages','gameChatMessages'].forEach(id=>{const box=$('#'+id);if(!box)return;const near=box.scrollHeight-box.clientHeight-box.scrollTop<30;box.textContent='';(v.chat||[]).forEach(m=>{const line=document.createElement('div');line.className='chat-line';const name=document.createElement('b');name.textContent=m.name+': ';name.style.color=m.color;const msg=document.createElement('span');msg.textContent=m.text;line.append(name,msg);box.appendChild(line)});if(near)box.scrollTop=box.scrollHeight;});}
+function makeChips(container, values, current, callback){container.textContent='';values.forEach(v=>{const b=document.createElement('button');b.className='chip txt';b.textContent=v.label;b.setAttribute('aria-pressed',String(v.value===current));b.onclick=()=>callback(v.value);container.appendChild(b)});}
 function joinRoom(code){
   if (!peerOk()) return;
   code = code.toUpperCase().trim();
@@ -666,7 +640,10 @@ function seatList(box, v){
 function renderLobby(v){
   $('#roomcode').textContent = v.code;
   $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
-  seatList($('#plist'), v);
+  seatList($('#plist'), v); paintChat(v);
+  $('#hotSettings').hidden = !isHost || v.mode!=='hot';
+  if(isHost && v.mode==='hot'){makeChips($('#passTimes'),[5,10,15].map(x=>({value:x,label:x+' s'})),v.hotCfg?.passSeconds||10,x=>{game.hotCfg={...(game.hotCfg||hotCfg),passSeconds:x};broadcast()});const maxCd=(v.hotCfg?.passSeconds||10)>5?1.5:1;makeChips($('#coolTimes'),[.5,1,1.5].filter(x=>x<=maxCd).map(x=>({value:x,label:x+' s'})),v.hotCfg?.cooldown??1,x=>{game.hotCfg={...(game.hotCfg||hotCfg),cooldown:x};broadcast()});}
+  $('#hotControls').hidden = v.mode!=='hot' || v.phase!=='play';
   $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost;
   if (isHost){
     const b = $('#bullets'); b.textContent = '';
@@ -722,6 +699,7 @@ function aimAt(deg, o){
   }
 }
 function renderGame(v){
+  paintChat(v);
   $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala ';
   $('#gcode').textContent = botMode ? 'contra bots' : v.code;
   if (busy) return;                       // se termina la animación y luego se pone al día
@@ -737,7 +715,7 @@ function scheduleBot(){
   if (!p || !p.bot) return;
   botTimer = setTimeout(() => {
     botTimer = null;
-    if (!busy && game.phase === 'play' && players[game.turn] === p) doShot(Math.random() < 0.35);
+    if (!busy && game.phase === 'play' && players[game.turn] === p) { if(game.mode==='hot') passHot(p.id); else doShot(Math.random() < 0.35); }
   }, 1100 + Math.random() * 900);
 }
 function startBots(){
@@ -745,7 +723,7 @@ function startBots(){
   botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null; conn = null;
   players = [{ id:'host', avatar:myAvatar(), alive:true }]
     .concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
-  game = { phase:'lobby', bullets:1 };
+  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} };
   view = null; broadcast();
 }
 function drawScene(v){
@@ -754,9 +732,8 @@ function drawScene(v){
   const myTurn = v.phase === 'play' && turnP && turnP.id === myId;
   $('#status').textContent = v.phase === 'over' ? 'Fin de la partida'
     : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
-  $('#info').textContent = v.bullets + (v.bullets === 1 ? ' bala' : ' balas') + ' en el tambor · '
-    + (CHAMBERS - v.pos) + ' recámaras hasta recargar · ronda ' + v.round;
-  $('#shoot').disabled = !myTurn; $('#spin').disabled = !myTurn;
+  $('#info').textContent = v.mode==='hot' ? 'Pipa Caliente · pasá la ficha antes de que termine el tiempo' : (v.bullets + (v.bullets === 1 ? ' bala' : ' balas') + ' en el tambor · ' + (CHAMBERS - v.pos) + ' recámaras hasta recargar · ronda ' + v.round);
+  const hot=v.mode==='hot'; $('#shoot').hidden=hot; $('#spin').hidden=hot; $('#hotControls').hidden=!hot||v.phase!=='play'; $('#passBtn').disabled=!myTurn||hotCooling; $('#hotHolder').textContent=hot&&turnP?'La ficha está con '+turnP.avatar.name:''; if(hot){const remain=Math.max(0,Math.ceil(((v.deadline||Date.now()+10000)-Date.now())/1000));$('#hotCountdown').textContent='⏳ '+remain+' s';} $('#shoot').disabled = !myTurn; $('#spin').disabled = !myTurn;
   drawCircle(v, v.phase === 'play' ? v.turn : -1);
   if (v.phase === 'play' && v.turn >= 0){
     aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 });
@@ -809,8 +786,17 @@ function fire(hit){
 window.addEventListener('resize', () => { if (view && view.phase !== 'lobby' && !busy && !$('#game').hidden) drawScene(view); });
 
 /* ---------- Botones ---------- */
-$('#create').addEventListener('click', () => { setHomeMsg(''); startHost(0); });
-$('#botsBtn').addEventListener('click', startBots);
+$('#playMenu').addEventListener('click',()=>$('#modeModal').hidden=false);
+$('#profileBtn').addEventListener('click',()=>$('#profileModal').hidden=false);
+$('#howBtn').addEventListener('click',()=>$('#howModal').hidden=false);
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{selectedMode=b.dataset.mode;$('#modeModal').hidden=true;$('#setupModal').hidden=false;$('#setupTitle').textContent=selectedMode==='hot'?'Pipa Caliente':'Ruleta Rusa Classic';}));
+$('#create').addEventListener('click',()=>{$('#setupModal').hidden=true;setHomeMsg('');startHost(0)});
+$('#botsBtn').addEventListener('click',()=>{$('#setupModal').hidden=true;startBots()});
+$('#openJoin').addEventListener('click',()=>$('#joinPanel').hidden=false);
+document.querySelectorAll('.closeModal').forEach(b=>b.addEventListener('click',()=>b.closest('.modal').hidden=true));
+$('#updatesBtn').addEventListener('click',()=>$('#updatesModal').hidden=false);
+$('#chatSend').addEventListener('click',()=>sendChat('chatInput'));$('#chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('chatInput')});$('#gameChatSend').addEventListener('click',()=>sendChat('gameChatInput'));$('#gameChatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('gameChatInput')});
+$('#passBtn').addEventListener('click',()=>{if(hotCooling)return;hotClicks++;const threshold=players.length<=4?4:5;if(isHost)passHot(myId);else if(conn&&conn.open)conn.send({t:'pass'});if(hotClicks>=threshold){hotCooling=true;$('#passFeedback').textContent='Pausa anti-spam activada';$('#passBtn').disabled=true;setTimeout(()=>{hotCooling=false;hotClicks=0;$('#passFeedback').textContent='';$('#passBtn').disabled=false;},(game.hotCfg?.cooldown||1)*1000);}});
 $('#joinBtn').addEventListener('click', () => joinRoom($('#code').value));
 $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') joinRoom($('#code').value); });
 $('#code').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase(); });
@@ -822,13 +808,13 @@ $('#copy').addEventListener('click', () => {
 $('#start').addEventListener('click', () => {
   if (!isHost || players.length < 2) return;
   players = players.filter(p => !p.left);
-  game = newGame(players, game.bullets || 1, Math.random);
+  if(game.mode==='hot'){players.forEach(p=>p.alive=true);game={phase:'play',mode:'hot',hotCfg:game.hotCfg||{...hotCfg},turn:Math.floor(Math.random()*players.length),winner:null,round:1};startHotClock();}else { game = newGame(players, game.bullets || 1, Math.random); game.mode='classic'; }
   broadcast();
 });
 $('#again').addEventListener('click', () => {
   if (!isHost) return;
   players = players.filter(p => !p.left); players.forEach(p => { p.alive = true; });
-  game = { phase:'lobby', bullets:game.bullets || 1 }; broadcast();
+  clearTimeout(hotTimer); game = { phase:'lobby', bullets:game.bullets || 1, mode:game.mode||selectedMode, hotCfg:game.hotCfg||{...hotCfg} }; broadcast();
 });
 $('#shoot').addEventListener('click', () => act(false));
 $('#spin').addEventListener('click', () => act(true));
@@ -836,63 +822,16 @@ $('#mute').addEventListener('click', e => {
   muted = !muted; e.target.setAttribute('aria-pressed', String(muted)); e.target.textContent = 'Sonido: ' + (muted ? 'no' : 'sí');
 });
 
+setInterval(()=>{if(view&&view.mode==='hot'&&view.phase==='play'&&!$('#game').hidden){const left=Math.max(0,Math.ceil(((view.deadline||Date.now())-Date.now())/1000));$('#hotCountdown').textContent='⏳ '+left+' s';}},200);
+// Nieve decorativa
+for(let i=0;i<42;i++){const f=document.createElement('span');f.className='snowflake';f.textContent=Math.random()>.5?'❄':'·';f.style.left=Math.random()*100+'vw';f.style.fontSize=(8+Math.random()*15)+'px';f.style.animationDuration=(7+Math.random()*12)+'s';f.style.animationDelay=(-Math.random()*18)+'s';f.style.setProperty('--drift',(Math.random()*100-50)+'px');document.body.appendChild(f)}
+// Música servida desde el propio repositorio: assets/music/*.mp3
+const player=$('#musicPlayer');
+$('#musicTrack').addEventListener('change',()=>{const src=$('#musicTrack').value;if(!src){player.pause();player.removeAttribute('src');player.load();$('#musicToggle').textContent='▶ Reproducir';return;}player.src=src;player.load();player.play().then(()=>$('#musicToggle').textContent='❚❚ Pausar').catch(()=>$('#musicToggle').textContent='▶ Reproducir');});
+$('#musicToggle').addEventListener('click',()=>{if(!player.src){$('#musicTrack').focus();return;}if(player.paused){player.play().then(()=>$('#musicToggle').textContent='❚❚ Pausar').catch(()=>{});}else{player.pause();$('#musicToggle').textContent='▶ Reproducir';}});
+player.addEventListener('ended',()=>{const sel=$('#musicTrack');const opts=Array.from(sel.options).filter(o=>o.value);if(!opts.length)return;const i=opts.findIndex(o=>o.value===sel.value);sel.value=opts[(i+1)%opts.length].value;sel.dispatchEvent(new Event('change'));});
 
-/* ---------- Música navideña (los MP3 se agregan en assets/music) ---------- */
-const musicAudio = $('#bgMusic');
-const musicSelect = $('#musicSelect');
-const musicToggle = $('#musicToggle');
-const musicStatus = $('#musicStatus');
-function setMusicStatus(message){ musicStatus.textContent = message; }
-musicSelect.addEventListener('change', () => {
-  const src = musicSelect.value;
-  musicAudio.pause(); musicAudio.removeAttribute('src'); musicAudio.load();
-  musicToggle.textContent = '▶';
-  if (!src){ setMusicStatus('Música desactivada.'); return; }
-  musicAudio.src = src; musicAudio.load();
-  setMusicStatus('Lista: ' + musicSelect.options[musicSelect.selectedIndex].text + '. Presioná ▶.');
-});
-musicToggle.addEventListener('click', async () => {
-  if (!musicAudio.src){
-    if (musicSelect.value) musicAudio.src = musicSelect.value;
-    else { setMusicStatus('Primero elegí una canción.'); return; }
-  }
-  if (musicAudio.paused){
-    try { await musicAudio.play(); musicToggle.textContent = 'Ⅱ'; setMusicStatus('Reproduciendo música navideña.'); }
-    catch(e){ setMusicStatus('No se pudo reproducir. Revisá que el MP3 esté en assets/music.'); }
-  } else { musicAudio.pause(); musicToggle.textContent = '▶'; setMusicStatus('Música pausada.'); }
-});
-musicAudio.addEventListener('ended', () => { musicToggle.textContent = '▶'; });
-
-/* ---------- Nieve animada ---------- */
-(function snowEffect(){
-  const canvas = document.getElementById('snowCanvas');
-  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ctx = canvas.getContext('2d');
-  let flakes = [], width = 0, height = 0, raf = 0;
-  function resize(){
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = window.innerWidth; height = window.innerHeight;
-    canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count = Math.min(100, Math.max(35, Math.floor(width/12)));
-    flakes = Array.from({length:count}, () => ({x:Math.random()*width,y:Math.random()*height,r:1+Math.random()*2.3,v:.5+Math.random()*1.2,w:(Math.random()-.5)*.55,a:.35+Math.random()*.55}));
-  }
-  function draw(){
-    ctx.clearRect(0,0,width,height);
-    for(const f of flakes){
-      f.y += f.v; f.x += f.w + Math.sin(f.y/35)*.25;
-      if(f.y > height+5){f.y=-5;f.x=Math.random()*width;}
-      if(f.x < -5) f.x=width+5; if(f.x > width+5) f.x=-5;
-      ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+f.a+')';ctx.fill();
-    }
-    raf = requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize',resize,{passive:true});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden) cancelAnimationFrame(raf); else draw();});
-  resize();draw();
-})();
-
-drawEditor();
+ drawEditor();
 </script>
 </body>
 </html>
