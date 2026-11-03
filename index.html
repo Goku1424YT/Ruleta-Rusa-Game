@@ -23,15 +23,14 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html,body{margin:0}
+html,body{margin:0;width:100%;min-height:100%;}
 body{
   background:radial-gradient(1200px 700px at 50% -10%,var(--felt) 0%,var(--ink) 70%) fixed;
   color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.45;min-height:100vh;
-  padding-block:24px 48px;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding:0;
 }
-main{width:min(96vw,1600px);max-width:none;margin:0 auto}
+main{width:100%;max-width:none;margin:0 auto;}
+#home{position:relative;width:100%;min-height:100vh;}
 h1,h2{font-family:var(--display);font-weight:400;letter-spacing:.02em;text-wrap:balance;margin:0}
 h1{font-size:clamp(2.2rem,8vw,3.6rem);color:var(--brass);line-height:1.05}
 h2{font-size:1.4rem}
@@ -157,14 +156,14 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
 @media(max-width:520px){.mode-grid{grid-template-columns:1fr}}
 
 /* Menú de imagen navideña con botones transparentes accesibles */
-.christmas-menu{position:relative;width:100%;max-width:1600px;aspect-ratio:1456/816;margin:0 auto;background:url("assets/menu-navidad.png") center/100% 100% no-repeat;overflow:hidden;border-radius:14px;box-shadow:0 16px 48px #0009}
+.christmas-menu{position:relative;width:100vw;height:100vh;max-width:none;aspect-ratio:auto;margin:0;background:url("assets/menu-navidad.png") center/100% 100% no-repeat;overflow:hidden;border-radius:0;box-shadow:none}
 .hotspot{position:absolute;display:block;padding:0;border:0;border-radius:12px;background:transparent;z-index:2;cursor:pointer}
 .hotspot:hover,.hotspot:focus-visible{background:rgba(255,230,210,.13);box-shadow:0 0 0 2px #f4d4c6,0 0 22px #f4d4c688;outline:none}
 .hs-updates{left:4.5%;top:35%;width:20%;height:17%}.hs-donate{left:4.5%;top:57%;width:20%;height:17%}.hs-play{left:31%;top:67%;width:38%;height:19%}.hs-profile{right:4%;top:35%;width:20%;height:18%}.hs-how{right:4%;top:57%;width:20%;height:18%}
 .hs-youtube{left:37%;top:87%;width:5.5%;height:11%}.hs-x{left:45.5%;top:87%;width:5.5%;height:11%}.hs-tiktok{left:53.5%;top:87%;width:5.5%;height:11%}.hs-twitch{left:62%;top:87%;width:5.5%;height:11%}
-.musicbar{max-width:700px;padding:10px 14px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
-.musicbar select{background:#23080e;color:#fff;padding:8px;border:1px solid #a66a60;border-radius:8px}
-@media(max-width:600px){main{width:100%}.christmas-menu{width:100%;border-radius:8px}.musicbar{font-size:.85rem}.musicbar select{max-width:175px}}
+.musicbar{position:absolute;z-index:5;left:50%;bottom:12px;transform:translateX(-50%);width:max-content;max-width:94vw;padding:8px 12px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
+.musicbar select{background:#23080e;color:#fff;padding:8px;border:1px solid #a66a60;border-radius:8px;min-width:0}.musicbar button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:8px;padding:8px 10px;cursor:pointer}.musicbar button:hover{background:#84202c}.volume-control{display:flex;align-items:center;gap:4px}.volume-control input{width:85px;accent-color:#d8aa70}#volumeValue{font-size:.8rem;min-width:32px}
+@media(max-width:700px){.christmas-menu{width:100vw;height:100svh;min-height:560px}.musicbar{font-size:.72rem;bottom:8px;gap:5px;padding:6px}.musicbar select{max-width:125px}.volume-control input{width:58px}}
 
 </style>
 </head>
@@ -184,7 +183,7 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
     <a class="hotspot hs-tiktok" href="https://www.tiktok.com/@gokuletoyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
     <a class="hotspot hs-twitch" href="https://www.twitch.tv/goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="Twitch"></a>
   </div>
-  <div class="musicbar"><label for="musicTrack">🎵 Música:</label><select id="musicTrack"><option value="">Sin música</option><option value="assets/music/jingle-bells.mp3">Jingle Bells (acústica)</option><option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero (acústica)</option><option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas Is You (acústica)</option></select><button id="musicToggle" type="button">▶ Reproducir</button></div>
+  <div class="musicbar" aria-label="Controles de música"><label for="musicTrack">🎵 Música:</label><select id="musicTrack" aria-label="Elegir canción"><option value="">Aleatorio al reproducir</option><option value="assets/music/jingle-bells.mp3">Jingle Bells (acústica)</option><option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero (acústica)</option><option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas Is You (acústica)</option></select><button id="musicToggle" type="button">▶ Reproducir</button><button id="musicNext" type="button" aria-label="Saltar canción" title="Saltar canción">⏭</button><label class="volume-control" for="musicVolume">🔊 <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.5" aria-label="Volumen"></label><span id="volumeValue">50%</span></div>
   <p id="homeMsg" class="msg" role="status"></p>
 </section>
 
@@ -562,30 +561,48 @@ function doShot(spin){ pullTrigger(game, players, spin, Math.random); broadcast(
 function relayChat(id, raw){ const p=players.find(x=>x.id===id); if(!p)return; const textMsg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!textMsg)return; chatLog.push({id,name:p.avatar.name,text:textMsg,color:playerColors[id]||'#fff'}); chatLog=chatLog.slice(-40); broadcast(); }
 function sendChat(inputId='chatInput'){const val=$('#'+inputId).value.trim();if(!val)return; if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val}); $('#'+inputId).value='';}
 function passHot(id){
-  if(game.phase!=='play'||game.mode!=='hot')return;
+  if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
   const from=players.findIndex(p=>p.id===id);
-  if(from<0||from!==game.turn||Date.now()>=hotDeadline)return;
-  const next=nextAlive(players,from); if(next<0)return;
+  // Se compara siempre contra el mismo deadline absoluto. Pasar la ficha
+  // cambia al portador, pero jamás modifica ni vuelve a programar el reloj.
+  if(from<0||from!==game.turn||!hotDeadline||Date.now()>=hotDeadline)return;
+  const next=nextAlive(players,from);
+  if(next<0)return;
   game.turn=next;
-  /* El reloj es global para la ronda: pasar la ficha NO reinicia el plazo. */
   broadcast();
 }
 function startHotClock(newRound=true){
-  clearTimeout(hotTimer);
   if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
-  if(newRound||!hotDeadline||hotDeadline<=Date.now()) hotDeadline=Date.now()+(game.hotCfg.passSeconds*1000);
-  const remaining=Math.max(0,hotDeadline-Date.now());
-  hotTimer=setTimeout(()=>{
-    const p=players[game.turn];
-    if(p)p.alive=false;
-    const alive=players.filter(x=>x.alive);
-    if(alive.length<=1){game.phase='over';game.winner=alive[0]?.id||null;game.turn=-1;hotDeadline=0;broadcast();return;}
-    game.turn=nextAlive(players,game.turn);
-    /* Al quedar fuera el jugador actual comienza una nueva ronda de tiempo. */
-    hotDeadline=Date.now()+(game.hotCfg.passSeconds*1000);
-    broadcast();
-    startHotClock(false);
-  },remaining);
+  if(newRound){
+    clearTimeout(hotTimer);
+    hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
+  } else if(!hotDeadline){
+    hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
+  }
+  const scheduledDeadline=hotDeadline;
+  const remaining=scheduledDeadline-Date.now();
+  if(remaining<=0){
+    hotTimer=setTimeout(()=>expireHotTurn(scheduledDeadline),0);
+    return;
+  }
+  // Un solo timeout absoluto permanece activo aunque la ficha se pase muchas veces.
+  hotTimer=setTimeout(()=>expireHotTurn(scheduledDeadline),remaining);
+}
+function expireHotTurn(scheduledDeadline){
+  if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
+  // Ignora callbacks viejos si se inició una partida/ronda nueva.
+  if(scheduledDeadline!==hotDeadline)return;
+  if(Date.now()<hotDeadline){startHotClock(false);return;}
+  const expiredIndex=game.turn;
+  if(expiredIndex>=0&&players[expiredIndex])players[expiredIndex].alive=false;
+  const alive=players.filter(p=>p.alive);
+  if(alive.length<=1){
+    game.phase='over';game.winner=alive[0]?.id||null;game.turn=-1;hotDeadline=0;clearTimeout(hotTimer);broadcast();return;
+  }
+  game.turn=nextAlive(players,expiredIndex);
+  hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
+  broadcast();
+  startHotClock(false);
 }
 function paintChat(v){['chatMessages','gameChatMessages'].forEach(id=>{const box=$('#'+id);if(!box)return;const near=box.scrollHeight-box.clientHeight-box.scrollTop<30;box.textContent='';(v.chat||[]).forEach(m=>{const line=document.createElement('div');line.className='chat-line';const name=document.createElement('b');name.textContent=m.name+': ';name.style.color=m.color;const msg=document.createElement('span');msg.textContent=m.text;line.append(name,msg);box.appendChild(line)});if(near)box.scrollTop=box.scrollHeight;});}
 function makeChips(container, values, current, callback){container.textContent='';values.forEach(v=>{const b=document.createElement('button');b.className='chip txt';b.textContent=v.label;b.setAttribute('aria-pressed',String(v.value===current));b.onclick=()=>callback(v.value);container.appendChild(b)});}
@@ -849,11 +866,48 @@ $('#mute').addEventListener('click', e => {
 setInterval(()=>{if(view&&view.mode==='hot'&&view.phase==='play'&&!$('#game').hidden){const left=Math.max(0,Math.ceil(((view.deadline||Date.now())-Date.now())/1000));$('#hotCountdown').textContent='⏳ '+left+' s';}},200);
 // Nieve decorativa
 for(let i=0;i<42;i++){const f=document.createElement('span');f.className='snowflake';f.textContent=Math.random()>.5?'❄':'·';f.style.left=Math.random()*100+'vw';f.style.fontSize=(8+Math.random()*15)+'px';f.style.animationDuration=(7+Math.random()*12)+'s';f.style.animationDelay=(-Math.random()*18)+'s';f.style.setProperty('--drift',(Math.random()*100-50)+'px');document.body.appendChild(f)}
-// Música servida desde el propio repositorio: assets/music/*.mp3
+// Reproductor navideño: orden aleatorio, pausa, salto y volumen.
 const player=$('#musicPlayer');
-$('#musicTrack').addEventListener('change',()=>{const src=$('#musicTrack').value;if(!src){player.pause();player.removeAttribute('src');player.load();$('#musicToggle').textContent='▶ Reproducir';return;}player.src=src;player.load();player.play().then(()=>$('#musicToggle').textContent='❚❚ Pausar').catch(()=>$('#musicToggle').textContent='▶ Reproducir');});
-$('#musicToggle').addEventListener('click',()=>{if(!player.src){$('#musicTrack').focus();return;}if(player.paused){player.play().then(()=>$('#musicToggle').textContent='❚❚ Pausar').catch(()=>{});}else{player.pause();$('#musicToggle').textContent='▶ Reproducir';}});
-player.addEventListener('ended',()=>{const sel=$('#musicTrack');const opts=Array.from(sel.options).filter(o=>o.value);if(!opts.length)return;const i=opts.findIndex(o=>o.value===sel.value);sel.value=opts[(i+1)%opts.length].value;sel.dispatchEvent(new Event('change'));});
+const musicSelect=$('#musicTrack');
+const musicButton=$('#musicToggle');
+const musicTracks=Array.from(musicSelect.options).filter(o=>o.value);
+player.volume=0.5;
+let lastTrack='';
+function syncMusicButton(){musicButton.textContent=player.paused?'▶ Reproducir':'❚❚ Pausar';}
+function chooseRandomTrack(){
+  if(!musicTracks.length)return null;
+  const choices=musicTracks.filter(o=>o.value!==lastTrack);
+  const pool=choices.length?choices:musicTracks;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function playTrack(option){
+  if(!option)return;
+  musicSelect.value=option.value;
+  lastTrack=option.value;
+  player.src=option.value;
+  player.load();
+  player.play().then(syncMusicButton).catch(syncMusicButton);
+}
+function playRandomTrack(){playTrack(chooseRandomTrack());}
+musicSelect.addEventListener('change',()=>{
+  const selected=musicSelect.value;
+  if(!selected){playRandomTrack();return;}
+  playTrack(musicTracks.find(o=>o.value===selected));
+});
+musicButton.addEventListener('click',()=>{
+  if(player.paused){
+    if(!player.src)playRandomTrack();
+    else player.play().then(syncMusicButton).catch(syncMusicButton);
+  }else{player.pause();syncMusicButton();}
+});
+$('#musicNext').addEventListener('click',playRandomTrack);
+$('#musicVolume').addEventListener('input',e=>{
+  player.volume=Number(e.target.value);
+  $('#volumeValue').textContent=Math.round(player.volume*100)+'%';
+});
+player.addEventListener('ended',playRandomTrack);
+player.addEventListener('play',syncMusicButton);
+player.addEventListener('pause',syncMusicButton);
 
  drawEditor();
 </script>
