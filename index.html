@@ -139,6 +139,77 @@ button:disabled{opacity:.4;cursor:not-allowed}
   #gun{transition:none}#banner.show,.shake,.av .xmark.fresh,#flash.fire,.wis,.reveal{animation:none}
   #banner.show{opacity:1}
 }
+/* ===== TEMÁTICA NAVIDEÑA ===== */
+
+:root{
+--ink:#101b19;
+--felt:#17452f;
+--felt-2:#0d3023;
+--paper:#fff4df;
+--muted:#c0c9b8;
+--brass:#d9b45b;
+--danger:#b92d35;
+--line:rgba(255,244,223,.2);
+}
+
+/* Fondo navideño */
+body{
+background:
+radial-gradient(ellipse at 50% 0%,rgba(35,105,66,.65),transparent 65%),
+linear-gradient(145deg,#101b19,#07130f 75%) fixed;
+}
+
+/* Títulos */
+h1{
+color:#e8c66d;
+text-shadow:0 0 18px rgba(217,180,91,.25);
+}
+
+/* Paneles */
+.panel{
+background:rgba(13,38,27,.82);
+border-color:rgba(217,180,91,.3);
+box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+/* Mesa */
+.table{
+background:
+radial-gradient(ellipse at center,#1d583a 0%,#103522 75%);
+border:2px solid rgba(217,180,91,.45);
+box-shadow:0 0 25px rgba(0,0,0,.25);
+}
+
+/* Botones */
+.btn{
+background:linear-gradient(145deg,#e6c66f,#bd913b);
+border-color:#e6c66f;
+color:#201807;
+}
+
+.btn.danger{
+background:linear-gradient(145deg,#d84b4b,#96252d);
+border-color:#d84b4b;
+color:white;
+}
+
+/* Código de sala */
+.code{
+color:#e8c66d;
+text-shadow:0 0 15px rgba(232,198,109,.2);
+}
+
+/* Detalles decorativos */
+.seat2.turn .av{
+box-shadow:0 0 0 3px #e8c66d,0 0 24px rgba(232,198,109,.5);
+}
+
+/* Ventana del ganador */
+.over{
+background:
+radial-gradient(ellipse at 50% 40%,rgba(24,83,51,.97),rgba(7,19,15,.98));
+}
+
 </style>
 </head>
 <body>
