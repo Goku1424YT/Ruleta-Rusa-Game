@@ -22,27 +22,27 @@
 
 :root{
 
-  --ink:#170709;
+  --ink:#170709;
 
-  --felt:#351016;
+  --felt:#351016;
 
-  --felt-2:#21090e;
+  --felt-2:#21090e;
 
-  --paper:#f7e8df;
+  --paper:#f7e8df;
 
-  --muted:#d0a9a5;
+  --muted:#d0a9a5;
 
-  --brass:#d8b4a0;
+  --brass:#d8b4a0;
 
-  --danger:#c52b32;
+  --danger:#c52b32;
 
-  --line:rgba(255,230,220,.18);
+  --line:rgba(255,230,220,.18);
 
-  --display:'Rye','Georgia',serif;
+  --display:'Rye','Georgia',serif;
 
-  --body:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
 
-  color-scheme:dark;
+  color-scheme:dark;
 
 }
 
@@ -52,11 +52,11 @@ html,body{margin:0;width:100%;min-height:100%;}
 
 body{
 
-  background:radial-gradient(ellipse at 50% 0%,#64151d 0%,#21080d 58%,#090406 100%) fixed;
+  background:radial-gradient(ellipse at 50% 0%,#64151d 0%,#21080d 58%,#090406 100%) fixed;
 
-  color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.45;min-height:100vh;
+  color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.45;min-height:100vh;
 
-  padding:0;overflow-x:hidden;
+  padding:0;overflow-x:hidden;
 
 }
 
@@ -82,9 +82,9 @@ h2{font-size:1.4rem}
 
 input[type=text],select{
 
-  width:100%;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:10px;
+  width:100%;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:10px;
 
-  padding:11px 12px;font:inherit;
+  padding:11px 12px;font:inherit;
 
 }
 
@@ -128,15 +128,15 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 /* Personaje */
 
-.av{--s:64px;width:var(--s);height:var(--s);border-radius:50%;position:relative;display:grid;place-items:center;flex:none;
+.av{--s:64px;width:var(--s);height:var(--s);font-size:var(--s);border-radius:50%;position:relative;display:grid;place-items:center;flex:none;
 
-  box-shadow:0 0 0 2px rgba(0,0,0,.35) inset,0 0 0 2px var(--line);border:2px solid #d8b7a5;overflow:visible}
+  box-shadow:0 0 0 2px rgba(0,0,0,.35) inset,0 0 0 2px var(--line);border:2px solid #d8b7a5;overflow:visible}
 
 .av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 
 .av .face{font-size:calc(var(--s)*.6);line-height:1}
 
-.av .hat{position:absolute;top:calc(var(--s)**-.34);left:50%;transform:translateX(-50%);font-size:calc(var(--s)**.52);line-height:1;pointer-events:none;z-index:5;text-shadow:0 2px 4px #000}
+.av .hat{position:absolute;top:-34%;left:50%;transform:translateX(-50%);font-size:52%;line-height:1;pointer-events:none;z-index:5;text-shadow:0 2px 4px #000}
 
 .av .holiday-frame{position:absolute;inset:-7px;border:3px solid #b88952;border-radius:50%;pointer-events:none;z-index:4}
 
@@ -162,9 +162,9 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 .av .xmark::before,.av .xmark::after{
 
-  content:"";position:absolute;left:50%;top:50%;width:124%;height:calc(var(--s)*.12);min-height:5px;border-radius:99px;
+  content:"";position:absolute;left:50%;top:50%;width:124%;height:calc(var(--s)*.12);min-height:5px;border-radius:99px;
 
-  background:var(--danger);box-shadow:0 0 0 2px rgba(0,0,0,.5);transform:translate(-50%,-50%) rotate(45deg)}
+  background:var(--danger);box-shadow:0 0 0 2px rgba(0,0,0,.5);transform:translate(-50%,-50%) rotate(45deg)}
 
 .av .xmark::after{transform:translate(-50%,-50%) rotate(-45deg)}
 
@@ -250,7 +250,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 .over{position:fixed;inset:0;z-index:50;background:radial-gradient(ellipse at 50% 40%,rgba(18,55,42,.96),rgba(6,12,9,.97));
 
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
 
 .over[hidden]{display:none}
 
@@ -362,11 +362,11 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 @media(max-width:700px){
 
-  .musicbar{max-width:calc(100vw - 120px);font-size:.7rem;bottom:8px;left:8px;padding:4px 6px}
+  .musicbar{max-width:calc(100vw - 120px);font-size:.7rem;bottom:8px;left:8px;padding:4px 6px}
 
-  .musicbar select{max-width:85px}
+  .musicbar select{max-width:85px}
 
-  #voicePanel{top:auto;bottom:65px;right:8px;width:calc(100vw - 16px)}
+  #voicePanel{top:auto;bottom:65px;right:8px;width:calc(100vw - 16px)}
 
 }
 
@@ -391,55 +391,55 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <section id="home" class="screen">
 
-  <div class="christmas-menu" role="navigation" aria-label="Menú principal de Ruleta Rusa">
+  <div class="christmas-menu" role="navigation" aria-label="Menú principal de Ruleta Rusa">
 
-    <button id="updatesBtn" class="hotspot hs-updates" type="button" aria-label="Updates" title="Updates"></button>
+    <button id="updatesBtn" class="hotspot hs-updates" type="button" aria-label="Updates" title="Updates"></button>
 
-    <a class="hotspot hs-donate" href="https://www.paypal.com/donate/?hosted_button_id=7BZL4Q3MP62WW" target="_blank" rel="noopener noreferrer" aria-label="Donar" title="Donar"></a>
+    <a class="hotspot hs-donate" href="https://www.paypal.com/donate/?hosted_button_id=7BZL4Q3MP62WW" target="_blank" rel="noopener noreferrer" aria-label="Donar" title="Donar"></a>
 
-    <button id="playMenu" class="hotspot hs-play" type="button" aria-label="Play" title="Play"></button>
+    <button id="playMenu" class="hotspot hs-play" type="button" aria-label="Play" title="Play"></button>
 
-    <button id="profileBtn" class="hotspot hs-profile" type="button" aria-label="Personalizar personaje" title="Personalizar personaje"></button>
+    <button id="profileBtn" class="hotspot hs-profile" type="button" aria-label="Personalizar personaje" title="Personalizar personaje"></button>
 
-    <button id="howBtn" class="hotspot hs-how" type="button" aria-label="Cómo jugar" title="Cómo jugar"></button>
+    <button id="howBtn" class="hotspot hs-how" type="button" aria-label="Cómo jugar" title="Cómo jugar"></button>
 
-    <a class="hotspot hs-youtube" href="https://www.youtube.com/@goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube"></a>
+    <a class="hotspot hs-youtube" href="https://www.youtube.com/@goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="YouTube"></a>
 
-    <a class="hotspot hs-x" href="https://x.com/Papi_goku_edits" target="_blank" rel="noopener noreferrer" aria-label="X"></a>
+    <a class="hotspot hs-x" href="https://x.com/Papi_goku_edits" target="_blank" rel="noopener noreferrer" aria-label="X"></a>
 
-    <a class="hotspot hs-tiktok" href="https://www.tiktok.com/@gokuletoyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
+    <a class="hotspot hs-tiktok" href="https://www.tiktok.com/@gokuletoyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
 
-    <a class="hotspot hs-twitch" href="https://www.twitch.tv/goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="Twitch"></a>
+    <a class="hotspot hs-twitch" href="https://www.twitch.tv/goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="Twitch"></a>
 
-  </div>
+  </div>
 
-  <div class="musicbar" aria-label="Controles de música">
+  <div class="musicbar" aria-label="Controles de música">
 
-    <label for="musicTrack">🎵</label>
+    <label for="musicTrack">🎵</label>
 
-    <select id="musicTrack" aria-label="Elegir canción">
+    <select id="musicTrack" aria-label="Elegir canción">
 
-      <option value="">Aleatorio</option>
+      <option value="">Aleatorio</option>
 
-      <option value="assets/music/jingle-bells.mp3">Jingle Bells</option>
+      <option value="assets/music/jingle-bells.mp3">Jingle Bells</option>
 
-      <option value="assets/music/burrito-sabanero.mp3">Burrito Sabanero</option>
+      <option value="assets/music/burrito-sabanero.mp3">Burrito Sabanero</option>
 
-      <option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want</option>
+      <option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want</option>
 
-    </select>
+    </select>
 
-    <button id="musicToggle" type="button">▶ Reproducir</button>
+    <button id="musicToggle" type="button">▶ Reproducir</button>
 
-    <button id="musicNext" type="button" title="Siguiente">⏭</button>
+    <button id="musicNext" type="button" title="Siguiente">⏭</button>
 
-    <label class="volume-control" for="musicVolume">🔊<input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+    <label class="volume-control" for="musicVolume">🔊<input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.5"></label>
 
-    <span id="volumeValue">50%</span>
+    <span id="volumeValue">50%</span>
 
-  </div>
+  </div>
 
-  <p id="homeMsg" class="msg" role="status"></p>
+  <p id="homeMsg" class="msg" role="status"></p>
 
 </section>
 
@@ -447,13 +447,13 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <div id="profileModal" class="modal" hidden><div class="modal-card"><h2>🎅 Personalizar personaje</h2>
 
-  <div class="editor"><div id="prev" aria-label="Vista previa de tu personaje"></div><div class="field"><label class="label" for="name">Tu nombre</label><input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador"></div></div>
+  <div class="editor"><div id="prev" aria-label="Vista previa de tu personaje"></div><div class="field"><label class="label" for="name">Tu nombre</label><input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador"></div></div>
 
-  <span class="label">Personaje</span><div id="bases" class="chips"></div><span class="label">Sombrero / accesorio</span><div id="hats" class="chips"></div><span class="label">Máscara</span><div id="masks" class="chips"></div><span class="label">Color de fondo</span><div id="colors" class="chips"></div>
+  <span class="label">Personaje</span><div id="bases" class="chips"></div><span class="label">Sombrero / accesorio</span><div id="hats" class="chips"></div><span class="label">Máscara</span><div id="masks" class="chips"></div><span class="label">Color de fondo</span><div id="colors" class="chips"></div>
 
-  <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
+  <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
 
-  <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
+  <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
 
 <div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> creá una sala o jugá contra bots. En tu turno elegís una acción; gana quien quede al final.</p><p><b>Pipa Caliente:</b> la ficha pasa antes de que acabe el tiempo. Si llega a cero, el jugador queda fuera de la ronda.</p><p>Compartí el código de sala con tus amigos. El anfitrión configura la partida y puede iniciar cuando haya suficientes participantes.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
@@ -465,17 +465,17 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2>
 
-  <div style="margin-bottom:14px">
+  <div style="margin-bottom:14px">
 
-    <label class="label">Visibilidad de Sala</label>
+    <label class="label">Visibilidad de Sala</label>
 
-    <div class="chips"><button id="roomPublic" class="chip txt" aria-pressed="true" type="button">Pública</button><button id="roomPrivate" class="chip txt" aria-pressed="false" type="button">Privada con Código</button></div>
+    <div class="chips"><button id="roomPublic" class="chip txt" aria-pressed="true" type="button">Pública</button><button id="roomPrivate" class="chip txt" aria-pressed="false" type="button">Privada con Código</button></div>
 
-  </div>
+  </div>
 
-  <p>¿Cómo querés jugar?</p>
+  <p>¿Cómo querés jugar?</p>
 
-  <div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
+  <div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
 
 <div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2><p><b>Salas públicas y privadas:</b> opción para buscar salas públicas disponibles o entrar mediante código privado.</p><p><b>Pipa Caliente restaurado:</b> vuelve el modo de pasar la ficha, con temporizador y eliminación al agotarse el tiempo.</p><p><b>Micrófono:</b> se eliminó la reproducción local de la entrada para evitar escucharse a uno mismo. La transmisión de voz entre jugadores requiere la conexión de voz correspondiente.</p><p><b>HUD reorganizado:</b> chats flotantes separados del código de sala y del botón Salir.</p><p><b>Interfaz:</b> enlaces sociales alineados con la plantilla y reproductor musical más compacto.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
@@ -483,57 +483,57 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <section id="lobby" class="screen" hidden>
 
-  <div class="top">
+  <div class="top">
 
-    <span class="pill">Sala <b id="roomcode">····</b></span>
+    <span class="pill">Sala <b id="roomcode">····</b></span>
 
-    <button id="leave1" class="ghost iconbtn" type="button">Salir</button>
+    <button id="leave1" class="ghost iconbtn" type="button">Salir</button>
 
-  </div>
+  </div>
 
-  <div class="panel">
+  <div class="panel">
 
-    <div id="codebox">
+    <div id="codebox">
 
-      <span class="label">Código para compartir</span>
+      <span class="label">Código para compartir</span>
 
-      <div class="code" id="roomcodebig">····</div>
+      <div class="code" id="roomcodebig">····</div>
 
-      <button id="copy" class="ghost" type="button">Copiar código</button>
+      <button id="copy" class="ghost" type="button">Copiar código</button>
 
-    </div>
+    </div>
 
-    <span class="label" id="botnote" hidden>Práctica contra 4 bots</span>
+    <span class="label" id="botnote" hidden>Práctica contra 4 bots</span>
 
-    <div id="plist" class="plist"></div>
+    <div id="plist" class="plist"></div>
 
-  </div>
+  </div>
 
-  <div class="panel">
+  <div class="panel">
 
-    <div id="hostctl" hidden>
+    <div id="hostctl" hidden>
 
-      <span class="label">Balas en el tambor (de 6 recámaras)</span>
+      <span class="label">Balas en el tambor (de 6 recámaras)</span>
 
-      <div id="bullets" class="chips"></div>
+      <div id="bullets" class="chips"></div>
 
-      <div class="row" style="margin-top:16px">
+      <div class="row" style="margin-top:16px">
 
-        <button id="start" class="btn" type="button">Empezar partida</button>
+        <button id="start" class="btn" type="button">Empezar partida</button>
 
-        <span id="needmore" class="tag"></span>
+        <span id="needmore" class="tag"></span>
 
-      </div>
+      </div>
 
-    </div>
+    </div>
 
-    <div id="hotSettings" hidden><span class="label">Pipa Caliente · Configuración</span><label class="label">Tiempo de ronda</label><div class="chips" id="passTimes"></div><label class="label">Cooldown anti-spam</label><div class="chips" id="coolTimes"></div></div>
+    <div id="hotSettings" hidden><span class="label">Pipa Caliente · Configuración</span><label class="label">Tiempo de ronda</label><div class="chips" id="passTimes"></div><label class="label">Cooldown anti-spam</label><div class="chips" id="coolTimes"></div></div>
 
-    <p id="guestwait" class="sub" style="margin:0" hidden>Esperando al anfitrión…</p>
+    <p id="guestwait" class="sub" style="margin:0" hidden>Esperando al anfitrión…</p>
 
-  </div>
+  </div>
 
-  <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="chatSend" class="btn">Enviar</button></div></div>
+  <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="chatSend" class="btn">Enviar</button></div></div>
 
 </section>
 
@@ -541,101 +541,101 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <section id="game" class="screen" hidden>
 
-  <div class="top">
+  <div class="top">
 
-    <span class="pill"><span id="gpre">Sala </span><b id="gcode"></b></span>
+    <span class="pill"><span id="gpre">Sala </span><b id="gcode"></b></span>
 
-    <div class="row">
+    <div class="row">
 
-      <button id="mute" class="ghost iconbtn" type="button" aria-pressed="false">Sonido: sí</button>
+      <button id="mute" class="ghost iconbtn" type="button" aria-pressed="false">Sonido: sí</button>
 
-      <button id="leave2" class="ghost iconbtn" type="button">Salir</button>
+      <button id="leave2" class="ghost iconbtn" type="button">Salir</button>
 
-    </div>
+    </div>
 
-  </div>
+  </div>
 
-  <div class="table" id="table">
+  <div class="table" id="table">
 
-    <p class="status" id="status"></p>
+    <p class="status" id="status"></p>
 
-    <p class="info" id="info"></p>
+    <p class="info" id="info"></p>
 
-    <div class="arena" id="arena">
+    <div class="arena" id="arena">
 
-      <div class="seats" id="seats"></div>
+      <div class="seats" id="seats"></div>
 
-      <div class="gunwrap">
+      <div class="gunwrap">
 
-        <svg id="gun" viewBox="0 0 200 200" aria-hidden="true">
+        <svg id="gun" viewBox="0 0 200 200" aria-hidden="true">
 
-          <g id="flash">
+          <g id="flash">
 
-            <polygon points="194,100 204,90 206,76 213,92 230,96 215,102 228,116 211,110 204,124 202,108" fill="#ffb02e"/>
+            <polygon points="194,100 204,90 206,76 213,92 230,96 215,102 228,116 211,110 204,124 202,108" fill="#ffb02e"/>
 
-            <circle cx="200" cy="100" r="9" fill="#fff3b0"/>
+            <circle cx="200" cy="100" r="9" fill="#fff3b0"/>
 
-          </g>
+          </g>
 
-          <g stroke="#1d2420" stroke-width="2" stroke-linejoin="round">
+          <g stroke="#1d2420" stroke-width="2" stroke-linejoin="round">
 
-            <rect x="100" y="95" width="94" height="10" rx="2" fill="#9aa4ad"/>
+            <rect x="100" y="95" width="94" height="10" rx="2" fill="#9aa4ad"/>
 
-            <rect x="186" y="92" width="10" height="16" rx="2" fill="#6f7882"/>
+            <rect x="186" y="92" width="10" height="16" rx="2" fill="#6f7882"/>
 
-            <rect x="66" y="80" width="50" height="40" rx="8" fill="#6f7882"/>
+            <rect x="66" y="80" width="50" height="40" rx="8" fill="#6f7882"/>
 
-            <line x1="79" y1="80" x2="79" y2="120"/><line x1="91" y1="80" x2="91" y2="120"/><line x1="103" y1="80" x2="103" y2="120"/>
+            <line x1="79" y1="80" x2="79" y2="120"/><line x1="91" y1="80" x2="91" y2="120"/><line x1="103" y1="80" x2="103" y2="120"/>
 
-            <rect x="44" y="86" width="30" height="28" rx="6" fill="#8a929b"/>
+            <rect x="44" y="86" width="30" height="28" rx="6" fill="#8a929b"/>
 
-            <rect x="12" y="88" width="40" height="24" rx="10" fill="#7a4b2a"/>
+            <rect x="12" y="88" width="40" height="24" rx="10" fill="#7a4b2a"/>
 
-            <circle cx="52" cy="100" r="5" fill="#d4a640"/>
+            <circle cx="52" cy="100" r="5" fill="#d4a640"/>
 
-          </g>
+          </g>
 
-        </svg>
+        </svg>
 
-      </div>
+      </div>
 
-      <div id="banner" aria-live="assertive"><span></span></div>
+      <div id="banner" aria-live="assertive"><span></span></div>
 
-    </div>
+    </div>
 
-    <div class="actions">
+    <div class="actions">
 
-      <button id="shoot" class="btn danger" type="button">Disparar</button>
+      <button id="shoot" class="btn danger" type="button">Disparar</button>
 
-      <button id="spin" class="ghost" type="button">Girar el tambor y disparar</button>
+      <button id="spin" class="ghost" type="button">Girar el tambor y disparar</button>
 
-    </div>
+    </div>
 
-    <div id="hotControls" hidden><p class="countdown" id="hotCountdown">—</p><p id="hotHolder" class="info"></p><button id="passBtn" class="btn" type="button">Pasar ficha</button><p id="passFeedback" class="tag"></p></div>
+    <div id="hotControls" hidden><p class="countdown" id="hotCountdown">—</p><p id="hotHolder" class="info"></p><button id="passBtn" class="btn" type="button">Pasar ficha</button><p id="passFeedback" class="tag"></p></div>
 
-    <ul class="log" id="log"></ul>
+    <ul class="log" id="log"></ul>
 
-  </div>
+  </div>
 
-  <div class="chatbox"><b>💬 Chat de sala</b><div id="gameChatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="gameChatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="gameChatSend" class="btn">Enviar</button></div></div>
+  <div class="chatbox"><b>💬 Chat de sala</b><div id="gameChatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="gameChatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="gameChatSend" class="btn">Enviar</button></div></div>
 
-  <div class="over" id="over" hidden>
+  <div class="over" id="over" hidden>
 
-    <p class="wis" id="wis">Winner is…</p>
+    <p class="wis" id="wis">Winner is…</p>
 
-    <div class="reveal" id="winbox"><div id="winav"></div><h2 id="wname"></h2></div>
+    <div class="reveal" id="winbox"><div id="winav"></div><h2 id="wname"></h2></div>
 
-    <div class="reveal late row" style="justify-content:center">
+    <div class="reveal late row" style="justify-content:center">
 
-      <button id="again" class="btn" type="button" hidden>Revancha</button>
+      <button id="again" class="btn" type="button" hidden>Revancha</button>
 
-      <button id="leave3" class="ghost" type="button">Salir</button>
+      <button id="leave3" class="ghost" type="button">Salir</button>
 
-    </div>
+    </div>
 
-    <p id="waitagain" class="tag reveal late" hidden>Esperando al anfitrión…</p>
+    <p id="waitagain" class="tag reveal late" hidden>Esperando al anfitrión…</p>
 
-  </div>
+  </div>
 
 </section>
 
@@ -643,19 +643,19 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 <div id="voicePanel" hidden aria-label="Controles de micrófono">
 
-  <h3>🎙️ Voice Chat</h3>
+  <h3>🎙️ Voice Chat</h3>
 
-  <label for="voiceInput">Dispositivo de entrada</label>
+  <label for="voiceInput">Dispositivo de entrada</label>
 
-  <select id="voiceInput"><option value="">Micrófono predeterminado</option></select>
+  <select id="voiceInput"><option value="">Micrófono predeterminado</option></select>
 
-  <label for="micVolume">Nivel de entrada: <span id="micVolumeValue">70%</span></label>
+  <label for="micVolume">Nivel de entrada: <span id="micVolumeValue">70%</span></label>
 
-  <input id="micVolume" type="range" min="0" max="1" step="0.05" value="0.7">
+  <input id="micVolume" type="range" min="0" max="1" step="0.05" value="0.7">
 
-  <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>PTT (V)</button></div>
+  <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>PTT (V)</button></div>
 
-  <div id="voiceStatus" role="status">Micrófono local sin retorno. La transmisión de voz entre jugadores aún no está conectada.</div>
+  <div id="voiceStatus" role="status">Micrófono local sin retorno. La transmisión de voz entre jugadores aún no está conectada.</div>
 
 </div>
 
@@ -679,115 +679,115 @@ const COLORS = ['#e8e0cc','#d9482b','#d4a640','#4f9d6b','#3f8fb5','#7a63c9','#c2
 
 function cleanAvatar(a){
 
-  a = a || {};
+  a = a || {};
 
-  const name = String(a.name || '').replace(/[\u0000-\u001f<>]/g,'').trim().slice(0,14) || 'Jugador';
+  const name = String(a.name || '').replace(/[\u0000-\u001f<>]/g,'').trim().slice(0,14) || 'Jugador';
 
-  const o = {
+  const o = {
 
-    name,
+    name,
 
-    base: BASES.includes(a.base) ? a.base : BASES[0],
+    base: BASES.includes(a.base) ? a.base : BASES[0],
 
-    hat: HATS.includes(a.hat) ? a.hat : '',
+    hat: HATS.includes(a.hat) ? a.hat : '',
 
-    mask: MASKS.includes(a.mask) ? a.mask : '',
+    mask: MASKS.includes(a.mask) ? a.mask : '',
 
-    color: COLORS.includes(a.color) ? a.color : COLORS[0],
+    color: COLORS.includes(a.color) ? a.color : COLORS[0],
 
-    photo: ''
+    photo: ''
 
-  };
+  };
 
-  if (typeof a.photo === 'string' && a.photo.length < 40000 && /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(a.photo)) o.photo = a.photo;
+  if (typeof a.photo === 'string' && a.photo.length < 40000 && /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(a.photo)) o.photo = a.photo;
 
-  return o;
+  return o;
 
 }
 
 function loadGun(bullets, rnd){
 
-  const c = Array(CHAMBERS).fill(false);
+  const c = Array(CHAMBERS).fill(false);
 
-  let n = 0;
+  let n = 0;
 
-  while (n < bullets){ const i = Math.floor(rnd()*CHAMBERS); if (!c[i]){ c[i] = true; n++; } }
+  while (n < bullets){ const i = Math.floor(rnd()*CHAMBERS); if (!c[i]){ c[i] = true; n++; } }
 
-  return c;
+  return c;
 
 }
 
 function nextAlive(players, from){
 
-  const n = players.length;
+  const n = players.length;
 
-  for (let k = 1; k <= n; k++){ const i = (from + k) % n; if (players[i].alive) return i; }
+  for (let k = 1; k <= n; k++){ const i = (from + k) % n; if (players[i].alive) return i; }
 
-  return -1;
+  return -1;
 
 }
 
 function newGame(players, bullets, rnd){
 
-  players.forEach(p => { p.alive = true; });
+  players.forEach(p => { p.alive = true; });
 
-  return { phase:'play', bullets, chambers:loadGun(bullets, rnd), pos:0,
+  return { phase:'play', bullets, chambers:loadGun(bullets, rnd), pos:0,
 
-           turn:Math.floor(rnd()*players.length), seq:0, last:null, round:1, winner:null };
+           turn:Math.floor(rnd()*players.length), seq:0, last:null, round:1, winner:null };
 
 }
 
 function pullTrigger(g, players, spin, rnd){
 
-  if (spin){ g.chambers = loadGun(g.bullets, rnd); g.pos = 0; }
+  if (spin){ g.chambers = loadGun(g.bullets, rnd); g.pos = 0; }
 
-  const shooter = g.turn;
+  const shooter = g.turn;
 
-  const hit = g.chambers[g.pos];
+  const hit = g.chambers[g.pos];
 
-  g.pos = (g.pos + 1) % CHAMBERS;
+  g.pos = (g.pos + 1) % CHAMBERS;
 
-  g.seq++;
+  g.seq++;
 
-  g.last = { by:players[shooter].id, hit, spun:!!spin, seq:g.seq };
+  g.last = { by:players[shooter].id, hit, spun:!!spin, seq:g.seq };
 
-  if (hit){
+  if (hit){
 
-    players[shooter].alive = false;
+    players[shooter].alive = false;
 
-    g.chambers = loadGun(g.bullets, rnd); g.pos = 0; g.round++;
+    g.chambers = loadGun(g.bullets, rnd); g.pos = 0; g.round++;
 
-  }
+  }
 
-  const alive = players.filter(p => p.alive);
+  const alive = players.filter(p => p.alive);
 
-  if (alive.length <= 1){ g.phase = 'over'; g.winner = alive[0] ? alive[0].id : null; g.turn = -1; }
+  if (alive.length <= 1){ g.phase = 'over'; g.winner = alive[0] ? alive[0].id : null; g.turn = -1; }
 
-  else g.turn = nextAlive(players, shooter);
+  else g.turn = nextAlive(players, shooter);
 
-  return g;
+  return g;
 
 }
 
 function dropPlayer(g, players, id){
 
-  const i = players.findIndex(p => p.id === id);
+  const i = players.findIndex(p => p.id === id);
 
-  if (i < 0) return;
+  if (i < 0) return;
 
-  if (g.phase === 'lobby'){ players.splice(i, 1); return; }
+  if (g.phase === 'lobby'){ players.splice(i, 1); return; }
 
-  players[i].alive = false; players[i].left = true;
+  players[i].alive = false; players[i].left = true;
 
-  if (g.phase === 'play'){
+  if (g.phase === 'play'){
 
-    const alive = players.filter(p => p.alive);
+    const alive = players.filter(p => p.alive);
 
-    if (alive.length <= 1){ g.phase = 'over'; g.winner = alive[0] ? alive[0].id : null; g.turn = -1; }
+    if (alive.length <= 1){ g.phase = 'over'; g.winner = alive[0] ? alive[0].id : null; g.turn = -1; }
 
-    else if (g.turn === i) g.turn = nextAlive(players, i);
+    else if (g.turn === i) g.turn = nextAlive(players, i);
 
-  }
+  }
 
 }
 
@@ -803,19 +803,19 @@ const PREFIX = 'ruletarusa-';
 
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
 
-  + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
+  + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
 
-  + '<path d="M22 108V88C22 74 30 66 40 66C46 66 46 72 50 72C54 72 54 66 60 66C70 66 78 74 78 88V108Z"/></g></svg>';
+  + '<path d="M22 108V88C22 74 30 66 40 66C46 66 46 72 50 72C54 72 54 66 60 66C70 66 78 74 78 88V108Z"/></g></svg>';
 
 const BOT_LOOKS = [
 
-  { name:'Bot Rex',  hat:'🎩', mask:'',   color:'#3f8fb5' },
+  { name:'Bot Rex',  hat:'🎩', mask:'',   color:'#3f8fb5' },
 
-  { name:'Bot Luna', hat:'',   mask:'🕶️', color:'#7a63c9' },
+  { name:'Bot Luna', hat:'',   mask:'🕶️', color:'#7a63c9' },
 
-  { name:'Bot Nova', hat:'🧢', mask:'',   color:'#c25b8f' },
+  { name:'Bot Nova', hat:'🧢', mask:'',   color:'#c25b8f' },
 
-  { name:'Bot Zeta', hat:'🤠', mask:'🥸', color:'#4f9d6b' }
+  { name:'Bot Zeta', hat:'🤠', mask:'🥸', color:'#4f9d6b' }
 
 ];
 
@@ -839,19 +839,19 @@ let me = loadProfile();
 
 function loadProfile(){
 
-  try {
+  try {
 
-    let s = localStorage.getItem('ruleta-perfil-2');
+    let s = localStorage.getItem('ruleta-perfil-2');
 
-    if (s) return cleanAvatar(JSON.parse(s));
+    if (s) return cleanAvatar(JSON.parse(s));
 
-    s = localStorage.getItem('ruleta-perfil');
+    s = localStorage.getItem('ruleta-perfil');
 
-    if (s){ const o = JSON.parse(s); return cleanAvatar({ name:o.name, hat:o.hat, mask:o.mask, photo:o.photo }); }
+    if (s){ const o = JSON.parse(s); return cleanAvatar({ name:o.name, hat:o.hat, mask:o.mask, photo:o.photo }); }
 
-  } catch(e){}
+  } catch(e){}
 
-  return cleanAvatar({});
+  return cleanAvatar({});
 
 }
 
@@ -859,99 +859,99 @@ function saveProfile(){ try { localStorage.setItem('ruleta-perfil-2', JSON.strin
 
 function avatarEl(av, size, dead, fresh){
 
-  const d = document.createElement('div');
+  const d = document.createElement('div');
 
-  d.className = 'av' + (dead ? ' dead' : '');
+  d.className = 'av' + (dead ? ' dead' : '');
 
-  d.style.setProperty('--s', size + 'px');
+  d.style.setProperty('--s', size + 'px');
 
-  d.style.background = av.color;
+  d.style.background = av.color;
 
-  if (av.photo){
+  if (av.photo){
 
-    const im = new Image(); im.src = av.photo; im.alt = ''; d.appendChild(im);
+    const im = new Image(); im.src = av.photo; im.alt = ''; d.appendChild(im);
 
-  } else if (av.base === 'silueta'){
+  } else if (av.base === 'silueta'){
 
-    d.classList.add('sil'); d.insertAdjacentHTML('beforeend', SIL('#16120d'));
+    d.classList.add('sil'); d.insertAdjacentHTML('beforeend', SIL('#16120d'));
 
-  } else {
+  } else {
 
-    const f = document.createElement('span'); f.className = 'face'; f.textContent = av.base; d.appendChild(f);
+    const f = document.createElement('span'); f.className = 'face'; f.textContent = av.base; d.appendChild(f);
 
-  }
+  }
 
-  if (av.mask){ const m = document.createElement('span'); m.className = 'mask'; m.textContent = av.mask; d.appendChild(m); }
+  if (av.mask){ const m = document.createElement('span'); m.className = 'mask'; m.textContent = av.mask; d.appendChild(m); }
 
-  if (av.hat === '🎅'){
+  if (av.hat === '🎅'){
 
-    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🎅'; d.appendChild(h);
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🎅'; d.appendChild(h);
 
-    const fr = document.createElement('div'); fr.className = 'holiday-frame'; d.appendChild(fr);
+    const fr = document.createElement('div'); fr.className = 'holiday-frame'; d.appendChild(fr);
 
-  } else if (av.hat === '🦌'){
+  } else if (av.hat === '🦌'){
 
-    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🦌'; d.appendChild(h);
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🦌'; d.appendChild(h);
 
-    const fr = document.createElement('div'); fr.className = 'holiday-frame reindeer'; d.appendChild(fr);
+    const fr = document.createElement('div'); fr.className = 'holiday-frame reindeer'; d.appendChild(fr);
 
-  } else if (av.hat){
+  } else if (av.hat){
 
-    const h = document.createElement('span'); h.className = 'hat'; h.textContent = av.hat; d.appendChild(h);
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = av.hat; d.appendChild(h);
 
-  }
+  }
 
-  if (fresh){ const x = document.createElement('div'); x.className = 'xmark fresh'; d.appendChild(x); }
+  if (fresh){ const x = document.createElement('div'); x.className = 'xmark fresh'; d.appendChild(x); }
 
-  else if (dead){ const x = document.createElement('div'); x.className = 'xmark'; d.appendChild(x); }
+  else if (dead){ const x = document.createElement('div'); x.className = 'xmark'; d.appendChild(x); }
 
-  return d;
+  return d;
 
 }
 
 function chips(box, items, key, label){
 
-  box.textContent = '';
+  box.textContent = '';
 
-  items.forEach(v => {
+  items.forEach(v => {
 
-    const b = document.createElement('button');
+    const b = document.createElement('button');
 
-    b.type = 'button'; b.className = 'chip';
+    b.type = 'button'; b.className = 'chip';
 
-    if (key === 'color'){ b.classList.add('swatch'); b.style.background = v; b.setAttribute('aria-label', 'Color ' + v); }
+    if (key === 'color'){ b.classList.add('swatch'); b.style.background = v; b.setAttribute('aria-label', 'Color ' + v); }
 
-    else if (v === 'silueta'){ b.innerHTML = SIL('currentColor'); b.setAttribute('aria-label', 'Silueta'); }
+    else if (v === 'silueta'){ b.innerHTML = SIL('currentColor'); b.setAttribute('aria-label', 'Silueta'); }
 
-    else { b.textContent = v || label; if (!v) b.classList.add('txt'); }
+    else { b.textContent = v || label; if (!v) b.classList.add('txt'); }
 
-    b.setAttribute('aria-pressed', String(me[key] === v));
+    b.setAttribute('aria-pressed', String(me[key] === v));
 
-    b.addEventListener('click', () => { me[key] = v; saveProfile(); drawEditor(); });
+    b.addEventListener('click', () => { me[key] = v; saveProfile(); drawEditor(); });
 
-    box.appendChild(b);
+    box.appendChild(b);
 
-  });
+  });
 
 }
 
 function drawEditor(){
 
-  const p = $('#prev'); p.textContent = ''; p.style.paddingTop = '14px';
+  const p = $('#prev'); p.textContent = ''; p.style.paddingTop = '14px';
 
-  p.appendChild(avatarEl(me, 84));
+  p.appendChild(avatarEl(me, 84));
 
-  chips($('#bases'), BASES, 'base', '');
+  chips($('#bases'), BASES, 'base', '');
 
-  chips($('#hats'), HATS, 'hat', 'Ninguno');
+  chips($('#hats'), HATS, 'hat', 'Ninguno');
 
-  chips($('#masks'), MASKS, 'mask', 'Ninguna');
+  chips($('#masks'), MASKS, 'mask', 'Ninguna');
 
-  chips($('#colors'), COLORS, 'color', '');
+  chips($('#colors'), COLORS, 'color', '');
 
-  $('#nophoto').hidden = !me.photo;
+  $('#nophoto').hidden = !me.photo;
 
-  $('#pick').textContent = me.photo ? 'Cambiar foto' : 'Elegir foto del ordenador';
+  $('#pick').textContent = me.photo ? 'Cambiar foto' : 'Elegir foto del ordenador';
 
 }
 
@@ -965,33 +965,33 @@ $('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile(); dr
 
 $('#file').addEventListener('change', e => {
 
-  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const f = e.target.files && e.target.files[0]; if (!f) return;
 
-  const rd = new FileReader();
+  const rd = new FileReader();
 
-  rd.onload = () => {
+  rd.onload = () => {
 
-    const img = new Image();
+    const img = new Image();
 
-    img.onload = () => {
+    img.onload = () => {
 
-      const s = 80, c = document.createElement('canvas'); c.width = c.height = s;
+      const s = 80, c = document.createElement('canvas'); c.width = c.height = s;
 
-      const side = Math.min(img.width, img.height);
+      const side = Math.min(img.width, img.height);
 
-      c.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, s, s);
+      c.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, s, s);
 
-      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile(); drawEditor();
+      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile(); drawEditor();
 
-    };
+    };
 
-    img.onerror = () => setHomeMsg('No se pudo leer esa imagen.');
+    img.onerror = () => setHomeMsg('No se pudo leer esa imagen.');
 
-    img.src = rd.result;
+    img.src = rd.result;
 
-  };
+  };
 
-  rd.readAsDataURL(f); e.target.value = '';
+  rd.readAsDataURL(f); e.target.value = '';
 
 });
 
@@ -1076,43 +1076,43 @@ function clearTimers(){ timers.forEach(clearTimeout); timers = []; clearTimeout(
 
 function snd(kind){
 
-  if (muted) return;
+  if (muted) return;
 
-  try {
+  try {
 
-    const AC = window.AudioContext || window.webkitAudioContext;
+    const AC = window.AudioContext || window.webkitAudioContext;
 
-    window._ac = window._ac || new AC(); const ac = window._ac; const t = ac.currentTime;
+    window._ac = window._ac || new AC(); const ac = window._ac; const t = ac.currentTime;
 
-    if (kind === 'bang'){
+    if (kind === 'bang'){
 
-      const len = ac.sampleRate * 0.5, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+      const len = ac.sampleRate * 0.5, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
 
-      for (let i = 0; i < len; i++) d[i] = (Math.random()*2 - 1) * Math.pow(1 - i/len, 3);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2 - 1) * Math.pow(1 - i/len, 3);
 
-      const s = ac.createBufferSource(); s.buffer = buf;
+      const s = ac.createBufferSource(); s.buffer = buf;
 
-      const g = ac.createGain(); g.gain.value = 0.7; s.connect(g).connect(ac.destination); s.start(t);
+      const g = ac.createGain(); g.gain.value = 0.7; s.connect(g).connect(ac.destination); s.start(t);
 
-    } else {
+    } else {
 
-      const ticks = kind === 'spin' ? 8 : 1;
+      const ticks = kind === 'spin' ? 8 : 1;
 
-      for (let i = 0; i < ticks; i++){
+      for (let i = 0; i < ticks; i++){
 
-        const o = ac.createOscillator(), g = ac.createGain();
+        const o = ac.createOscillator(), g = ac.createGain();
 
-        o.type = 'square'; o.frequency.value = kind === 'spin' ? 700 + i*40 : 1500;
+        o.type = 'square'; o.frequency.value = kind === 'spin' ? 700 + i*40 : 1500;
 
-        const at = t + i*0.07; g.gain.setValueAtTime(0.12, at); g.gain.exponentialRampToValueAtTime(0.001, at + 0.04);
+        const at = t + i*0.07; g.gain.setValueAtTime(0.12, at); g.gain.exponentialRampToValueAtTime(0.001, at + 0.04);
 
-        o.connect(g).connect(ac.destination); o.start(at); o.stop(at + 0.05);
+        o.connect(g).connect(ac.destination); o.start(at); o.stop(at + 0.05);
 
-      }
+      }
 
-    }
+    }
 
-  } catch(e){}
+  } catch(e){}
 
 }
 
@@ -1122,87 +1122,87 @@ function myAvatar(){ return cleanAvatar(me); }
 
 function startHost(tries){
 
-  if (!peerOk()) return;
+  if (!peerOk()) return;
 
-  tries = tries || 0; const code = randomCode(); let p;
+  tries = tries || 0; const code = randomCode(); let p;
 
-  try { p = new Peer(PREFIX + (isPublicRoom ? 'P-' : '') + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
+  try { p = new Peer(PREFIX + (isPublicRoom ? 'P-' : '') + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
 
-  peer = p;
+  peer = p;
 
-  p.on('open', () => {
+  p.on('open', () => {
 
-    isHost = true; myId = 'host'; roomCode = code; conns = {};
+    isHost = true; myId = 'host'; roomCode = code; conns = {};
 
-    players = [{ id:'host', avatar:myAvatar(), alive:true }];
+    players = [{ id:'host', avatar:myAvatar(), alive:true }];
 
-    playerColors={host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)]}; chatLog=[];
+    playerColors={host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)]}; chatLog=[];
 
-    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg}, isPublic:isPublicRoom };
+    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg}, isPublic:isPublicRoom };
 
-    lastSeq = 0; log = [];
+    lastSeq = 0; log = [];
 
-    broadcast();
+    broadcast();
 
-  });
+  });
 
-  p.on('connection', hostOnConn);
+  p.on('connection', hostOnConn);
 
-  p.on('error', err => { if (err.type === 'unavailable-id' && tries < 5){ p.destroy(); startHost(tries + 1); return; } });
+  p.on('error', err => { if (err.type === 'unavailable-id' && tries < 5){ p.destroy(); startHost(tries + 1); return; } });
 
 }
 
 function hostOnConn(c){
 
-  c.on('data', m => {
+  c.on('data', m => {
 
-    if (!m || typeof m !== 'object') return;
+    if (!m || typeof m !== 'object') return;
 
-    if (m.t === 'join'){
+    if (m.t === 'join'){
 
-      let why = '';
+      let why = '';
 
-      if (game.phase !== 'lobby') why = 'Partida en curso.';
+      if (game.phase !== 'lobby') why = 'Partida en curso.';
 
-      else if (players.length >= MAX_PLAYERS) why = 'Sala llena.';
+      else if (players.length >= MAX_PLAYERS) why = 'Sala llena.';
 
-      if (why){ c.send({ t:'denied', reason:why }); setTimeout(() => c.close(), 400); return; }
+      if (why){ c.send({ t:'denied', reason:why }); setTimeout(() => c.close(), 400); return; }
 
-      conns[c.peer] = c;
+      conns[c.peer] = c;
 
-      players.push({ id:c.peer, avatar:cleanAvatar(m.avatar), alive:true });
+      players.push({ id:c.peer, avatar:cleanAvatar(m.avatar), alive:true });
 
-      const free=CHAT_COLORS.filter(x=>!Object.values(playerColors).includes(x));
+      const free=CHAT_COLORS.filter(x=>!Object.values(playerColors).includes(x));
 
-      playerColors[c.peer]=free.length ? free[Math.floor(Math.random()*free.length)] : '#ffffff';
+      playerColors[c.peer]=free.length ? free[Math.floor(Math.random()*free.length)] : '#ffffff';
 
-      broadcast();
+      broadcast();
 
-    } else if (m.t === 'shoot'){ if (game.phase === 'play' && players[game.turn]?.id === c.peer) doShot(!!m.spin);
+    } else if (m.t === 'shoot'){ if (game.phase === 'play' && players[game.turn]?.id === c.peer) doShot(!!m.spin);
 
-    } else if (m.t === 'chat'){ relayChat(c.peer,m.text);
+    } else if (m.t === 'chat'){ relayChat(c.peer,m.text);
 
-    } else if (m.t === 'pass'){ if(game.phase==='play' && game.mode==='hot' && players[game.turn]?.id===c.peer) passHot(c.peer); }
+    } else if (m.t === 'pass'){ if(game.phase==='play' && game.mode==='hot' && players[game.turn]?.id===c.peer) passHot(c.peer); }
 
-  });
+  });
 
-  c.on('close', () => { if (!conns[c.peer]) return; delete conns[c.peer]; dropPlayer(game, players, c.peer); broadcast(); });
+  c.on('close', () => { if (!conns[c.peer]) return; delete conns[c.peer]; dropPlayer(game, players, c.peer); broadcast(); });
 
 }
 
 function buildView(){
 
-  return {
+  return {
 
-    code:roomCode, phase:game.phase, bullets:game.bullets, mode:game.mode||'classic', hotCfg:game.hotCfg||hotCfg, hotDeadline,
+    code:roomCode, phase:game.phase, bullets:game.bullets, mode:game.mode||'classic', hotCfg:game.hotCfg||hotCfg, hotDeadline,
 
-    turn:game.turn === undefined ? -1 : game.turn, pos:game.pos || 0, round:game.round || 1,
+    turn:game.turn === undefined ? -1 : game.turn, pos:game.pos || 0, round:game.round || 1,
 
-    last:game.last || null, winner:game.winner || null, chat:chatLog.slice(-40),
+    last:game.last || null, winner:game.winner || null, chat:chatLog.slice(-40),
 
-    players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left, chatColor:playerColors[p.id]||'#fff' }))
+    players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left, chatColor:playerColors[p.id]||'#fff' }))
 
-  };
+  };
 
 }
 
@@ -1212,23 +1212,23 @@ function doShot(spin){ pullTrigger(game, players, spin, Math.random); broadcast(
 
 function relayChat(id, raw){
 
-  const p=players.find(x=>x.id===id); if(!p)return;
+  const p=players.find(x=>x.id===id); if(!p)return;
 
-  const msg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!msg)return;
+  const msg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!msg)return;
 
-  chatLog.push({id,name:p.avatar.name,text:msg,color:playerColors[id]||'#fff'});
+  chatLog.push({id,name:p.avatar.name,text:msg,color:playerColors[id]||'#fff'});
 
-  chatLog=chatLog.slice(-40); broadcast();
+  chatLog=chatLog.slice(-40); broadcast();
 
 }
 
 function sendChat(inputId='chatInput'){
 
-  const val=$('#'+inputId).value.trim(); if(!val)return;
+  const val=$('#'+inputId).value.trim(); if(!val)return;
 
-  if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val});
+  if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val});
 
-  $('#'+inputId).value='';
+  $('#'+inputId).value='';
 
 }
 
@@ -1278,27 +1278,27 @@ function updateHotHud(v){
 }
 function paintChat(v){
 
-  ['chatMessages','gameChatMessages'].forEach(id=>{
+  ['chatMessages','gameChatMessages'].forEach(id=>{
 
-    const box=$('#'+id); if(!box)return;
+    const box=$('#'+id); if(!box)return;
 
-    box.textContent='';
+    box.textContent='';
 
-    (v.chat||[]).forEach(m=>{
+    (v.chat||[]).forEach(m=>{
 
-      const line=document.createElement('div'); line.className='chat-line';
+      const line=document.createElement('div'); line.className='chat-line';
 
-      const name=document.createElement('b'); name.textContent=m.name+': '; name.style.color=m.color;
+      const name=document.createElement('b'); name.textContent=m.name+': '; name.style.color=m.color;
 
-      const msg=document.createElement('span'); msg.textContent=m.text;
+      const msg=document.createElement('span'); msg.textContent=m.text;
 
-      line.append(name,msg); box.appendChild(line);
+      line.append(name,msg); box.appendChild(line);
 
-    });
+    });
 
-    box.scrollTop=box.scrollHeight;
+    box.scrollTop=box.scrollHeight;
 
-  });
+  });
 
 }
 
@@ -1336,27 +1336,27 @@ async function refreshPublicRooms(){
 
 function joinRoom(code, publicRoom=false){
 
-  if (!peerOk()) return;
+  if (!peerOk()) return;
 
-  code = code.toUpperCase().trim();
+  code = code.toUpperCase().trim();
 
-  let p = new Peer(); peer = p; isHost = false; roomCode = code;
+  let p = new Peer(); peer = p; isHost = false; roomCode = code;
 
-  p.on('open', id => {
+  p.on('open', id => {
 
-    myId = id; conn = p.connect(PREFIX + (publicRoom ? 'P-' : '') + code, { reliable:true });
+    myId = id; conn = p.connect(PREFIX + (publicRoom ? 'P-' : '') + code, { reliable:true });
 
-    conn.on('open', () => conn.send({ t:'join', avatar:myAvatar() }));
+    conn.on('open', () => conn.send({ t:'join', avatar:myAvatar() }));
 
-    conn.on('data', m => {
+    conn.on('data', m => {
 
-      if (m.t === 'state' && m.v){ clearTimeout(joinTimer); view = m.v; render(); }
+      if (m.t === 'state' && m.v){ clearTimeout(joinTimer); view = m.v; render(); }
 
-      else if (m.t === 'denied') leave(m.reason || 'Acceso denegado.');
+      else if (m.t === 'denied') leave(m.reason || 'Acceso denegado.');
 
-    });
+    });
 
-  });
+  });
 
 }
 
@@ -1364,25 +1364,25 @@ function act(spin){ if (busy) return; if (isHost) doShot(spin); else if (conn &&
 
 function leave(msg){
 
-  clearTimeout(joinTimer); clearInterval(hotTimer); hotDeadline=0; const p = peer; peer = null; conn = null; conns = {};
+  clearTimeout(joinTimer); clearInterval(hotTimer); hotDeadline=0; const p = peer; peer = null; conn = null; conns = {};
 
-  try { if (p) p.destroy(); } catch(e){}
+  try { if (p) p.destroy(); } catch(e){}
 
-  players = []; view = null; isHost = false; botMode = false; resetScene(); if(localMicStream){localMicStream.getTracks().forEach(t=>t.stop());localMicStream=null;} $('#voiceEnable').textContent='🎤 Activar micrófono'; $('#voiceMute').disabled=true; $('#pushToTalk').disabled=true;
+  players = []; view = null; isHost = false; botMode = false; resetScene(); if(localMicStream){localMicStream.getTracks().forEach(t=>t.stop());localMicStream=null;} $('#voiceEnable').textContent='🎤 Activar micrófono'; $('#voiceMute').disabled=true; $('#pushToTalk').disabled=true;
 
-  show('home'); setHomeMsg(msg || '');
+  show('home'); setHomeMsg(msg || '');
 
 }
 
 function resetScene(){
 
-  clearTimers(); busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
+  clearTimers(); busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
 
-  $('#banner').className = ''; $('#table').classList.remove('shake'); $('#flash').classList.remove('fire');
+  $('#banner').className = ''; $('#table').classList.remove('shake'); $('#flash').classList.remove('fire');
 
-  $('#over').hidden = true; $('#log').textContent = '';
+  $('#over').hidden = true; $('#log').textContent = '';
 
-  const g = $('#gun'); g.style.transition = 'none'; g.style.transform = 'rotate(0deg)'; gunRot = 0; gunReady = false;
+  const g = $('#gun'); g.style.transition = 'none'; g.style.transform = 'rotate(0deg)'; gunRot = 0; gunReady = false;
 
 }
 
@@ -1390,29 +1390,29 @@ function render(){ const v = view; if (!v) return; if (v.phase === 'lobby'){ res
 
 function renderLobby(v){
 
-  $('#roomcode').textContent = v.code; $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
+  $('#roomcode').textContent = v.code; $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
 
-  seatList($('#plist'), v); paintChat(v);
+  seatList($('#plist'), v); paintChat(v);
 
-  $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost; $('#hotSettings').hidden = !(isHost && v.mode==='hot');
+  $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost; $('#hotSettings').hidden = !(isHost && v.mode==='hot');
 
-  if (isHost){
+  if (isHost){
 
-    const b = $('#bullets'); b.textContent = '';
+    const b = $('#bullets'); b.textContent = '';
 
-    [1,2,3].forEach(n => {
+    [1,2,3].forEach(n => {
 
-      const c = document.createElement('button'); c.className = 'chip txt'; c.textContent = n + ' bala' + (n>1?'s':'');
+      const c = document.createElement('button'); c.className = 'chip txt'; c.textContent = n + ' bala' + (n>1?'s':'');
 
-      c.setAttribute('aria-pressed', String(v.bullets === n));
+      c.setAttribute('aria-pressed', String(v.bullets === n));
 
-      c.addEventListener('click', () => { game.bullets = n; broadcast(); });
+      c.addEventListener('click', () => { game.bullets = n; broadcast(); });
 
-      b.appendChild(c);
+      b.appendChild(c);
 
-    });
+    });
 
-    $('#start').disabled = v.players.length < 2;
+    $('#start').disabled = v.players.length < 2;
     if(v.mode==='hot'){
       const pt=$('#passTimes'); pt.textContent='';
       [5,10,15].forEach(sec=>{const b=document.createElement('button');b.type='button';b.className='chip txt';b.textContent=sec+' s';b.setAttribute('aria-pressed',String((game.hotCfg||hotCfg).passSeconds===sec));b.onclick=()=>{game.hotCfg={...(game.hotCfg||hotCfg),passSeconds:sec};broadcast();};pt.append(b);});
@@ -1420,27 +1420,27 @@ function renderLobby(v){
       [1,2,3].forEach(sec=>{const b=document.createElement('button');b.type='button';b.className='chip txt';b.textContent=sec+' s';b.setAttribute('aria-pressed',String((game.hotCfg||hotCfg).cooldown===sec));b.onclick=()=>{game.hotCfg={...(game.hotCfg||hotCfg),cooldown:sec};broadcast();};ct.append(b);});
     }
 
-  }
+  }
 
 }
 
 function seatList(box, v){
 
-  box.textContent = '';
+  box.textContent = '';
 
-  v.players.forEach(p => {
+  v.players.forEach(p => {
 
-    const s = document.createElement('div'); s.className = 'seat';
+    const s = document.createElement('div'); s.className = 'seat';
 
-    s.appendChild(avatarEl(p.avatar, 64, false));
+    s.appendChild(avatarEl(p.avatar, 64, false));
 
-    const n = document.createElement('div'); n.className = 'nm';
+    const n = document.createElement('div'); n.className = 'nm';
 
-    n.textContent = p.avatar.name + (p.id === myId ? ' (tú)' : '');
+    n.textContent = p.avatar.name + (p.id === myId ? ' (tú)' : '');
 
-    s.appendChild(n); box.appendChild(s);
+    s.appendChild(n); box.appendChild(s);
 
-  });
+  });
 
 }
 
@@ -1448,105 +1448,105 @@ function seatAngle(i, n){ return -90 + 360 * i / n; }
 
 function drawCircle(v, dispTurn){
 
-  const box = $('#seats'); box.textContent = '';
+  const box = $('#seats'); box.textContent = '';
 
-  const n = v.players.length, R = 0.37, W = $('#arena').clientWidth || 340;
+  const n = v.players.length, R = 0.37, W = $('#arena').clientWidth || 340;
 
-  const s = Math.round(Math.max(40, Math.min(78, 0.62 * 2 * R * W * Math.sin(Math.PI / Math.max(n, 2)))));
+  const s = Math.round(Math.max(40, Math.min(78, 0.62 * 2 * R * W * Math.sin(Math.PI / Math.max(n, 2)))));
 
-  v.players.forEach((p, i) => {
+  v.players.forEach((p, i) => {
 
-    const a = seatAngle(i, n) * Math.PI / 180;
+    const a = seatAngle(i, n) * Math.PI / 180;
 
-    const el = document.createElement('div'); el.className = 'seat2' + (i === dispTurn ? ' turn' : '');
+    const el = document.createElement('div'); el.className = 'seat2' + (i === dispTurn ? ' turn' : '');
 
-    el.style.setProperty('--s', s + 'px');
+    el.style.setProperty('--s', s + 'px');
 
-    el.style.left = (50 + R * 100 * Math.cos(a)) + '%'; el.style.top = (50 + R * 100 * Math.sin(a)) + '%';
+    el.style.left = (50 + R * 100 * Math.cos(a)) + '%'; el.style.top = (50 + R * 100 * Math.sin(a)) + '%';
 
-    const out = (!p.alive || p.left) && p.id !== holdId;
+    const out = (!p.alive || p.left) && p.id !== holdId;
 
-    el.appendChild(avatarEl(p.avatar, s, out, out && p.id === freshId));
+    el.appendChild(avatarEl(p.avatar, s, out, out && p.id === freshId));
 
-    const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = p.avatar.name; el.appendChild(nm);
+    const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = p.avatar.name; el.appendChild(nm);
 
-    box.appendChild(el);
+    box.appendChild(el);
 
-  });
+  });
 
 }
 
 function aimAt(deg, o){
 
-  o = o || {}; const g = $('#gun');
+  o = o || {}; const g = $('#gun');
 
-  const c = ((gunRot % 360) + 360) % 360, t = ((deg % 360) + 360) % 360;
+  const c = ((gunRot % 360) + 360) % 360, t = ((deg % 360) + 360) % 360;
 
-  gunRot += (((t - c + 540) % 360) - 180) + 360 * (o.turns || 0);
+  gunRot += (((t - c + 540) % 360) - 180) + 360 * (o.turns || 0);
 
-  g.style.transition = o.instant ? 'none' : 'transform ' + (o.dur || 0.7) + 's';
+  g.style.transition = o.instant ? 'none' : 'transform ' + (o.dur || 0.7) + 's';
 
-  g.style.transform = 'rotate(' + gunRot + 'deg)';
+  g.style.transform = 'rotate(' + gunRot + 'deg)';
 
 }
 
 function renderGame(v){
 
-  paintChat(v); $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala '; $('#gcode').textContent = botMode ? 'bots' : v.code; updateHotHud(v);
+  paintChat(v); $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala '; $('#gcode').textContent = botMode ? 'bots' : v.code; updateHotHud(v);
 
-  if (busy) return;
+  if (busy) return;
 
-  if (v.last && v.last.seq !== lastSeq){ playShot(v); return; }
+  if (v.last && v.last.seq !== lastSeq){ playShot(v); return; }
 
-  drawScene(v);
+  drawScene(v);
 
 }
 
 function drawScene(v){
 
-  const n = v.players.length, turnP = v.players[v.turn], myTurn = v.phase === 'play' && turnP && turnP.id === myId;
+  const n = v.players.length, turnP = v.players[v.turn], myTurn = v.phase === 'play' && turnP && turnP.id === myId;
 
-  $('#status').textContent = v.phase === 'over' ? 'Fin' : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
+  $('#status').textContent = v.phase === 'over' ? 'Fin' : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
 
-  drawCircle(v, v.phase === 'play' ? v.turn : -1);
+  drawCircle(v, v.phase === 'play' ? v.turn : -1);
 
-  if (v.phase === 'play' && v.turn >= 0){ aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 }); gunReady = true; }
+  if (v.phase === 'play' && v.turn >= 0){ aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 }); gunReady = true; }
 
 }
 
 function playShot(v){
 
-  const L = v.last, n = v.players.length; lastSeq = L.seq; busy = true;
+  const L = v.last, n = v.players.length; lastSeq = L.seq; busy = true;
 
-  const si = v.players.findIndex(p => p.id === L.by), who = v.players[si];
+  const si = v.players.findIndex(p => p.id === L.by), who = v.players[si];
 
-  holdId = L.hit ? L.by : null; drawCircle(v, si);
+  holdId = L.hit ? L.by : null; drawCircle(v, si);
 
-  aimAt(seatAngle(si, n), { instant:!gunReady, turns:L.spun ? 2 : 0, dur:L.spun ? 1.2 : 0.6 });
+  aimAt(seatAngle(si, n), { instant:!gunReady, turns:L.spun ? 2 : 0, dur:L.spun ? 1.2 : 0.6 });
 
-  gunReady = true; if (L.spun) snd('spin');
+  gunReady = true; if (L.spun) snd('spin');
 
-  later(() => {
+  later(() => {
 
-    snd(L.hit ? 'bang' : 'click');
+    snd(L.hit ? 'bang' : 'click');
 
-    const f = $('#flash'); f.classList.remove('fire'); void f.getBoundingClientRect(); if (L.hit) f.classList.add('fire');
+    const f = $('#flash'); f.classList.remove('fire'); void f.getBoundingClientRect(); if (L.hit) f.classList.add('fire');
 
-    if (L.hit){ holdId = null; freshId = L.by; drawCircle(v, si); freshId = null; }
+    if (L.hit){ holdId = null; freshId = L.by; drawCircle(v, si); freshId = null; }
 
-  }, L.spun ? 1300 : 550);
+  }, L.spun ? 1300 : 550);
 
-  later(() => { busy = false; holdId = null; render(); }, (L.spun ? 1300 : 550) + 1700);
+  later(() => { busy = false; holdId = null; render(); }, (L.spun ? 1300 : 550) + 1700);
 
 }
 
 function startBots(){
 
-  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null;
+  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null;
 
-  players = [{ id:'host', avatar:myAvatar(), alive:true }].concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
+  players = [{ id:'host', avatar:myAvatar(), alive:true }].concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
 
-  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} }; broadcast();
+  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} }; broadcast();
 
 }
 
@@ -1586,9 +1586,9 @@ $('#passBtn').addEventListener('click',()=>{if(isHost)passHot(myId);else if(conn
 
 $('#start').addEventListener('click', () => {
 
-  if (!isHost || players.length < 2) return;
+  if (!isHost || players.length < 2) return;
 
-  if((game.mode||selectedMode)==='hot'){
+  if((game.mode||selectedMode)==='hot'){
     game={phase:'play',mode:'hot',hotCfg:{...(game.hotCfg||hotCfg)},turn:0,winner:null};
     startHotClock(); broadcast();
   }else{
