@@ -8,16 +8,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Rye&display=swap" rel="stylesheet">
 <style>
-/* Mesa de póker entre amigos: fieltro verde, latón y una sola nota roja para el peligro */
+/* Estilos Base y Temática Navideña */
 :root{
-  --ink:#0a1511;
-  --felt:#12372a;
-  --felt-2:#0d2a20;
-  --paper:#efe9d8;
-  --muted:#93ab9e;
-  --brass:#d4a640;
-  --danger:#e0502e;
-  --line:rgba(239,233,216,.14);
+  --ink:#170709;
+  --felt:#351016;
+  --felt-2:#21090e;
+  --paper:#f7e8df;
+  --muted:#d0a9a5;
+  --brass:#d8b4a0;
+  --danger:#c52b32;
+  --line:rgba(255,230,220,.18);
   --display:'Rye','Georgia',serif;
   --body:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:dark;
@@ -25,31 +25,31 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;min-height:100%;}
 body{
-  background:radial-gradient(1200px 700px at 50% -10%,var(--felt) 0%,var(--ink) 70%) fixed;
+  background:radial-gradient(ellipse at 50% 0%,#64151d 0%,#21080d 58%,#090406 100%) fixed;
   color:var(--paper);font-family:var(--body);font-size:16px;line-height:1.45;min-height:100vh;
-  padding:0;
+  padding:0;overflow-x:hidden;
 }
 main{width:100%;max-width:none;margin:0 auto;}
 #home{position:relative;width:100%;min-height:100vh;}
 h1,h2{font-family:var(--display);font-weight:400;letter-spacing:.02em;text-wrap:balance;margin:0}
-h1{font-size:clamp(2.2rem,8vw,3.6rem);color:var(--brass);line-height:1.05}
+h1{font-size:clamp(2.2rem,8vw,3.6rem);color:#f4d4c6;line-height:1.05;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
 h2{font-size:1.4rem}
 .sub{color:var(--muted);margin:.4rem 0 1.4rem}
 .screen[hidden]{display:none}
-.panel{background:rgba(10,21,17,.55);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.panel,.table{background:linear-gradient(145deg,rgba(90,12,22,.88),rgba(25,5,10,.94));border:1px solid rgba(230,180,160,.28);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 12px 32px #0008}
 .label{display:block;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
 .label:first-child{margin-top:0}
-input[type=text]{
+input[type=text],select{
   width:100%;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:10px;
   padding:11px 12px;font:inherit;
 }
-input[type=text]:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+input[type=text]:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--paper);padding:10px 14px}
 button:disabled{opacity:.4;cursor:not-allowed}
-.btn{background:var(--brass);color:#1a1405;border-color:var(--brass);font-weight:700}
+.btn{background:linear-gradient(#d9b2a1,#8c3038);color:#fff;border-color:#e5b7a8;font-weight:700}
 .btn:hover:not(:disabled){filter:brightness(1.08)}
 .btn.danger{background:var(--danger);border-color:var(--danger);color:#fff}
-.ghost:hover:not(:disabled){border-color:var(--brass)}
+.ghost:hover:not(:disabled){border-color:#e6b9a8}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{min-width:46px;height:46px;padding:0 10px;font-size:1.5rem;line-height:1;display:grid;place-items:center}
@@ -65,10 +65,13 @@ button:disabled{opacity:.4;cursor:not-allowed}
 
 /* Personaje */
 .av{--s:64px;width:var(--s);height:var(--s);border-radius:50%;position:relative;display:grid;place-items:center;flex:none;
-  box-shadow:0 0 0 2px rgba(0,0,0,.35) inset,0 0 0 2px var(--line)}
+  box-shadow:0 0 0 2px rgba(0,0,0,.35) inset,0 0 0 2px var(--line);border:2px solid #d8b7a5;overflow:visible}
 .av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .av .face{font-size:calc(var(--s)*.6);line-height:1}
-.av .hat{position:absolute;top:calc(var(--s)*-.34);left:50%;transform:translateX(-50%);font-size:calc(var(--s)*.52);line-height:1;pointer-events:none}
+.av .hat{position:absolute;top:calc(var(--s)*-.34);left:50%;transform:translateX(-50%);font-size:calc(var(--s)*.52);line-height:1;pointer-events:none;z-index:5;text-shadow:0 2px 4px #000}
+.av .holiday-frame{position:absolute;inset:-7px;border:3px solid #b88952;border-radius:50%;pointer-events:none;z-index:4}
+.av .holiday-frame.reindeer:before,.av .holiday-frame.reindeer:after{content:'♢';position:absolute;top:-13px;color:#9a5b2e;font-size:22px;font-weight:bold;text-shadow:0 1px #321}
+.av .holiday-frame.reindeer:before{left:-3px;transform:rotate(-35deg)}.av .holiday-frame.reindeer:after{right:-3px;transform:rotate(35deg)}
 .av .mask{position:absolute;top:36%;left:50%;transform:translateX(-50%);font-size:calc(var(--s)*.46);line-height:1;pointer-events:none}
 .av.sil .sil-svg{width:100%;height:100%;display:block;clip-path:circle(50%)}
 .av.sil .mask{top:13%;font-size:calc(var(--s)*.4)}
@@ -84,15 +87,14 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .av .xmark.fresh{animation:xin .4s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes xin{from{transform:scale(2.4);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* Sala de espera */
+/* Sala de espera y Mesa */
 .code{font-family:var(--display);font-size:clamp(2.6rem,12vw,4.4rem);letter-spacing:.18em;color:var(--brass);margin:6px 0 2px}
 .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:22px 12px;margin-top:14px;padding-top:12px}
 .seat{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;min-width:0}
 .seat .nm{font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tag{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
-/* Mesa: jugadores en círculo y el arma al centro */
-.table{background:radial-gradient(ellipse at 50% 45%,var(--felt) 0%,var(--felt-2) 100%);border:1px solid var(--line);border-radius:22px;padding:22px 10px 22px;position:relative;overflow:hidden}
+.table{border-radius:22px;padding:22px 10px 22px;position:relative;overflow:hidden}
 .status{text-align:center;font-family:var(--display);font-size:1.3rem;margin:0 0 2px;text-wrap:balance;min-height:1.6em}
 .info{text-align:center;color:var(--muted);font-size:.88rem;margin:0 0 30px}
 .arena{position:relative;width:100%;max-width:540px;aspect-ratio:1/1;margin:0 auto}
@@ -124,7 +126,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .pill b{color:var(--brass);letter-spacing:.2em}
 .iconbtn{padding:6px 10px}
 
-/* Pantalla del ganador */
+/* Pantalla final */
 .over{position:fixed;inset:0;z-index:50;background:radial-gradient(ellipse at 50% 40%,rgba(18,55,42,.96),rgba(6,12,9,.97));
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
 .over[hidden]{display:none}
@@ -134,51 +136,72 @@ button:disabled{opacity:.4;cursor:not-allowed}
 #winbox{display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:36px}
 #wname{font-family:var(--display);color:var(--brass);font-size:clamp(2.2rem,10vw,4.4rem);line-height:1.1;overflow-wrap:anywhere}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){
-  #gun{transition:none}#banner.show,.shake,.av .xmark.fresh,#flash.fire,.wis,.reveal{animation:none}
-  #banner.show{opacity:1}
-}
 
-/* ACTUALIZACIÓN NAVIDEÑA */
-:root{--ink:#170709;--felt:#351016;--felt-2:#21090e;--paper:#f7e8df;--muted:#d0a9a5;--brass:#d8b4a0;--danger:#c52b32;--line:rgba(255,230,220,.18)}
-body{background:radial-gradient(ellipse at 50% 0%,#64151d 0%,#21080d 58%,#090406 100%) fixed}
-.panel,.table{background:linear-gradient(145deg,rgba(90,12,22,.88),rgba(25,5,10,.94));border-color:rgba(230,180,160,.28);box-shadow:0 12px 32px #0008}
-h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
-.btn{background:linear-gradient(#d9b2a1,#8c3038);color:#fff;border-color:#e5b7a8}.ghost:hover:not(:disabled){border-color:#e6b9a8}
-.av{border:2px solid #d8b7a5;overflow:visible}.av .hat{z-index:5;top:-.28em;text-shadow:0 2px 4px #000}.av .holiday-frame{position:absolute;inset:-7px;border:3px solid #b88952;border-radius:50%;pointer-events:none;z-index:4}
-.av .holiday-frame.reindeer:before,.av .holiday-frame.reindeer:after{content:'♢';position:absolute;top:-13px;color:#9a5b2e;font-size:22px;font-weight:bold;text-shadow:0 1px #321}
-.av .holiday-frame.reindeer:before{left:-3px;transform:rotate(-35deg)}.av .holiday-frame.reindeer:after{right:-3px;transform:rotate(35deg)}
+/* Nieve animada */
 .snowflake{position:fixed;top:-20px;z-index:1000;pointer-events:none;color:#fff;text-shadow:0 0 6px #fff;animation:snowfall linear infinite;opacity:.85}
 @keyframes snowfall{to{transform:translate3d(var(--drift),110vh,0) rotate(360deg)}}
-.modal{position:fixed;inset:0;background:#080306df;z-index:100;display:grid;place-items:center;padding:18px}.modal[hidden]{display:none}.modal-card{width:min(560px,100%);max-height:85vh;overflow:auto;background:linear-gradient(145deg,#5b111b,#17070b);border:1px solid #c18b76;border-radius:18px;padding:22px;box-shadow:0 20px 70px #000}
-.modal-card h2{font-family:var(--display);font-size:1.8rem;margin-bottom:12px}.modal-card p{color:#f1d6ca}.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode-grid button{min-height:74px;font-weight:700}.socials{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:16px 0}.socials a{color:#ffe8df;text-decoration:none;border:1px solid #a66a60;border-radius:9px;padding:8px 12px;background:#330d14}.snow-head{font-size:1.2rem}
-.chatbox{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#100509}.chat-messages{height:150px;overflow:auto;display:flex;flex-direction:column;gap:6px;font-size:.9rem}.chat-line{overflow-wrap:anywhere}.chat-send{display:flex;gap:8px;margin-top:8px}.chat-send input{flex:1;min-width:0}.musicbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;margin:14px auto}.musicbar select{max-width:220px;background:#23080e;color:#fff;padding:8px;border-radius:8px}.countdown{font-size:2rem;color:#ffd7c7;font-family:var(--display);text-align:center}
+
+/* Modales */
+.modal{position:fixed;inset:0;background:#080306df;z-index:100;display:grid;place-items:center;padding:18px}
+.modal[hidden]{display:none}
+.modal-card{width:min(560px,100%);max-height:85vh;overflow:auto;background:linear-gradient(145deg,#5b111b,#17070b);border:1px solid #c18b76;border-radius:18px;padding:22px;box-shadow:0 20px 70px #000}
+.modal-card h2{font-family:var(--display);font-size:1.8rem;margin-bottom:12px}
+.modal-card p{color:#f1d6ca}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode-grid button{min-height:74px;font-weight:700}
 @media(max-width:520px){.mode-grid{grid-template-columns:1fr}}
 
-/* Menú de imagen navideña con botones transparentes accesibles */
+/* Menú Principal */
 .christmas-menu{position:relative;width:100vw;height:100vh;max-width:none;aspect-ratio:auto;margin:0;background:url("assets/menu-navidad.png") center/100% 100% no-repeat;overflow:hidden;border-radius:0;box-shadow:none}
 .hotspot{position:absolute;display:block;padding:0;border:0;border-radius:12px;background:transparent;z-index:2;cursor:pointer}
 .hotspot:hover,.hotspot:focus-visible{background:rgba(255,230,210,.13);box-shadow:0 0 0 2px #f4d4c6,0 0 22px #f4d4c688;outline:none}
-.hs-updates{left:4.5%;top:35%;width:20%;height:17%}.hs-donate{left:4.5%;top:57%;width:20%;height:17%}.hs-play{left:31%;top:67%;width:38%;height:19%}.hs-profile{right:4%;top:35%;width:20%;height:18%}.hs-how{right:4%;top:57%;width:20%;height:18%}
-.hs-youtube{left:37%;top:87%;width:5.5%;height:11%}.hs-x{left:45.5%;top:87%;width:5.5%;height:11%}.hs-tiktok{left:53.5%;top:87%;width:5.5%;height:11%}.hs-twitch{left:62%;top:87%;width:5.5%;height:11%}
-.musicbar{position:fixed;z-index:1200;left:14px;bottom:14px;transform:none;width:max-content;max-width:94vw;padding:8px 12px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
-.musicbar select{background:#23080e;color:#fff;padding:8px;border:1px solid #a66a60;border-radius:8px;min-width:0}.musicbar button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:8px;padding:8px 10px;cursor:pointer}.musicbar button:hover{background:#84202c}.volume-control{display:flex;align-items:center;gap:4px}.volume-control input{width:85px;accent-color:#d8aa70}#volumeValue{font-size:.8rem;min-width:32px}
-@media(max-width:700px){.christmas-menu{width:100vw;height:100svh;min-height:560px}.musicbar{font-size:.72rem;bottom:8px;gap:5px;padding:6px}.musicbar select{max-width:125px}.volume-control input{width:58px}}
+.hs-updates{left:4.5%;top:35%;width:20%;height:17%}
+.hs-donate{left:4.5%;top:57%;width:20%;height:17%}
+.hs-play{left:31%;top:67%;width:38%;height:19%}
+.hs-profile{right:4%;top:35%;width:20%;height:18%}
+.hs-how{right:4%;top:57%;width:20%;height:18%}
 
+/* Redes Sociales Ajustadas */
+.hs-youtube{left:37%;top:87%;width:5.5%;height:11%}
+.hs-x{left:45.5%;top:87%;width:5.5%;height:11%}
+.hs-tiktok{left:53.5%;top:87%;width:5.5%;height:11%}
+.hs-twitch{left:62%;top:87%;width:5.5%;height:11%}
 
-/* HUD de sala: chat y voz solo aparecen al entrar a una sala (espera o partida); nunca en el menú principal. */
-#lobby .chatbox,#game>.chatbox{position:fixed;z-index:1100;top:14px;left:14px;width:min(340px,calc(100vw - 28px));margin:0;padding:10px;background:rgba(12,5,8,.94);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;backdrop-filter:blur(8px)}
-#lobby .chat-messages,#game>.chatbox .chat-messages{height:125px;max-height:22vh}
-#voicePanel{position:fixed;z-index:1101;right:14px;top:14px;width:min(320px,calc(100vw - 28px));padding:12px;background:rgba(12,5,8,.95);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;color:#fff0e7;backdrop-filter:blur(8px)}
-#voicePanel h3{margin:0 0 8px;font-size:1rem}#voicePanel label{display:block;font-size:.82rem;margin:7px 0 4px}#voicePanel select,#voicePanel input[type=range]{width:100%;max-width:100%}#voicePanel select{background:#260b11;color:white;border:1px solid #a66a60;border-radius:7px;padding:7px}#voicePanel .voice-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}#voicePanel button{background:#5b111b;color:white;border:1px solid #c18b76;border-radius:8px;padding:8px;cursor:pointer}#voiceStatus{font-size:.78rem;color:#e7c3b5;margin-top:6px}
-@media(max-width:700px){#lobby .chatbox,#game>.chatbox{top:8px;left:8px;width:min(255px,calc(100vw - 16px));}#lobby .chat-messages,#game>.chatbox .chat-messages{height:85px}#voicePanel{top:8px;right:8px;width:min(245px,calc(100vw - 16px));padding:8px}.musicbar{left:8px;bottom:8px;max-width:calc(100vw - 16px);}}
+/* Barra de Música Flotante y Compacta */
+.musicbar{position:fixed;z-index:1200;left:14px;bottom:14px;display:flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7;font-size:.8rem;max-width:calc(100vw - 230px);overflow:hidden}
+.musicbar select{background:#23080e;color:#fff;padding:5px;border:1px solid #a66a60;border-radius:6px;max-width:120px}
+.musicbar button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:6px;padding:5px 8px;cursor:pointer}
+.volume-control{display:flex;align-items:center;gap:4px}
+.volume-control input{width:60px;accent-color:#d8aa70}
+#volumeValue{font-size:.75rem;min-width:28px}
 
+/* HUD de Chat y Voz Integrados */
+.chatbox{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:12px;background:#100509}
+.chat-messages{height:120px;max-height:22vh;overflow:auto;display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+.chat-line{overflow-wrap:anywhere}
+.chat-send{display:flex;gap:8px;margin-top:8px}
+.chat-send input{flex:1;min-width:0}
+
+#voicePanel{position:fixed;z-index:1101;right:14px;top:14px;width:min(300px,calc(100vw - 28px));padding:10px;background:rgba(12,5,8,.95);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;color:#fff0e7;backdrop-filter:blur(8px);font-size:.85rem}
+#voicePanel h3{margin:0 0 6px;font-size:.95rem}
+#voicePanel label{display:block;font-size:.78rem;margin:5px 0 3px}
+#voicePanel select,#voicePanel input[type=range]{width:100%;max-width:100%}
+#voicePanel select{background:#260b11;color:white;border:1px solid #a66a60;border-radius:7px;padding:5px}
+#voicePanel .voice-actions{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+#voicePanel button{background:#5b111b;color:white;border:1px solid #c18b76;border-radius:7px;padding:6px;cursor:pointer;font-size:.8rem}
+#voiceStatus{font-size:.75rem;color:#e7c3b5;margin-top:5px}
+
+@media(max-width:700px){
+  .musicbar{max-width:calc(100vw - 120px);font-size:.7rem;bottom:8px;left:8px;padding:4px 6px}
+  .musicbar select{max-width:85px}
+  #voicePanel{top:auto;bottom:65px;right:8px;width:calc(100vw - 16px)}
+}
 </style>
 </head>
 <body>
 <main>
 
-<!-- MENÚ PRINCIPAL: imagen de referencia con zonas interactivas -->
+<!-- MENÚ PRINCIPAL -->
 <section id="home" class="screen">
   <div class="christmas-menu" role="navigation" aria-label="Menú principal de Ruleta Rusa">
     <button id="updatesBtn" class="hotspot hs-updates" type="button" aria-label="Updates" title="Updates"></button>
@@ -191,27 +214,54 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
     <a class="hotspot hs-tiktok" href="https://www.tiktok.com/@gokuletoyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok"></a>
     <a class="hotspot hs-twitch" href="https://www.twitch.tv/goku1424yt" target="_blank" rel="noopener noreferrer" aria-label="Twitch"></a>
   </div>
-  <div class="musicbar" aria-label="Controles de música"><label for="musicTrack">🎵 Música:</label><select id="musicTrack" aria-label="Elegir canción"><option value="">Aleatorio al reproducir</option><option value="assets/music/jingle-bells.mp3">Jingle Bells (acústica)</option><option value="assets/music/burrito-sabanero.mp3">Mi Burrito Sabanero (acústica)</option><option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want for Christmas Is You (acústica)</option></select><button id="musicToggle" type="button">▶ Reproducir</button><button id="musicNext" type="button" aria-label="Saltar canción" title="Saltar canción">⏭</button><label class="volume-control" for="musicVolume">🔊 <input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.5" aria-label="Volumen"></label><span id="volumeValue">50%</span></div>
+
+  <div class="musicbar" aria-label="Controles de música">
+    <label for="musicTrack">🎵</label>
+    <select id="musicTrack" aria-label="Elegir canción">
+      <option value="">Aleatorio</option>
+      <option value="assets/music/jingle-bells.mp3">Jingle Bells</option>
+      <option value="assets/music/burrito-sabanero.mp3">Burrito Sabanero</option>
+      <option value="assets/music/all-i-want-for-christmas-acoustic.mp3">All I Want</option>
+    </select>
+    <button id="musicToggle" type="button">▶ Reproducir</button>
+    <button id="musicNext" type="button" title="Siguiente">⏭</button>
+    <label class="volume-control" for="musicVolume">🔊<input id="musicVolume" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+    <span id="volumeValue">50%</span>
+  </div>
   <p id="homeMsg" class="msg" role="status"></p>
 </section>
 
+<!-- MODALES -->
 <div id="profileModal" class="modal" hidden><div class="modal-card"><h2>🎅 Personalizar personaje</h2>
   <div class="editor"><div id="prev" aria-label="Vista previa de tu personaje"></div><div class="field"><label class="label" for="name">Tu nombre</label><input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador"></div></div>
   <span class="label">Personaje</span><div id="bases" class="chips"></div><span class="label">Sombrero / accesorio</span><div id="hats" class="chips"></div><span class="label">Máscara</span><div id="masks" class="chips"></div><span class="label">Color de fondo</span><div id="colors" class="chips"></div>
   <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
   <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
-<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> creá una sala o jugá contra bots. En tu turno elegís una acción del juego ficticio; gana quien quede al final.</p><p><b>Pipa Caliente:</b> la ficha pasa al siguiente jugador antes de que termine el temporizador. Si el tiempo llega a cero, ese jugador queda fuera de la ronda.</p><p>Compartí el código de sala con tus amigos. El anfitrión configura la partida y puede iniciar cuando haya suficientes participantes.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
+
+<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> creá una sala o jugá contra bots. En tu turno elegís una acción; gana quien quede al final.</p><p><b>Pipa Caliente:</b> la ficha pasa antes de que acabe el tiempo. Si llega a cero, el jugador queda fuera de la ronda.</p><p>Compartí el código de sala con tus amigos. El anfitrión configura la partida y puede iniciar cuando haya suficientes participantes.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
+
+<div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí un modo</h2><div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse a una sala</button><button class="ghost closeModal">Volver</button></div><div id="joinPanel" hidden style="margin-top:12px"><label class="label" for="code">Código de sala</label><div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO"><button id="joinBtn" class="btn">Unirme</button></div></div></div></div>
+
+<div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2>
+  <div style="margin-bottom:14px">
+    <label class="label">Visibilidad de Sala</label>
+    <div class="chips"><button id="roomPublic" class="chip txt" aria-pressed="true" type="button">Pública</button><button id="roomPrivate" class="chip txt" aria-pressed="false" type="button">Privada con Código</button></div>
+  </div>
+  <p>¿Cómo querés jugar?</p>
+  <div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
+
+<div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2><p><b>Salas Públicas y Privadas:</b> Selección de acceso para partidas exclusivas por código o abiertas.</p><p><b>Optimización de Chat de Voz:</b> Eliminación del retorno e interferencia de eco local al hablar por micrófono.</p><p><b>Mejoras en la Interfaz:</b> Rediseño flotante compacto de la barra musical y reubicación de los módulos de chat sin interferir en el juego.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
 <!-- SALA DE ESPERA -->
 <section id="lobby" class="screen" hidden>
   <div class="top">
-    <span class="pill">Sala</span>
+    <span class="pill">Sala <b id="roomcode">····</b></span>
     <button id="leave1" class="ghost iconbtn" type="button">Salir</button>
   </div>
   <div class="panel">
     <div id="codebox">
-      <span class="label">Comparte este código con tus amigos</span>
-      <div class="code" id="roomcode">····</div>
+      <span class="label">Código para compartir</span>
+      <div class="code" id="roomcodebig">····</div>
       <button id="copy" class="ghost" type="button">Copiar código</button>
     </div>
     <span class="label" id="botnote" hidden>Práctica contra 4 bots</span>
@@ -226,10 +276,10 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
         <span id="needmore" class="tag"></span>
       </div>
     </div>
-    <div id="hotSettings" hidden><span class="label">Pipa Caliente · Configuración de sala</span><label class="label">Tiempo para pasar</label><div class="chips" id="passTimes"></div><label class="label">Cooldown anti-spam</label><div class="chips" id="coolTimes"></div></div>
-    <p id="guestwait" class="sub" style="margin:0" hidden>Esperando a que el anfitrión empiece la partida…</p>
-    <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="chatSend" class="btn">Enviar</button></div></div>
+    <div id="hotSettings" hidden><span class="label">Pipa Caliente · Configuración</span><label class="label">Tiempo para pasar</label><div class="chips" id="passTimes"></div><label class="label">Cooldown anti-spam</label><div class="chips" id="coolTimes"></div></div>
+    <p id="guestwait" class="sub" style="margin:0" hidden>Esperando al anfitrión…</p>
   </div>
+  <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…"><button id="chatSend" class="btn">Enviar</button></div></div>
 </section>
 
 <!-- PARTIDA -->
@@ -291,18 +341,16 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
   <h3>🎙️ Voice Chat</h3>
   <label for="voiceInput">Dispositivo de entrada</label>
   <select id="voiceInput"><option value="">Micrófono predeterminado</option></select>
-  <label for="micVolume">Volumen del micrófono: <span id="micVolumeValue">70%</span></label>
+  <label for="micVolume">Volumen: <span id="micVolumeValue">70%</span></label>
   <input id="micVolume" type="range" min="0" max="1" step="0.05" value="0.7">
-  <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>Push to Talk (V)</button></div>
-  <div id="voiceStatus" role="status">El micrófono se activa dentro de una sala. Tecla V para hablar.</div>
+  <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>PTT (V)</button></div>
+  <div id="voiceStatus" role="status">Activo dentro de la sala. Tecla V para hablar.</div>
 </div>
-<div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí un modo</h2><div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse a una sala</button><button class="ghost closeModal">Volver</button></div><div id="joinPanel" hidden><label class="label" for="code">Código de sala</label><div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO"><button id="joinBtn" class="btn">Unirme</button></div></div></div></div>
-<div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2><p>¿Cómo querés jugar?</p><div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
-<div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2><p><b>Interfaz:</b> nueva ambientación navideña, nieve animada y decoración de perfil.</p><p><b>Jugabilidad:</b> se incorpora el modo Pipa Caliente con tiempo límite, pases y cooldown configurable.</p><p><b>Multijugador:</b> chat de sala con colores aleatorios únicos para distinguir participantes.</p><p><b>Personalización:</b> gorro de Santa y marco con cuernos de reno.</p><p><b>Mejoras:</b> selección de modo, creación de sala o práctica con bots, reproductor musical y accesos a redes sociales.</p><button class="btn closeModal">Cerrar</button></div></div>
+
 <audio id="musicPlayer" preload="none"></audio>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
 
-<!-- Lógica pura del juego: no toca la pantalla ni la red -->
+<!-- Lógica Pura del Juego -->
 <script id="logic">
 const MAX_PLAYERS = 8, CHAMBERS = 6;
 const BASES = ['silueta','😀','😎','🤓','😈','👽','🤖','👻','🐵','🐱','🐸','🦊','🐼'];
@@ -369,11 +417,10 @@ function dropPlayer(g, players, id){
 }
 </script>
 
-<!-- Pantallas y conexión -->
+<!-- Interfaz, Control de Red PeerJS y Microfono sin Eco -->
 <script>
 const $ = s => document.querySelector(s);
 const PREFIX = 'ruletarusa-';
-/* Icono de persona por defecto: cabeza y hombros en contorno */
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
   + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
   + '<path d="M22 108V88C22 74 30 66 40 66C46 66 46 72 50 72C54 72 54 66 60 66C70 66 78 74 78 88V108Z"/></g></svg>';
@@ -387,26 +434,23 @@ let peer = null, conn = null, conns = {};
 let isHost = false, myId = null, roomCode = '';
 let players = [], game = { phase:'lobby', bullets:1 }, view = null;
 let lastSeq = 0, log = [], muted = false, joinTimer = null;
-// Presentación de la partida (solo visual)
 let busy = false, holdId = null, freshId = null, gunRot = 0, gunReady = false, timers = [];
 let botMode = false, botTimer = null;
-let selectedMode='classic', hotCfg={passSeconds:10,cooldown:1}, hotTimer=null, hotDeadline=0, hotClicks=0, hotCooling=false, chatLog=[], playerColors={};
+let selectedMode='classic', isPublicRoom=true, hotCfg={passSeconds:10,cooldown:1}, hotTimer=null, hotDeadline=0, hotClicks=0, hotCooling=false, chatLog=[], playerColors={};
 const CHAT_COLORS=['#ff8a80','#80cbc4','#90caf9','#ce93d8','#fff176','#a5d6a7','#ffcc80','#80deea'];
 let me = loadProfile();
 
-/* ---------- Perfil ---------- */
 function loadProfile(){
   try {
     let s = localStorage.getItem('ruleta-perfil-2');
     if (s) return cleanAvatar(JSON.parse(s));
-    s = localStorage.getItem('ruleta-perfil');          // versión anterior: se conserva nombre, foto, sombrero y máscara
+    s = localStorage.getItem('ruleta-perfil');
     if (s){ const o = JSON.parse(s); return cleanAvatar({ name:o.name, hat:o.hat, mask:o.mask, photo:o.photo }); }
   } catch(e){}
   return cleanAvatar({});
 }
 function saveProfile(){ try { localStorage.setItem('ruleta-perfil-2', JSON.stringify(me)); } catch(e){} }
 
-/* ---------- Dibujo del personaje ---------- */
 function avatarEl(av, size, dead, fresh){
   const d = document.createElement('div');
   d.className = 'av' + (dead ? ' dead' : '');
@@ -420,13 +464,20 @@ function avatarEl(av, size, dead, fresh){
     const f = document.createElement('span'); f.className = 'face'; f.textContent = av.base; d.appendChild(f);
   }
   if (av.mask){ const m = document.createElement('span'); m.className = 'mask'; m.textContent = av.mask; d.appendChild(m); }
-  if (av.hat === '🎅'){ const h=document.createElement('span'); h.className='hat'; h.textContent='🎅'; d.appendChild(h); }
-  else if (av.hat && !['🦌','🎄'].includes(av.hat)){ const h=document.createElement('span'); h.className='hat'; h.textContent=av.hat; d.appendChild(h); }
-  if (av.hat === '🦌'){ const f=document.createElement('span'); f.className='holiday-frame reindeer'; d.appendChild(f); }
-  if (av.hat === '🎄'){ const f=document.createElement('span'); f.className='holiday-frame'; d.appendChild(f); }
-  if (dead){ const x = document.createElement('span'); x.className = 'xmark' + (fresh ? ' fresh' : ''); d.appendChild(x); }
+  if (av.hat === '🎅'){
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🎅'; d.appendChild(h);
+    const fr = document.createElement('div'); fr.className = 'holiday-frame'; d.appendChild(fr);
+  } else if (av.hat === '🦌'){
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = '🦌'; d.appendChild(h);
+    const fr = document.createElement('div'); fr.className = 'holiday-frame reindeer'; d.appendChild(fr);
+  } else if (av.hat){
+    const h = document.createElement('span'); h.className = 'hat'; h.textContent = av.hat; d.appendChild(h);
+  }
+  if (fresh){ const x = document.createElement('div'); x.className = 'xmark fresh'; d.appendChild(x); }
+  else if (dead){ const x = document.createElement('div'); x.className = 'xmark'; d.appendChild(x); }
   return d;
 }
+
 function chips(box, items, key, label){
   box.textContent = '';
   items.forEach(v => {
@@ -436,54 +487,11 @@ function chips(box, items, key, label){
     else if (v === 'silueta'){ b.innerHTML = SIL('currentColor'); b.setAttribute('aria-label', 'Silueta'); }
     else { b.textContent = v || label; if (!v) b.classList.add('txt'); }
     b.setAttribute('aria-pressed', String(me[key] === v));
-    b.addEventListener('click', () => { me[key] = v; saveProfile();
-// Controles locales de micrófono. La transmisión entre participantes requiere
-// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
-const voiceInput=document.getElementById('voiceInput');
-const voiceEnable=document.getElementById('voiceEnable');
-const voiceMute=document.getElementById('voiceMute');
-const pushBtn=document.getElementById('pushToTalk');
-const micSlider=document.getElementById('micVolume');
-const micValue=document.getElementById('micVolumeValue');
-const voiceStatus=document.getElementById('voiceStatus');
-let localMicStream=null, micContext=null, micGain=null, micSource=null;
-let voiceMuted=false, pttMode=false, pttHeld=false;
-async function refreshMicDevices(){
-  if(!navigator.mediaDevices?.enumerateDevices)return;
-  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
-    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
-    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
-  }catch(e){}
-}
-function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
-async function enableMic(){
-  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
-  try{
-    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
-    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
-    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
-    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
-    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
-    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
-    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
-    await refreshMicDevices();updateMicGain();
-  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
-}
-voiceEnable.addEventListener('click',enableMic);
-voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
-pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
-micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
-voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
-document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
-if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
-refreshMicDevices();
-
- drawEditor(); });
+    b.addEventListener('click', () => { me[key] = v; saveProfile(); drawEditor(); });
     box.appendChild(b);
   });
 }
+
 function drawEditor(){
   const p = $('#prev'); p.textContent = ''; p.style.paddingTop = '14px';
   p.appendChild(avatarEl(me, 84));
@@ -494,54 +502,11 @@ function drawEditor(){
   $('#nophoto').hidden = !me.photo;
   $('#pick').textContent = me.photo ? 'Cambiar foto' : 'Elegir foto del ordenador';
 }
+
 $('#name').value = me.name === 'Jugador' ? '' : me.name;
 $('#name').addEventListener('input', e => { me.name = cleanAvatar({ ...me, name:e.target.value }).name; saveProfile(); });
 $('#pick').addEventListener('click', () => $('#file').click());
-$('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile();
-// Controles locales de micrófono. La transmisión entre participantes requiere
-// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
-const voiceInput=document.getElementById('voiceInput');
-const voiceEnable=document.getElementById('voiceEnable');
-const voiceMute=document.getElementById('voiceMute');
-const pushBtn=document.getElementById('pushToTalk');
-const micSlider=document.getElementById('micVolume');
-const micValue=document.getElementById('micVolumeValue');
-const voiceStatus=document.getElementById('voiceStatus');
-let localMicStream=null, micContext=null, micGain=null, micSource=null;
-let voiceMuted=false, pttMode=false, pttHeld=false;
-async function refreshMicDevices(){
-  if(!navigator.mediaDevices?.enumerateDevices)return;
-  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
-    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
-    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
-  }catch(e){}
-}
-function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
-async function enableMic(){
-  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
-  try{
-    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
-    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
-    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
-    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
-    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
-    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
-    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
-    await refreshMicDevices();updateMicGain();
-  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
-}
-voiceEnable.addEventListener('click',enableMic);
-voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
-pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
-micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
-voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
-document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
-if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
-refreshMicDevices();
-
- drawEditor(); });
+$('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile(); drawEditor(); });
 $('#file').addEventListener('change', e => {
   const f = e.target.files && e.target.files[0]; if (!f) return;
   const rd = new FileReader();
@@ -551,51 +516,7 @@ $('#file').addEventListener('change', e => {
       const s = 80, c = document.createElement('canvas'); c.width = c.height = s;
       const side = Math.min(img.width, img.height);
       c.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, s, s);
-      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile();
-// Controles locales de micrófono. La transmisión entre participantes requiere
-// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
-const voiceInput=document.getElementById('voiceInput');
-const voiceEnable=document.getElementById('voiceEnable');
-const voiceMute=document.getElementById('voiceMute');
-const pushBtn=document.getElementById('pushToTalk');
-const micSlider=document.getElementById('micVolume');
-const micValue=document.getElementById('micVolumeValue');
-const voiceStatus=document.getElementById('voiceStatus');
-let localMicStream=null, micContext=null, micGain=null, micSource=null;
-let voiceMuted=false, pttMode=false, pttHeld=false;
-async function refreshMicDevices(){
-  if(!navigator.mediaDevices?.enumerateDevices)return;
-  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
-    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
-    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
-  }catch(e){}
-}
-function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
-async function enableMic(){
-  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
-  try{
-    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
-    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
-    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
-    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
-    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
-    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
-    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
-    await refreshMicDevices();updateMicGain();
-  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
-}
-voiceEnable.addEventListener('click',enableMic);
-voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
-pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
-micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
-voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
-document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
-if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
-refreshMicDevices();
-
- drawEditor();
+      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile(); drawEditor();
     };
     img.onerror = () => setHomeMsg('No se pudo leer esa imagen.');
     img.src = rd.result;
@@ -603,25 +524,65 @@ refreshMicDevices();
   rd.readAsDataURL(f); e.target.value = '';
 });
 
-/* ---------- Utilidades de pantalla ---------- */
-function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); const vp=$('#voicePanel'); if(vp) vp.hidden=(id==='home'); }
+/* Micrófono Sin Eco Local */
+let localMicStream = null, micContext = null, micGain = null;
+let voiceMuted = false, pttMode = false, pttHeld = false;
+
+async function refreshMicDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices)return;
+  try{
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const voiceInput = $('#voiceInput'); const old = voiceInput.value; voiceInput.textContent = '';
+    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{
+      const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o);
+    });
+    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
+  }catch(e){}
+}
+
+function updateMicGain(){
+  if(micGain) micGain.gain.value = (voiceMuted || (pttMode && !pttHeld)) ? 0 : Number($('#micVolume').value);
+}
+
+async function enableMic(){
+  const voiceStatus = $('#voiceStatus');
+  if(!navigator.mediaDevices?.getUserMedia){ voiceStatus.textContent='HTTPS y permiso del navegador requeridos.'; return; }
+  try{
+    if(localMicStream) localMicStream.getTracks().forEach(t=>t.stop());
+    localMicStream = await navigator.mediaDevices.getUserMedia({audio:{deviceId:$('#voiceInput').value?{exact:$('#voiceInput').value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    const AC = window.AudioContext||window.webkitAudioContext; micContext = micContext||new AC(); await micContext.resume();
+    
+    // Conexión exclusiva para procesamiento de señal (sin ruteo al destino de audio local)
+    const micSource = micContext.createMediaStreamSource(localMicStream);
+    micGain = micContext.createGain();
+    micSource.connect(micGain);
+    
+    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
+    $('#voiceEnable').textContent='🎤 Activo'; $('#voiceMute').disabled=false; $('#pushToTalk').disabled=false;
+    voiceStatus.textContent='Micrófono listo para salas sin eco.';
+    await refreshMicDevices(); updateMicGain();
+  }catch(e){ voiceStatus.textContent='Error al activar micrófono.'; }
+}
+
+$('#voiceEnable').addEventListener('click',enableMic);
+$('#voiceMute').addEventListener('click',()=>{voiceMuted=!voiceMuted;$('#voiceMute').textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
+$('#pushToTalk').addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;$('#pushToTalk').textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
+$('#micVolume').addEventListener('input',()=>{ $('#micVolumeValue').textContent=Math.round(Number($('#micVolume').value)*100)+'%'; updateMicGain(); });
+$('#voiceInput').addEventListener('change',()=>{if(localMicStream)enableMic();});
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain();}});
+document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain();}});
+
+function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); }
 function setHomeMsg(t){ $('#homeMsg').textContent = t || ''; }
-function randomCode(){
-  const L = 'ABCDEFGHJKMNPQRSTUVWXYZ'; let s = '';
-  for (let i = 0; i < 4; i++) s += L[Math.floor(Math.random()*L.length)];
-  return s;
-}
-function later(fn, ms){
-  const id = setTimeout(() => { timers = timers.filter(x => x !== id); fn(); }, ms);
-  timers.push(id);
-}
+function randomCode(){ const L = 'ABCDEFGHJKMNPQRSTUVWXYZ'; let s = ''; for (let i = 0; i < 4; i++) s += L[Math.floor(Math.random()*L.length)]; return s; }
+function later(fn, ms){ const id = setTimeout(() => { timers = timers.filter(x => x !== id); fn(); }, ms); timers.push(id); }
 function clearTimers(){ timers.forEach(clearTimeout); timers = []; clearTimeout(botTimer); botTimer = null; }
+
 function snd(kind){
   if (muted) return;
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
-    window._ac = window._ac || new AC(); const ac = window._ac;
-    const t = ac.currentTime;
+    window._ac = window._ac || new AC(); const ac = window._ac; const t = ac.currentTime;
     if (kind === 'bang'){
       const len = ac.sampleRate * 0.5, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = (Math.random()*2 - 1) * Math.pow(1 - i/len, 3);
@@ -639,183 +600,141 @@ function snd(kind){
   } catch(e){}
 }
 
-/* ---------- Red: el anfitrión manda, los demás solo piden ---------- */
-function peerOk(){
-  if (typeof Peer === 'undefined'){ setHomeMsg('Sin conexión: no se pudo cargar la librería de red (PeerJS). Revisa tu internet.'); return false; }
-  return true;
-}
+function peerOk(){ return typeof Peer !== 'undefined'; }
 function myAvatar(){ return cleanAvatar(me); }
 
 function startHost(tries){
   if (!peerOk()) return;
-  tries = tries || 0;
-  const code = randomCode();
-  let p;
-  try { p = new Peer(PREFIX + code); } catch(e){ setHomeMsg('No se pudo crear la sala.'); return; }
+  tries = tries || 0; const code = randomCode(); let p;
+  try { p = new Peer(PREFIX + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
   peer = p;
   p.on('open', () => {
     isHost = true; myId = 'host'; roomCode = code; conns = {};
     players = [{ id:'host', avatar:myAvatar(), alive:true }];
     playerColors={host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)]}; chatLog=[];
-    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} };
+    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg}, isPublic:isPublicRoom };
     lastSeq = 0; log = [];
     broadcast();
   });
   p.on('connection', hostOnConn);
-  p.on('error', err => {
-    if (err.type === 'unavailable-id' && tries < 5){ p.destroy(); startHost(tries + 1); return; }
-    if (!view) setHomeMsg('No se pudo crear la sala (' + err.type + ').');
-  });
-  p.on('disconnected', () => { try { p.reconnect(); } catch(e){} });
+  p.on('error', err => { if (err.type === 'unavailable-id' && tries < 5){ p.destroy(); startHost(tries + 1); return; } });
 }
+
 function hostOnConn(c){
   c.on('data', m => {
     if (!m || typeof m !== 'object') return;
     if (m.t === 'join'){
       let why = '';
-      if (game.phase !== 'lobby') why = 'La partida ya empezó.';
-      else if (players.length >= MAX_PLAYERS) why = 'La sala está llena.';
+      if (game.phase !== 'lobby') why = 'Partida en curso.';
+      else if (players.length >= MAX_PLAYERS) why = 'Sala llena.';
       if (why){ c.send({ t:'denied', reason:why }); setTimeout(() => c.close(), 400); return; }
-      if (players.some(p => p.id === c.peer)) return;
       conns[c.peer] = c;
       players.push({ id:c.peer, avatar:cleanAvatar(m.avatar), alive:true });
-      const used=Object.values(playerColors); const free=CHAT_COLORS.filter(x=>!used.includes(x)); playerColors[c.peer]=free.length ? free[Math.floor(Math.random()*free.length)] : '#ffffff';
+      const free=CHAT_COLORS.filter(x=>!Object.values(playerColors).includes(x));
+      playerColors[c.peer]=free.length ? free[Math.floor(Math.random()*free.length)] : '#ffffff';
       broadcast();
-    } else if (m.t === 'shoot'){
-      if (game.phase === 'play' && players[game.turn] && players[game.turn].id === c.peer && game.mode !== 'hot') doShot(!!m.spin);
+    } else if (m.t === 'shoot'){ if (game.phase === 'play' && players[game.turn]?.id === c.peer) doShot(!!m.spin);
     } else if (m.t === 'chat'){ relayChat(c.peer,m.text);
     } else if (m.t === 'pass'){ if(game.phase==='play' && game.mode==='hot' && players[game.turn]?.id===c.peer) passHot(c.peer); }
   });
-  c.on('close', () => {
-    if (!conns[c.peer]) return;
-    delete conns[c.peer];
-    dropPlayer(game, players, c.peer); delete playerColors[c.peer];
-    broadcast();
-  });
+  c.on('close', () => { if (!conns[c.peer]) return; delete conns[c.peer]; dropPlayer(game, players, c.peer); broadcast(); });
 }
+
 function buildView(){
   return {
-    code:roomCode, phase:game.phase, bullets:game.bullets, mode:game.mode||'classic', hotCfg:game.hotCfg||hotCfg, holder:game.turn, deadline:hotDeadline,
+    code:roomCode, phase:game.phase, bullets:game.bullets, mode:game.mode||'classic', hotCfg:game.hotCfg||hotCfg,
     turn:game.turn === undefined ? -1 : game.turn, pos:game.pos || 0, round:game.round || 1,
     last:game.last || null, winner:game.winner || null, chat:chatLog.slice(-40),
     players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left, chatColor:playerColors[p.id]||'#fff' }))
   };
 }
-function broadcast(){
-  const v = buildView();
-  Object.values(conns).forEach(c => { try { c.send({ t:'state', v }); } catch(e){} });
-  view = v; render();
-}
+
+function broadcast(){ const v = buildView(); Object.values(conns).forEach(c => { try { c.send({ t:'state', v }); } catch(e){} }); view = v; render(); }
 function doShot(spin){ pullTrigger(game, players, spin, Math.random); broadcast(); }
 
-function relayChat(id, raw){ const p=players.find(x=>x.id===id); if(!p)return; const textMsg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!textMsg)return; chatLog.push({id,name:p.avatar.name,text:textMsg,color:playerColors[id]||'#fff'}); chatLog=chatLog.slice(-40); broadcast(); }
-function sendChat(inputId='chatInput'){const val=$('#'+inputId).value.trim();if(!val)return; if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val}); $('#'+inputId).value='';}
+function relayChat(id, raw){
+  const p=players.find(x=>x.id===id); if(!p)return;
+  const msg=String(raw||'').replace(/[<>]/g,'').trim().slice(0,180); if(!msg)return;
+  chatLog.push({id,name:p.avatar.name,text:msg,color:playerColors[id]||'#fff'});
+  chatLog=chatLog.slice(-40); broadcast();
+}
+
+function sendChat(inputId='chatInput'){
+  const val=$('#'+inputId).value.trim(); if(!val)return;
+  if(isHost)relayChat(myId,val); else if(conn&&conn.open)conn.send({t:'chat',text:val});
+  $('#'+inputId).value='';
+}
+
 function passHot(id){
   if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
   const from=players.findIndex(p=>p.id===id);
-  // Se compara siempre contra el mismo deadline absoluto. Pasar la ficha
-  // cambia al portador, pero jamás modifica ni vuelve a programar el reloj.
   if(from<0||from!==game.turn||!hotDeadline||Date.now()>=hotDeadline)return;
-  const next=nextAlive(players,from);
-  if(next<0)return;
-  game.turn=next;
-  broadcast();
+  const next=nextAlive(players,from); if(next<0)return;
+  game.turn=next; broadcast();
 }
-function startHotClock(newRound=true){
-  if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
-  if(newRound){
-    clearTimeout(hotTimer);
-    hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
-  } else if(!hotDeadline){
-    hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
-  }
-  const scheduledDeadline=hotDeadline;
-  const remaining=scheduledDeadline-Date.now();
-  if(remaining<=0){
-    hotTimer=setTimeout(()=>expireHotTurn(scheduledDeadline),0);
-    return;
-  }
-  // Un solo timeout absoluto permanece activo aunque la ficha se pase muchas veces.
-  hotTimer=setTimeout(()=>expireHotTurn(scheduledDeadline),remaining);
+
+function paintChat(v){
+  ['chatMessages','gameChatMessages'].forEach(id=>{
+    const box=$('#'+id); if(!box)return;
+    box.textContent='';
+    (v.chat||[]).forEach(m=>{
+      const line=document.createElement('div'); line.className='chat-line';
+      const name=document.createElement('b'); name.textContent=m.name+': '; name.style.color=m.color;
+      const msg=document.createElement('span'); msg.textContent=m.text;
+      line.append(name,msg); box.appendChild(line);
+    });
+    box.scrollTop=box.scrollHeight;
+  });
 }
-function expireHotTurn(scheduledDeadline){
-  if(!isHost||game.phase!=='play'||game.mode!=='hot')return;
-  // Ignora callbacks viejos si se inició una partida/ronda nueva.
-  if(scheduledDeadline!==hotDeadline)return;
-  if(Date.now()<hotDeadline){startHotClock(false);return;}
-  const expiredIndex=game.turn;
-  if(expiredIndex>=0&&players[expiredIndex])players[expiredIndex].alive=false;
-  const alive=players.filter(p=>p.alive);
-  if(alive.length<=1){
-    game.phase='over';game.winner=alive[0]?.id||null;game.turn=-1;hotDeadline=0;clearTimeout(hotTimer);broadcast();return;
-  }
-  game.turn=nextAlive(players,expiredIndex);
-  hotDeadline=Date.now()+(Number(game.hotCfg?.passSeconds)||10)*1000;
-  broadcast();
-  startHotClock(false);
-}
-function paintChat(v){['chatMessages','gameChatMessages'].forEach(id=>{const box=$('#'+id);if(!box)return;const near=box.scrollHeight-box.clientHeight-box.scrollTop<30;box.textContent='';(v.chat||[]).forEach(m=>{const line=document.createElement('div');line.className='chat-line';const name=document.createElement('b');name.textContent=m.name+': ';name.style.color=m.color;const msg=document.createElement('span');msg.textContent=m.text;line.append(name,msg);box.appendChild(line)});if(near)box.scrollTop=box.scrollHeight;});}
-function makeChips(container, values, current, callback){container.textContent='';values.forEach(v=>{const b=document.createElement('button');b.className='chip txt';b.textContent=v.label;b.setAttribute('aria-pressed',String(v.value===current));b.onclick=()=>callback(v.value);container.appendChild(b)});}
+
 function joinRoom(code){
   if (!peerOk()) return;
   code = code.toUpperCase().trim();
-  if (!/^[A-Z]{4}$/.test(code)){ setHomeMsg('El código tiene 4 letras.'); return; }
-  setHomeMsg(''); $('#joinBtn').disabled = true;
-  let p;
-  try { p = new Peer(); } catch(e){ $('#joinBtn').disabled = false; setHomeMsg('No se pudo conectar.'); return; }
-  peer = p; isHost = false; roomCode = code;
+  let p = new Peer(); peer = p; isHost = false; roomCode = code;
   p.on('open', id => {
-    myId = id;
-    conn = p.connect(PREFIX + code, { reliable:true });
+    myId = id; conn = p.connect(PREFIX + code, { reliable:true });
     conn.on('open', () => conn.send({ t:'join', avatar:myAvatar() }));
     conn.on('data', m => {
-      if (!m || typeof m !== 'object') return;
       if (m.t === 'state' && m.v){ clearTimeout(joinTimer); view = m.v; render(); }
-      else if (m.t === 'denied') leave(m.reason || 'No pudiste entrar.');
+      else if (m.t === 'denied') leave(m.reason || 'Acceso denegado.');
     });
-    conn.on('close', () => { if (peer) leave('El anfitrión cerró la sala.'); });
-    joinTimer = setTimeout(() => { if (!view) leave('No se pudo conectar con la sala ' + code + '.'); }, 12000);
-  });
-  p.on('error', err => {
-    if (err.type === 'peer-unavailable') leave('No existe una sala con el código ' + code + '.');
-    else if (!view) leave('No se pudo conectar (' + err.type + ').');
   });
 }
-function act(spin){
-  if (busy) return;
-  if (isHost) doShot(spin);
-  else if (conn && conn.open) conn.send({ t:'shoot', spin });
-}
+
+function act(spin){ if (busy) return; if (isHost) doShot(spin); else if (conn && conn.open) conn.send({ t:'shoot', spin }); }
+
 function leave(msg){
-  clearTimeout(joinTimer);
-  const p = peer; peer = null; conn = null; conns = {};
+  clearTimeout(joinTimer); const p = peer; peer = null; conn = null; conns = {};
   try { if (p) p.destroy(); } catch(e){}
-  players = []; view = null; isHost = false; botMode = false;
-  resetScene();
-  $('#joinBtn').disabled = false;
+  players = []; view = null; isHost = false; botMode = false; resetScene();
   show('home'); setHomeMsg(msg || '');
 }
 
-/* ---------- Escena: dejarla limpia antes de cada partida ---------- */
 function resetScene(){
-  clearTimers();
-  busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
-  $('#banner').className = '';
-  $('#table').classList.remove('shake');
-  $('#flash').classList.remove('fire');
-  $('#over').hidden = true;
-  $('#log').textContent = '';
+  clearTimers(); busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
+  $('#banner').className = ''; $('#table').classList.remove('shake'); $('#flash').classList.remove('fire');
+  $('#over').hidden = true; $('#log').textContent = '';
   const g = $('#gun'); g.style.transition = 'none'; g.style.transform = 'rotate(0deg)'; gunRot = 0; gunReady = false;
 }
-$('#banner').addEventListener('animationend', () => { $('#banner').className = ''; });
-$('#table').addEventListener('animationend', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('shake'); });
 
-/* ---------- Pintar el estado ---------- */
-function render(){
-  const v = view; if (!v) return;
-  if (v.phase === 'lobby'){ resetScene(); show('lobby'); renderLobby(v); }
-  else { show('game'); renderGame(v); }
+function render(){ const v = view; if (!v) return; if (v.phase === 'lobby'){ resetScene(); show('lobby'); renderLobby(v); } else { show('game'); renderGame(v); } }
+
+function renderLobby(v){
+  $('#roomcode').textContent = v.code; $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
+  seatList($('#plist'), v); paintChat(v);
+  $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost;
+  if (isHost){
+    const b = $('#bullets'); b.textContent = '';
+    [1,2,3].forEach(n => {
+      const c = document.createElement('button'); c.className = 'chip txt'; c.textContent = n + ' bala' + (n>1?'s':'');
+      c.setAttribute('aria-pressed', String(v.bullets === n));
+      c.addEventListener('click', () => { game.bullets = n; broadcast(); });
+      b.appendChild(c);
+    });
+    $('#start').disabled = v.players.length < 2;
+  }
 }
+
 function seatList(box, v){
   box.textContent = '';
   v.players.forEach(p => {
@@ -823,287 +742,111 @@ function seatList(box, v){
     s.appendChild(avatarEl(p.avatar, 64, false));
     const n = document.createElement('div'); n.className = 'nm';
     n.textContent = p.avatar.name + (p.id === myId ? ' (tú)' : '');
-    s.appendChild(n);
-    if (p.id === 'host'){ const t = document.createElement('div'); t.className = 'tag'; t.textContent = 'anfitrión'; s.appendChild(t); }
-    box.appendChild(s);
+    s.appendChild(n); box.appendChild(s);
   });
 }
-function renderLobby(v){
-  $('#roomcode').textContent = v.code;
-  $('#codebox').hidden = botMode; $('#botnote').hidden = !botMode;
-  seatList($('#plist'), v); paintChat(v);
-  $('#hotSettings').hidden = !isHost || v.mode!=='hot';
-  if(isHost && v.mode==='hot'){makeChips($('#passTimes'),[5,10,15].map(x=>({value:x,label:x+' s'})),v.hotCfg?.passSeconds||10,x=>{game.hotCfg={...(game.hotCfg||hotCfg),passSeconds:x};broadcast()});const maxCd=(v.hotCfg?.passSeconds||10)>5?1.5:1;makeChips($('#coolTimes'),[.5,1,1.5].filter(x=>x<=maxCd).map(x=>({value:x,label:x+' s'})),v.hotCfg?.cooldown??1,x=>{game.hotCfg={...(game.hotCfg||hotCfg),cooldown:x};broadcast()});}
-  $('#hotControls').hidden = v.mode!=='hot' || v.phase!=='play';
-  $('#hostctl').hidden = !isHost; $('#guestwait').hidden = isHost;
-  if (isHost){
-    const b = $('#bullets'); b.textContent = '';
-    [1,2,3].forEach(n => {
-      const c = document.createElement('button');
-      c.type = 'button'; c.className = 'chip txt'; c.textContent = n + (n === 1 ? ' bala' : ' balas');
-      c.setAttribute('aria-pressed', String(v.bullets === n));
-      c.addEventListener('click', () => { game.bullets = n; broadcast(); });
-      b.appendChild(c);
-    });
-    const ok = v.players.length >= 2;
-    $('#start').disabled = !ok;
-    $('#needmore').textContent = ok ? '' : 'Hacen falta al menos 2 jugadores';
-  }
-}
 
-/* Círculo de jugadores: el jugador i queda a (-90 + 360·i/n) grados, el primero arriba */
 function seatAngle(i, n){ return -90 + 360 * i / n; }
+
 function drawCircle(v, dispTurn){
   const box = $('#seats'); box.textContent = '';
-  const n = v.players.length, R = 0.37;
-  const W = $('#arena').clientWidth || 340;
-  const chord = 2 * R * W * Math.sin(Math.PI / Math.max(n, 2));
-  const s = Math.round(Math.max(40, Math.min(78, 0.62 * chord)));
+  const n = v.players.length, R = 0.37, W = $('#arena').clientWidth || 340;
+  const s = Math.round(Math.max(40, Math.min(78, 0.62 * 2 * R * W * Math.sin(Math.PI / Math.max(n, 2)))));
   v.players.forEach((p, i) => {
     const a = seatAngle(i, n) * Math.PI / 180;
-    const el = document.createElement('div');
-    el.className = 'seat2' + (i === dispTurn ? ' turn' : '');
+    const el = document.createElement('div'); el.className = 'seat2' + (i === dispTurn ? ' turn' : '');
     el.style.setProperty('--s', s + 'px');
-    el.style.left = (50 + R * 100 * Math.cos(a)) + '%';
-    el.style.top = (50 + R * 100 * Math.sin(a)) + '%';
+    el.style.left = (50 + R * 100 * Math.cos(a)) + '%'; el.style.top = (50 + R * 100 * Math.sin(a)) + '%';
     const out = (!p.alive || p.left) && p.id !== holdId;
     el.appendChild(avatarEl(p.avatar, s, out, out && p.id === freshId));
-    const nm = document.createElement('div'); nm.className = 'nm';
-    nm.textContent = p.avatar.name + (p.id === myId ? ' (tú)' : '');
-    el.appendChild(nm);
+    const nm = document.createElement('div'); nm.className = 'nm'; nm.textContent = p.avatar.name; el.appendChild(nm);
     box.appendChild(el);
   });
 }
-/* El arma gira por el camino más corto; "turns" añade vueltas completas */
+
 function aimAt(deg, o){
-  o = o || {};
-  const g = $('#gun');
+  o = o || {}; const g = $('#gun');
   const c = ((gunRot % 360) + 360) % 360, t = ((deg % 360) + 360) % 360;
-  const d = ((t - c + 540) % 360) - 180;
-  gunRot += d + 360 * (o.turns || 0);
-  if (o.instant){
-    g.style.transition = 'none'; g.style.transform = 'rotate(' + gunRot + 'deg)';
-    void g.offsetWidth; g.style.transition = '';
-  } else {
-    g.style.transition = ''; g.style.transitionDuration = (o.dur || 0.7) + 's';
-    g.style.transform = 'rotate(' + gunRot + 'deg)';
-  }
+  gunRot += (((t - c + 540) % 360) - 180) + 360 * (o.turns || 0);
+  g.style.transition = o.instant ? 'none' : 'transform ' + (o.dur || 0.7) + 's';
+  g.style.transform = 'rotate(' + gunRot + 'deg)';
 }
+
 function renderGame(v){
-  paintChat(v);
-  $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala ';
-  $('#gcode').textContent = botMode ? 'contra bots' : v.code;
-  if (busy) return;                       // se termina la animación y luego se pone al día
+  paintChat(v); $('#gpre').textContent = botMode ? 'Práctica ' : 'Sala '; $('#gcode').textContent = botMode ? 'bots' : v.code;
+  if (busy) return;
   if (v.last && v.last.seq !== lastSeq){ playShot(v); return; }
   drawScene(v);
-  scheduleBot();
 }
-/* Bots: cuando le toca a uno, espera un poco y dispara (a veces gira el tambor) */
-function scheduleBot(){
-  clearTimeout(botTimer); botTimer = null;
-  if (!botMode || !isHost || game.phase !== 'play') return;
-  const p = players[game.turn];
-  if (!p || !p.bot) return;
-  botTimer = setTimeout(() => {
-    botTimer = null;
-    if (!busy && game.phase === 'play' && players[game.turn] === p) { if(game.mode==='hot') passHot(p.id); else doShot(Math.random() < 0.35); }
-  }, 1100 + Math.random() * 900);
-}
-function startBots(){
-  setHomeMsg('');
-  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null; conn = null;
-  players = [{ id:'host', avatar:myAvatar(), alive:true }]
-    .concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
-  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} };
-  view = null; broadcast();
-}
-function drawScene(v){
-  const n = v.players.length;
-  const turnP = v.players[v.turn];
-  const myTurn = v.phase === 'play' && turnP && turnP.id === myId;
-  $('#status').textContent = v.phase === 'over' ? 'Fin de la partida'
-    : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
-  $('#info').textContent = v.mode==='hot' ? 'Pipa Caliente · pasá la ficha antes de que termine el tiempo' : (v.bullets + (v.bullets === 1 ? ' bala' : ' balas') + ' en el tambor · ' + (CHAMBERS - v.pos) + ' recámaras hasta recargar · ronda ' + v.round);
-  const hot=v.mode==='hot'; $('#shoot').hidden=hot; $('#spin').hidden=hot; $('#hotControls').hidden=!hot||v.phase!=='play'; $('#passBtn').disabled=!myTurn||hotCooling; $('#hotHolder').textContent=hot&&turnP?'La ficha está con '+turnP.avatar.name:''; if(hot){const remain=Math.max(0,Math.ceil(((v.deadline||Date.now()+10000)-Date.now())/1000));$('#hotCountdown').textContent='⏳ '+remain+' s';} $('#shoot').disabled = !myTurn; $('#spin').disabled = !myTurn;
-  drawCircle(v, v.phase === 'play' ? v.turn : -1);
-  if (v.phase === 'play' && v.turn >= 0){
-    aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 });
-    gunReady = true;
-  }
-  const over = $('#over');
-  if (v.phase === 'over'){
-    const w = v.players.find(p => p.id === v.winner);
-    $('#wis').textContent = w ? 'Winner is…' : 'Fin de la partida';
-    const wa = $('#winav'); wa.textContent = '';
-    if (w) wa.appendChild(avatarEl(w.avatar, 120));
-    $('#wname').textContent = w ? w.avatar.name : 'Todos se fueron';
-    $('#again').hidden = !isHost; $('#waitagain').hidden = isHost;
-    if (over.hidden) over.hidden = false;
-  } else over.hidden = true;
-}
-function playShot(v){
-  const L = v.last, n = v.players.length;
-  lastSeq = L.seq; busy = true;
-  $('#shoot').disabled = true; $('#spin').disabled = true;
-  const si = v.players.findIndex(p => p.id === L.by);
-  const who = v.players[si];
-  const name = who ? who.avatar.name : 'Alguien';
-  holdId = L.hit ? L.by : null; freshId = null;
-  drawCircle(v, si);                      // antes del disparo, el tirador sigue vivo
-  $('#status').textContent = name + (L.spun ? ' gira el tambor…' : ' aprieta el gatillo…');
-  aimAt(seatAngle(si, n), { instant:!gunReady, turns:L.spun ? 2 : 0, dur:L.spun ? 1.2 : 0.6 });
-  gunReady = true;
-  if (L.spun) snd('spin');
-  const wait = L.spun ? 1300 : 550;
-  later(() => {
-    fire(L.hit);
-    if (L.hit){ holdId = null; freshId = L.by; drawCircle(v, si); freshId = null; }
-    $('#status').textContent = name + (L.hit ? ' fue eliminado' : ' se salvó');
-    log.unshift(name + (L.spun ? ' giró el tambor y ' : ' ') + (L.hit ? 'recibió el disparo' : 'se salvó'));
-    log = log.slice(0, 4);
-    const ul = $('#log'); ul.textContent = '';
-    log.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
-  }, wait);
-  later(() => { busy = false; holdId = null; freshId = null; render(); }, wait + 1700);
-}
-function fire(hit){
-  snd(hit ? 'bang' : 'click');
-  const f = $('#flash'); f.classList.remove('fire'); void f.getBoundingClientRect(); if (hit) f.classList.add('fire');
-  const bn = $('#banner'); bn.className = ''; void bn.offsetWidth;
-  bn.className = 'show ' + (hit ? 'bang' : 'click');
-  bn.firstElementChild.textContent = hit ? '¡BANG!' : 'Click…';
-  if (hit){ const t = $('#table'); t.classList.remove('shake'); void t.offsetWidth; t.classList.add('shake'); }
-}
-window.addEventListener('resize', () => { if (view && view.phase !== 'lobby' && !busy && !$('#game').hidden) drawScene(view); });
 
-/* ---------- Botones ---------- */
+function drawScene(v){
+  const n = v.players.length, turnP = v.players[v.turn], myTurn = v.phase === 'play' && turnP && turnP.id === myId;
+  $('#status').textContent = v.phase === 'over' ? 'Fin' : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
+  drawCircle(v, v.phase === 'play' ? v.turn : -1);
+  if (v.phase === 'play' && v.turn >= 0){ aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 }); gunReady = true; }
+}
+
+function playShot(v){
+  const L = v.last, n = v.players.length; lastSeq = L.seq; busy = true;
+  const si = v.players.findIndex(p => p.id === L.by), who = v.players[si];
+  holdId = L.hit ? L.by : null; drawCircle(v, si);
+  aimAt(seatAngle(si, n), { instant:!gunReady, turns:L.spun ? 2 : 0, dur:L.spun ? 1.2 : 0.6 });
+  gunReady = true; if (L.spun) snd('spin');
+  later(() => {
+    snd(L.hit ? 'bang' : 'click');
+    const f = $('#flash'); f.classList.remove('fire'); void f.getBoundingClientRect(); if (L.hit) f.classList.add('fire');
+    if (L.hit){ holdId = null; freshId = L.by; drawCircle(v, si); freshId = null; }
+  }, L.spun ? 1300 : 550);
+  later(() => { busy = false; holdId = null; render(); }, (L.spun ? 1300 : 550) + 1700);
+}
+
+function startBots(){
+  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null;
+  players = [{ id:'host', avatar:myAvatar(), alive:true }].concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
+  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{...hotCfg} }; broadcast();
+}
+
+/* Modal y Configuración de Botones */
 $('#playMenu').addEventListener('click',()=>$('#modeModal').hidden=false);
-$('#profileBtn').addEventListener('click',()=>$('#profileModal').hidden=false);
+$('#profileBtn').addEventListener('click',()=>{$('#profileModal').hidden=false;drawEditor();});
 $('#howBtn').addEventListener('click',()=>$('#howModal').hidden=false);
-document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{selectedMode=b.dataset.mode;$('#modeModal').hidden=true;$('#setupModal').hidden=false;$('#setupTitle').textContent=selectedMode==='hot'?'Pipa Caliente':'Ruleta Rusa Classic';}));
-$('#create').addEventListener('click',()=>{$('#setupModal').hidden=true;setHomeMsg('');startHost(0)});
-$('#botsBtn').addEventListener('click',()=>{$('#setupModal').hidden=true;startBots()});
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{selectedMode=b.dataset.mode;$('#modeModal').hidden=true;$('#setupModal').hidden=false;}));
+
+$('#roomPublic').addEventListener('click', () => { isPublicRoom = true; $('#roomPublic').setAttribute('aria-pressed', 'true'); $('#roomPrivate').setAttribute('aria-pressed', 'false'); });
+$('#roomPrivate').addEventListener('click', () => { isPublicRoom = false; $('#roomPrivate').setAttribute('aria-pressed', 'true'); $('#roomPublic').setAttribute('aria-pressed', 'false'); });
+
+$('#create').addEventListener('click',()=>{$('#setupModal').hidden=true;startHost(0);});
+$('#botsBtn').addEventListener('click',()=>{$('#setupModal').hidden=true;startBots();});
 $('#openJoin').addEventListener('click',()=>$('#joinPanel').hidden=false);
 document.querySelectorAll('.closeModal').forEach(b=>b.addEventListener('click',()=>b.closest('.modal').hidden=true));
 $('#updatesBtn').addEventListener('click',()=>$('#updatesModal').hidden=false);
-$('#chatSend').addEventListener('click',()=>sendChat('chatInput'));$('#chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('chatInput')});$('#gameChatSend').addEventListener('click',()=>sendChat('gameChatInput'));$('#gameChatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('gameChatInput')});
-$('#passBtn').addEventListener('click',()=>{if(hotCooling)return;hotClicks++;const threshold=players.length<=4?4:5;if(isHost)passHot(myId);else if(conn&&conn.open)conn.send({t:'pass'});if(hotClicks>=threshold){hotCooling=true;$('#passFeedback').textContent='Pausa anti-spam activada';$('#passBtn').disabled=true;setTimeout(()=>{hotCooling=false;hotClicks=0;$('#passFeedback').textContent='';$('#passBtn').disabled=false;},(game.hotCfg?.cooldown||1)*1000);}});
+
+$('#chatSend').addEventListener('click',()=>sendChat('chatInput')); $('#chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('chatInput');});
+$('#gameChatSend').addEventListener('click',()=>sendChat('gameChatInput')); $('#gameChatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat('gameChatInput');});
+
 $('#joinBtn').addEventListener('click', () => joinRoom($('#code').value));
-$('#code').addEventListener('keydown', e => { if (e.key === 'Enter') joinRoom($('#code').value); });
-$('#code').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase(); });
 ['#leave1','#leave2','#leave3'].forEach(s => $(s).addEventListener('click', () => leave('')));
-$('#copy').addEventListener('click', () => {
-  const done = () => { $('#copy').textContent = 'Copiado'; setTimeout(() => { $('#copy').textContent = 'Copiar código'; }, 1500); };
-  try { navigator.clipboard.writeText(roomCode).then(done, () => {}); } catch(e){}
-});
+
 $('#start').addEventListener('click', () => {
   if (!isHost || players.length < 2) return;
-  players = players.filter(p => !p.left);
-  if(game.mode==='hot'){players.forEach(p=>p.alive=true);game={phase:'play',mode:'hot',hotCfg:game.hotCfg||{...hotCfg},turn:Math.floor(Math.random()*players.length),winner:null,round:1};startHotClock();}else { game = newGame(players, game.bullets || 1, Math.random); game.mode='classic'; }
-  broadcast();
+  game = newGame(players, game.bullets || 1, Math.random); broadcast();
 });
-$('#again').addEventListener('click', () => {
-  if (!isHost) return;
-  players = players.filter(p => !p.left); players.forEach(p => { p.alive = true; });
-  clearTimeout(hotTimer); game = { phase:'lobby', bullets:game.bullets || 1, mode:game.mode||selectedMode, hotCfg:game.hotCfg||{...hotCfg} }; broadcast();
-});
+
 $('#shoot').addEventListener('click', () => act(false));
 $('#spin').addEventListener('click', () => act(true));
-$('#mute').addEventListener('click', e => {
-  muted = !muted; e.target.setAttribute('aria-pressed', String(muted)); e.target.textContent = 'Sonido: ' + (muted ? 'no' : 'sí');
-});
+$('#mute').addEventListener('click', e => { muted = !muted; e.target.textContent = 'Sonido: ' + (muted ? 'no' : 'sí'); });
 
-setInterval(()=>{if(view&&view.mode==='hot'&&view.phase==='play'&&!$('#game').hidden){const left=Math.max(0,Math.ceil(((view.deadline||Date.now())-Date.now())/1000));$('#hotCountdown').textContent='⏳ '+left+' s';}},200);
-// Nieve decorativa
-for(let i=0;i<42;i++){const f=document.createElement('span');f.className='snowflake';f.textContent=Math.random()>.5?'❄':'·';f.style.left=Math.random()*100+'vw';f.style.fontSize=(8+Math.random()*15)+'px';f.style.animationDuration=(7+Math.random()*12)+'s';f.style.animationDelay=(-Math.random()*18)+'s';f.style.setProperty('--drift',(Math.random()*100-50)+'px');document.body.appendChild(f)}
-// Reproductor navideño: orden aleatorio, pausa, salto y volumen.
-const player=$('#musicPlayer');
-const musicSelect=$('#musicTrack');
-const musicButton=$('#musicToggle');
-const musicTracks=Array.from(musicSelect.options).filter(o=>o.value);
+/* Nieve */
+for(let i=0;i<35;i++){const f=document.createElement('span');f.className='snowflake';f.textContent=Math.random()>.5?'❄':'·';f.style.left=Math.random()*100+'vw';f.style.fontSize=(8+Math.random()*15)+'px';f.style.animationDuration=(7+Math.random()*12)+'s';f.style.animationDelay=(-Math.random()*18)+'s';f.style.setProperty('--drift',(Math.random()*100-50)+'px');document.body.appendChild(f);}
+
+/* Reproductor de Música */
+const player=$('#musicPlayer'), musicSelect=$('#musicTrack'), musicButton=$('#musicToggle');
 player.volume=0.5;
-let lastTrack='';
-function syncMusicButton(){musicButton.textContent=player.paused?'▶ Reproducir':'❚❚ Pausar';}
-function chooseRandomTrack(){
-  if(!musicTracks.length)return null;
-  const choices=musicTracks.filter(o=>o.value!==lastTrack);
-  const pool=choices.length?choices:musicTracks;
-  return pool[Math.floor(Math.random()*pool.length)];
-}
-function playTrack(option){
-  if(!option)return;
-  musicSelect.value=option.value;
-  lastTrack=option.value;
-  player.src=option.value;
-  player.load();
-  player.play().then(syncMusicButton).catch(syncMusicButton);
-}
-function playRandomTrack(){playTrack(chooseRandomTrack());}
-musicSelect.addEventListener('change',()=>{
-  const selected=musicSelect.value;
-  if(!selected){playRandomTrack();return;}
-  playTrack(musicTracks.find(o=>o.value===selected));
-});
 musicButton.addEventListener('click',()=>{
-  if(player.paused){
-    if(!player.src)playRandomTrack();
-    else player.play().then(syncMusicButton).catch(syncMusicButton);
-  }else{player.pause();syncMusicButton();}
+  if(player.paused){ if(!player.src)player.src=musicSelect.value||'assets/music/jingle-bells.mp3'; player.play(); musicButton.textContent='⏸ Pausar'; }
+  else{ player.pause(); musicButton.textContent='▶ Reproducir'; }
 });
-$('#musicNext').addEventListener('click',playRandomTrack);
-$('#musicVolume').addEventListener('input',e=>{
-  player.volume=Number(e.target.value);
-  $('#volumeValue').textContent=Math.round(player.volume*100)+'%';
-});
-player.addEventListener('ended',playRandomTrack);
-player.addEventListener('play',syncMusicButton);
-player.addEventListener('pause',syncMusicButton);
-
-
-// Controles locales de micrófono. La transmisión entre participantes requiere
-// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
-const voiceInput=document.getElementById('voiceInput');
-const voiceEnable=document.getElementById('voiceEnable');
-const voiceMute=document.getElementById('voiceMute');
-const pushBtn=document.getElementById('pushToTalk');
-const micSlider=document.getElementById('micVolume');
-const micValue=document.getElementById('micVolumeValue');
-const voiceStatus=document.getElementById('voiceStatus');
-let localMicStream=null, micContext=null, micGain=null, micSource=null;
-let voiceMuted=false, pttMode=false, pttHeld=false;
-async function refreshMicDevices(){
-  if(!navigator.mediaDevices?.enumerateDevices)return;
-  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
-    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
-    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
-  }catch(e){}
-}
-function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
-async function enableMic(){
-  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
-  try{
-    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
-    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
-    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
-    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
-    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
-    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
-    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
-    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
-    await refreshMicDevices();updateMicGain();
-  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
-}
-voiceEnable.addEventListener('click',enableMic);
-voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
-pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
-micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
-voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
-document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
-if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
-refreshMicDevices();
-
- drawEditor();
+$('#musicVolume').addEventListener('input',e=>{ player.volume=Number(e.target.value); $('#volumeValue').textContent=Math.round(player.volume*100)+'%'; });
 </script>
 </body>
 </html>
