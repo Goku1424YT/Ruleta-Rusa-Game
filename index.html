@@ -161,9 +161,17 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
 .hotspot:hover,.hotspot:focus-visible{background:rgba(255,230,210,.13);box-shadow:0 0 0 2px #f4d4c6,0 0 22px #f4d4c688;outline:none}
 .hs-updates{left:4.5%;top:35%;width:20%;height:17%}.hs-donate{left:4.5%;top:57%;width:20%;height:17%}.hs-play{left:31%;top:67%;width:38%;height:19%}.hs-profile{right:4%;top:35%;width:20%;height:18%}.hs-how{right:4%;top:57%;width:20%;height:18%}
 .hs-youtube{left:37%;top:87%;width:5.5%;height:11%}.hs-x{left:45.5%;top:87%;width:5.5%;height:11%}.hs-tiktok{left:53.5%;top:87%;width:5.5%;height:11%}.hs-twitch{left:62%;top:87%;width:5.5%;height:11%}
-.musicbar{position:absolute;z-index:5;left:50%;bottom:12px;transform:translateX(-50%);width:max-content;max-width:94vw;padding:8px 12px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
+.musicbar{position:fixed;z-index:1200;left:14px;bottom:14px;transform:none;width:max-content;max-width:94vw;padding:8px 12px;border:1px solid #b88952;border-radius:12px;background:#21090edb;color:#fff0e7}
 .musicbar select{background:#23080e;color:#fff;padding:8px;border:1px solid #a66a60;border-radius:8px;min-width:0}.musicbar button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:8px;padding:8px 10px;cursor:pointer}.musicbar button:hover{background:#84202c}.volume-control{display:flex;align-items:center;gap:4px}.volume-control input{width:85px;accent-color:#d8aa70}#volumeValue{font-size:.8rem;min-width:32px}
 @media(max-width:700px){.christmas-menu{width:100vw;height:100svh;min-height:560px}.musicbar{font-size:.72rem;bottom:8px;gap:5px;padding:6px}.musicbar select{max-width:125px}.volume-control input{width:58px}}
+
+
+/* HUD de sala: chat y voz solo aparecen al entrar a una sala (espera o partida); nunca en el menú principal. */
+#lobby .chatbox,#game>.chatbox{position:fixed;z-index:1100;top:14px;left:14px;width:min(340px,calc(100vw - 28px));margin:0;padding:10px;background:rgba(12,5,8,.94);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;backdrop-filter:blur(8px)}
+#lobby .chat-messages,#game>.chatbox .chat-messages{height:125px;max-height:22vh}
+#voicePanel{position:fixed;z-index:1101;right:14px;top:14px;width:min(320px,calc(100vw - 28px));padding:12px;background:rgba(12,5,8,.95);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;color:#fff0e7;backdrop-filter:blur(8px)}
+#voicePanel h3{margin:0 0 8px;font-size:1rem}#voicePanel label{display:block;font-size:.82rem;margin:7px 0 4px}#voicePanel select,#voicePanel input[type=range]{width:100%;max-width:100%}#voicePanel select{background:#260b11;color:white;border:1px solid #a66a60;border-radius:7px;padding:7px}#voicePanel .voice-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}#voicePanel button{background:#5b111b;color:white;border:1px solid #c18b76;border-radius:8px;padding:8px;cursor:pointer}#voiceStatus{font-size:.78rem;color:#e7c3b5;margin-top:6px}
+@media(max-width:700px){#lobby .chatbox,#game>.chatbox{top:8px;left:8px;width:min(255px,calc(100vw - 16px));}#lobby .chat-messages,#game>.chatbox .chat-messages{height:85px}#voicePanel{top:8px;right:8px;width:min(245px,calc(100vw - 16px));padding:8px}.musicbar{left:8px;bottom:8px;max-width:calc(100vw - 16px);}}
 
 </style>
 </head>
@@ -278,6 +286,16 @@ h1{color:#f4d4c6;text-shadow:0 4px 0 #64121b,0 0 22px #c22b36}
 </section>
 
 </main>
+
+<div id="voicePanel" hidden aria-label="Controles de micrófono">
+  <h3>🎙️ Voice Chat</h3>
+  <label for="voiceInput">Dispositivo de entrada</label>
+  <select id="voiceInput"><option value="">Micrófono predeterminado</option></select>
+  <label for="micVolume">Volumen del micrófono: <span id="micVolumeValue">70%</span></label>
+  <input id="micVolume" type="range" min="0" max="1" step="0.05" value="0.7">
+  <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>Push to Talk (V)</button></div>
+  <div id="voiceStatus" role="status">El micrófono se activa dentro de una sala. Tecla V para hablar.</div>
+</div>
 <div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí un modo</h2><div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse a una sala</button><button class="ghost closeModal">Volver</button></div><div id="joinPanel" hidden><label class="label" for="code">Código de sala</label><div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO"><button id="joinBtn" class="btn">Unirme</button></div></div></div></div>
 <div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2><p>¿Cómo querés jugar?</p><div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div><button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
 <div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2><p><b>Interfaz:</b> nueva ambientación navideña, nieve animada y decoración de perfil.</p><p><b>Jugabilidad:</b> se incorpora el modo Pipa Caliente con tiempo límite, pases y cooldown configurable.</p><p><b>Multijugador:</b> chat de sala con colores aleatorios únicos para distinguir participantes.</p><p><b>Personalización:</b> gorro de Santa y marco con cuernos de reno.</p><p><b>Mejoras:</b> selección de modo, creación de sala o práctica con bots, reproductor musical y accesos a redes sociales.</p><button class="btn closeModal">Cerrar</button></div></div>
@@ -418,7 +436,51 @@ function chips(box, items, key, label){
     else if (v === 'silueta'){ b.innerHTML = SIL('currentColor'); b.setAttribute('aria-label', 'Silueta'); }
     else { b.textContent = v || label; if (!v) b.classList.add('txt'); }
     b.setAttribute('aria-pressed', String(me[key] === v));
-    b.addEventListener('click', () => { me[key] = v; saveProfile(); drawEditor(); });
+    b.addEventListener('click', () => { me[key] = v; saveProfile();
+// Controles locales de micrófono. La transmisión entre participantes requiere
+// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
+const voiceInput=document.getElementById('voiceInput');
+const voiceEnable=document.getElementById('voiceEnable');
+const voiceMute=document.getElementById('voiceMute');
+const pushBtn=document.getElementById('pushToTalk');
+const micSlider=document.getElementById('micVolume');
+const micValue=document.getElementById('micVolumeValue');
+const voiceStatus=document.getElementById('voiceStatus');
+let localMicStream=null, micContext=null, micGain=null, micSource=null;
+let voiceMuted=false, pttMode=false, pttHeld=false;
+async function refreshMicDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices)return;
+  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
+    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
+    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
+  }catch(e){}
+}
+function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
+async function enableMic(){
+  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
+  try{
+    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
+    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
+    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
+    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
+    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
+    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
+    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
+    await refreshMicDevices();updateMicGain();
+  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
+}
+voiceEnable.addEventListener('click',enableMic);
+voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
+pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
+micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
+voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
+document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
+if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
+refreshMicDevices();
+
+ drawEditor(); });
     box.appendChild(b);
   });
 }
@@ -435,7 +497,51 @@ function drawEditor(){
 $('#name').value = me.name === 'Jugador' ? '' : me.name;
 $('#name').addEventListener('input', e => { me.name = cleanAvatar({ ...me, name:e.target.value }).name; saveProfile(); });
 $('#pick').addEventListener('click', () => $('#file').click());
-$('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile(); drawEditor(); });
+$('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile();
+// Controles locales de micrófono. La transmisión entre participantes requiere
+// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
+const voiceInput=document.getElementById('voiceInput');
+const voiceEnable=document.getElementById('voiceEnable');
+const voiceMute=document.getElementById('voiceMute');
+const pushBtn=document.getElementById('pushToTalk');
+const micSlider=document.getElementById('micVolume');
+const micValue=document.getElementById('micVolumeValue');
+const voiceStatus=document.getElementById('voiceStatus');
+let localMicStream=null, micContext=null, micGain=null, micSource=null;
+let voiceMuted=false, pttMode=false, pttHeld=false;
+async function refreshMicDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices)return;
+  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
+    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
+    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
+  }catch(e){}
+}
+function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
+async function enableMic(){
+  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
+  try{
+    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
+    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
+    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
+    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
+    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
+    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
+    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
+    await refreshMicDevices();updateMicGain();
+  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
+}
+voiceEnable.addEventListener('click',enableMic);
+voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
+pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
+micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
+voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
+document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
+if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
+refreshMicDevices();
+
+ drawEditor(); });
 $('#file').addEventListener('change', e => {
   const f = e.target.files && e.target.files[0]; if (!f) return;
   const rd = new FileReader();
@@ -445,7 +551,51 @@ $('#file').addEventListener('change', e => {
       const s = 80, c = document.createElement('canvas'); c.width = c.height = s;
       const side = Math.min(img.width, img.height);
       c.getContext('2d').drawImage(img, (img.width - side)/2, (img.height - side)/2, side, side, 0, 0, s, s);
-      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile(); drawEditor();
+      me.photo = c.toDataURL('image/jpeg', 0.72); saveProfile();
+// Controles locales de micrófono. La transmisión entre participantes requiere
+// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
+const voiceInput=document.getElementById('voiceInput');
+const voiceEnable=document.getElementById('voiceEnable');
+const voiceMute=document.getElementById('voiceMute');
+const pushBtn=document.getElementById('pushToTalk');
+const micSlider=document.getElementById('micVolume');
+const micValue=document.getElementById('micVolumeValue');
+const voiceStatus=document.getElementById('voiceStatus');
+let localMicStream=null, micContext=null, micGain=null, micSource=null;
+let voiceMuted=false, pttMode=false, pttHeld=false;
+async function refreshMicDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices)return;
+  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
+    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
+    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
+  }catch(e){}
+}
+function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
+async function enableMic(){
+  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
+  try{
+    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
+    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
+    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
+    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
+    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
+    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
+    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
+    await refreshMicDevices();updateMicGain();
+  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
+}
+voiceEnable.addEventListener('click',enableMic);
+voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
+pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
+micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
+voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
+document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
+if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
+refreshMicDevices();
+
+ drawEditor();
     };
     img.onerror = () => setHomeMsg('No se pudo leer esa imagen.');
     img.src = rd.result;
@@ -454,7 +604,7 @@ $('#file').addEventListener('change', e => {
 });
 
 /* ---------- Utilidades de pantalla ---------- */
-function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); }
+function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); const vp=$('#voicePanel'); if(vp) vp.hidden=(id==='home'); }
 function setHomeMsg(t){ $('#homeMsg').textContent = t || ''; }
 function randomCode(){
   const L = 'ABCDEFGHJKMNPQRSTUVWXYZ'; let s = '';
@@ -908,6 +1058,50 @@ $('#musicVolume').addEventListener('input',e=>{
 player.addEventListener('ended',playRandomTrack);
 player.addEventListener('play',syncMusicButton);
 player.addEventListener('pause',syncMusicButton);
+
+
+// Controles locales de micrófono. La transmisión entre participantes requiere
+// señalización WebRTC entre pares; no se inicia sin estar dentro de una sala.
+const voiceInput=document.getElementById('voiceInput');
+const voiceEnable=document.getElementById('voiceEnable');
+const voiceMute=document.getElementById('voiceMute');
+const pushBtn=document.getElementById('pushToTalk');
+const micSlider=document.getElementById('micVolume');
+const micValue=document.getElementById('micVolumeValue');
+const voiceStatus=document.getElementById('voiceStatus');
+let localMicStream=null, micContext=null, micGain=null, micSource=null;
+let voiceMuted=false, pttMode=false, pttHeld=false;
+async function refreshMicDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices)return;
+  try{const devices=await navigator.mediaDevices.enumerateDevices();const old=voiceInput.value;voiceInput.textContent='';
+    devices.filter(d=>d.kind==='audioinput').forEach((d,i)=>{const o=document.createElement('option');o.value=d.deviceId;o.textContent=d.label||`Micrófono ${i+1}`;voiceInput.append(o)});
+    if([...voiceInput.options].some(o=>o.value===old))voiceInput.value=old;
+  }catch(e){}
+}
+function updateMicGain(){if(micGain)micGain.gain.value=(voiceMuted||(pttMode&&!pttHeld))?0:Number(micSlider.value);}
+async function enableMic(){
+  if(!navigator.mediaDevices?.getUserMedia){voiceStatus.textContent='Se necesita HTTPS y permiso del navegador para usar el micrófono.';return;}
+  try{
+    if(localMicStream)localMicStream.getTracks().forEach(t=>t.stop());
+    localMicStream=await navigator.mediaDevices.getUserMedia({audio:{deviceId:voiceInput.value?{exact:voiceInput.value}:undefined,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    const AC=window.AudioContext||window.webkitAudioContext;micContext=micContext||new AC();await micContext.resume();
+    if(micSource)try{micSource.disconnect()}catch(e){} if(micGain)try{micGain.disconnect()}catch(e){}
+    micSource=micContext.createMediaStreamSource(localMicStream);micGain=micContext.createGain();micSource.connect(micGain);micGain.connect(micContext.destination);
+    // La ganancia local sirve como monitor de nivel; el stream queda disponible para la futura conexión WebRTC.
+    localMicStream.getAudioTracks().forEach(t=>t.enabled=true);
+    voiceEnable.textContent='🎤 Micrófono activado';voiceMute.disabled=false;pushBtn.disabled=false;voiceStatus.textContent='Permiso concedido. El micrófono está listo en este dispositivo.';
+    await refreshMicDevices();updateMicGain();
+  }catch(e){voiceStatus.textContent='No se pudo activar el micrófono: '+(e.name==='NotAllowedError'?'permiso denegado':e.message);}
+}
+voiceEnable.addEventListener('click',enableMic);
+voiceMute.addEventListener('click',()=>{voiceMuted=!voiceMuted;voiceMute.textContent=voiceMuted?'Activar sonido':'Silenciar';updateMicGain();});
+pushBtn.addEventListener('click',()=>{pttMode=!pttMode;pttHeld=false;pushBtn.textContent=pttMode?'PTT activado (V)':'Micrófono abierto';updateMicGain();});
+micSlider.addEventListener('input',()=>{micValue.textContent=Math.round(Number(micSlider.value)*100)+'%';updateMicGain()});
+voiceInput.addEventListener('change',()=>{if(localMicStream)enableMic()});
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='v'&&!e.repeat&&pttMode&&!e.target.matches('input,textarea,select')){pttHeld=true;updateMicGain()}});
+document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='v'&&pttMode){pttHeld=false;updateMicGain()}});
+if(navigator.mediaDevices?.addEventListener)navigator.mediaDevices.addEventListener('devicechange',refreshMicDevices);
+refreshMicDevices();
 
  drawEditor();
 </script>
