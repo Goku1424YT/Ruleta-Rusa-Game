@@ -426,15 +426,13 @@ const PREFIX = 'ruletarusa-';
 
 /* Con servidor propio: añadí host:'tu-servidor.com', port:443, path:'/', secure:true
    Para móviles / redes restrictivas añadí un servidor TURN en iceServers. */
-const PEER_OPTS = { debug:1, config:{ iceServers:[
+/* Por defecto se usa la configuración de PeerJS (STUN + TURN gratuitos incluidos).
+   Si tenés tu propio TURN, agregalo acá y se usará junto con los de PeerJS. */
+const CUSTOM_ICE = [ /* { urls:'turn:TU_TURN:3478', username:'...', credential:'...' } */ ];
+const PEER_OPTS = CUSTOM_ICE.length ? { debug:1, config:{ iceServers:[
   { urls:'stun:stun.l.google.com:19302' },
-  { urls:'stun:global.stun.twilio.com:3478' },
-  // TURN gratuitos de PeerJS (los que trae por defecto; hacen falta entre redes distintas)
-  { urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'], username:'peerjs', credential:'peerjsp' },
-  // TURN público de respaldo (compartido, puede ser lento o caerse)
-  { urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turn:openrelay.metered.ca:443?transport=tcp'], username:'openrelayproject', credential:'openrelayproject' }
-  // Mejor aún: tu propio TURN { urls:'turn:TU_TURN', username:'...', credential:'...' }
-], sdpSemantics:'unified-plan' }};
+  { urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'], username:'peerjs', credential:'peerjsp' }
+].concat(CUSTOM_ICE) } } : { debug:1 };
 const newPeer = id => new Peer(id || undefined, PEER_OPTS);
 
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
@@ -856,13 +854,17 @@ function refreshPublicRooms(){
 function joinById(fullId, label){
   if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
   if (peer){ try { peer.destroy(); } catch(e){} }
-  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false;
+  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false; let stage = 'servidor de señalización';
   setHomeMsg('Conectando a ' + label + '…');
   clearTimeout(joinTimer);
-  joinTimer = setTimeout(() => { if (peer === p) leave('La sala no respondió. Puede estar cerrándose: probá de nuevo en unos segundos.'); }, 12000);
+  joinTimer = setTimeout(() => {
+    if (peer !== p) return;
+    let ice = ''; try { ice = conn && conn.peerConnection ? conn.peerConnection.iceConnectionState : ''; } catch(e){}
+    leave('No se pudo conectar (falló en: ' + stage + (ice ? ' · ICE: ' + ice : '') + '). Verificá que ambos tengan la misma versión y probá de nuevo.');
+  }, 20000);
   p.on('open', id => {
-    myId = id; conn = p.connect(fullId, { reliable:true });
-    conn.on('open', () => { opened = true; conn.send({ t:'join', avatar:myAvatar() }); });
+    myId = id; stage = 'conexión con el anfitrión'; conn = p.connect(fullId, { reliable:true });
+    conn.on('open', () => { opened = true; stage = 'respuesta del anfitrión'; conn.send({ t:'join', avatar:myAvatar() }); });
     conn.on('data', m => {
       if (!m) return;
       if (m.t === 'state' && m.v){
