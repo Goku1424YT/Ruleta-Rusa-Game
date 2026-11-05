@@ -14,7 +14,7 @@
  JAVASCRIPT — script 1 (reglas puras)
   [L1] Constantes y avatares  [L2] Revólver y turnos
  JAVASCRIPT — script 2 (interfaz y red)
-  [J01] Configuración (TURN, Discord, bots)   [J02] Estado global
+  [J01] Configuración (Discord, bots)         [J02] Estado global
   [J03] Perfil y personaje                    [J04] Utilidades y sonidos
   [J05] Chat de voz                           [J06] Online: salas y conexión
   [J07] Chat de texto                         [J08] Modo Pipa Caliente
@@ -417,8 +417,6 @@ button:disabled{opacity:.4;cursor:not-allowed}
 <script id="logic">
 /* ══════════════════════════════════════════════════════════════════
    [L1] CONSTANTES Y AVATARES
-   MAX_PLAYERS, CHAMBERS, y las listas de personajes/sombreros/máscaras/colores (BASES, HATS, MASKS, COLORS).
-   Cambiar aquí: máximo de jugadores, añadir emojis o colores nuevos.
    ══════════════════════════════════════════════════════════════════ */
 
 const MAX_PLAYERS = 8, CHAMBERS = 6;
@@ -442,8 +440,6 @@ function cleanAvatar(a){
 }
 /* ══════════════════════════════════════════════════════════════════
    [L2] REGLAS DEL REVÓLVER Y TURNOS
-   Cargar el tambor, siguiente jugador vivo, disparar, quitar jugadores que se van.
-   Cambiar aquí: reglas del disparo (pullTrigger), quién sigue (nextAlive).
    ══════════════════════════════════════════════════════════════════ */
 
 function loadGun(bullets, rnd){
@@ -491,27 +487,14 @@ function dropPlayer(g, players, id){
 }
 </script>
 
-<!-- ═══ [SCRIPT 2] INTERFAZ, RED Y VOZ — secciones J01 a J14 (ver índice al inicio del archivo) ═══ -->
+<!-- ═══ [SCRIPT 2] INTERFAZ, RED Y VOZ — secciones J01 a J14 ═══ -->
 <script>
 /* ══════════════════════════════════════════════════════════════════
    [J01] CONFIGURACIÓN GENERAL
-   Conexión PeerJS/TURN (CUSTOM_ICE), enlace de Discord (DISCORD_URL), look de los bots (BOT_LOOKS).
-   Cambiar aquí: servidor TURN, URL de Discord, nombres/aspecto de los bots.
    ══════════════════════════════════════════════════════════════════ */
 const $ = s => document.querySelector(s);
 
 const PREFIX = 'ruletarusa-';
-
-/* Por defecto se usa la configuración de PeerJS (STUN + TURN gratuitos incluidos).
-   Si tenés tu propio TURN, agregalo acá y se usará junto con los de PeerJS. */
-const CUSTOM_ICE = [ /* { urls:'turn:TU_TURN:3478', username:'...', credential:'...' } */ ];
-
-const PEER_OPTS = CUSTOM_ICE.length ? { debug:1, config:{ iceServers:[
-  { urls:'stun:stun.l.google.com:19302' },
-  { urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'], username:'peerjs', credential:'peerjsp' }
-].concat(CUSTOM_ICE) } } : { debug:1 };
-
-const newPeer = id => { const p = new Peer(id || undefined, PEER_OPTS); p.on('call', handleCall); return p; };
 
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
   + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
@@ -528,8 +511,6 @@ const DISCORD_URL = ''; // pegá acá el enlace de invitación de tu servidor de
 
 /* ══════════════════════════════════════════════════════════════════
    [J02] ESTADO GLOBAL
-   Variables de la partida: sala, jugadores, turno, temporizadores, modo elegido, perfil propio (me).
-   Cambiar aquí: valores iniciales (hotCfg = tiempo y cooldown de Pipa Caliente, CHAT_COLORS).
    ══════════════════════════════════════════════════════════════════ */
 let peer = null, conn = null, conns = {};
 
@@ -551,8 +532,6 @@ let me = loadProfile();
 
 /* ══════════════════════════════════════════════════════════════════
    [J03] PERFIL Y PERSONAJE
-   Guardar/cargar perfil, dibujar avatares, editor de personaje (modal «Personalizar personaje»).
-   Cambiar aquí: cómo se ve un jugador, subida de foto.
    ══════════════════════════════════════════════════════════════════ */
 function loadProfile(){
   try {
@@ -645,7 +624,6 @@ $('#file').addEventListener('change', e => {
 
 /* ══════════════════════════════════════════════════════════════════
    [J04] UTILIDADES
-   Cambiar pantalla (show), mensajes del menú, código aleatorio, temporizadores, sonidos (snd), copiar al portapapeles.
    ══════════════════════════════════════════════════════════════════ */
 function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); $('#voicePanel').hidden = (id === 'home'); }
 
@@ -686,8 +664,6 @@ function copyText(txt, btn, label){
 
 /* ══════════════════════════════════════════════════════════════════
    [J05] CHAT DE VOZ
-   Micrófono, llamadas WebRTC entre jugadores, medidor de nivel, silenciar y PTT (tecla V).
-   Cambiar aquí: calidad del micrófono (enableMic), volumen, comportamiento de las llamadas (syncVoice).
    ══════════════════════════════════════════════════════════════════ */
 let localMicStream = null, sendStream = null, voiceAC = null, micGain = null, micAnalyser = null, micSrc = null, meterRAF = 0;
 
@@ -853,7 +829,6 @@ document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'v' && ptt
 
 window.addEventListener('blur', () => { pttHeld = false; updateMicState(); });
 
-/* Los navegadores bloquean audio hasta que haya un clic: reintentar reproducir al hacer clic */
 document.addEventListener('click', () => {
   Object.values(remoteAudio).forEach(a => { const pr = a.play(); if (pr && pr.catch) pr.catch(() => {}); });
   if (voiceAC && voiceAC.state === 'suspended') voiceAC.resume().catch(() => {});
@@ -861,14 +836,15 @@ document.addEventListener('click', () => {
 
 /* ══════════════════════════════════════════════════════════════════
    [J06] ONLINE: SALAS Y CONEXIÓN (PeerJS)
-   Crear sala (anfitrión), unirse con código, recibir jugadores, enviar el estado a todos (broadcast), salir.
-   Cambiar aquí: límites de sala, mensajes de error, qué hace el anfitrión con cada mensaje (hostOnConn).
+   Misma lógica de conexión que la versión que funcionaba:
+   Peer sin opciones, reconexión del anfitrión y unión simple por código.
    ══════════════════════════════════════════════════════════════════ */
-function peerOk(){ return typeof Peer !== 'undefined'; }
+function peerOk(){
+  if (typeof Peer === 'undefined'){ setHomeMsg('Sin conexión: no se pudo cargar la librería de red (PeerJS). Revisá tu internet.'); return false; }
+  return true;
+}
 
 function myAvatar(){ return cleanAvatar(me); }
-
-const FATAL = ['network','server-error','socket-error','socket-closed','browser-incompatible','invalid-id','invalid-key','ssl-unavailable'];
 
 function becomeHost(label){
   isHost = true; myId = 'host'; roomCode = label; conns = {};
@@ -879,21 +855,21 @@ function becomeHost(label){
   broadcast();
 }
 
-function hostError(p, err, onTaken){
-  if (peer !== p) return;
-  if (err.type === 'unavailable-id' && onTaken){ onTaken(); return; }
-  if (isHost && !FATAL.includes(err.type)) return;
-  leave('No se pudo crear la sala (' + err.type + ').');
-}
-
 function startHost(tries){
-  if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
-  tries = tries || 0; const code = randomCode(); let p;
-  try { p = newPeer(PREFIX + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
-  peer = p; setHomeMsg('Creando sala…');
+  if (!peerOk()) return;
+  tries = tries || 0;
+  const code = randomCode();
+  let p;
+  try { p = new Peer(PREFIX + code); } catch(e){ setHomeMsg('No se pudo crear la sala.'); return; }
+  peer = p;
+  p.on('call', handleCall);
   p.on('open', () => becomeHost(code));
   p.on('connection', hostOnConn);
-  p.on('error', err => hostError(p, err, tries < 5 ? () => { try { p.destroy(); } catch(e){} peer = null; startHost(tries + 1); } : null));
+  p.on('error', err => {
+    if (err.type === 'unavailable-id' && tries < 5){ try { p.destroy(); } catch(e){} startHost(tries + 1); return; }
+    if (!view) setHomeMsg('No se pudo crear la sala (' + err.type + ').');
+  });
+  p.on('disconnected', () => { try { p.reconnect(); } catch(e){} });
 }
 
 function hostOnConn(c){
@@ -901,9 +877,10 @@ function hostOnConn(c){
     if (!m || typeof m !== 'object') return;
     if (m.t === 'join'){
       let why = '';
-      if (game.phase !== 'lobby') why = 'Partida en curso.';
-      else if (players.length >= MAX_PLAYERS) why = 'Sala llena.';
+      if (game.phase !== 'lobby') why = 'La partida ya empezó.';
+      else if (players.length >= MAX_PLAYERS) why = 'La sala está llena.';
       if (why){ c.send({ t:'denied', reason:why }); setTimeout(() => c.close(), 400); return; }
+      if (players.some(p => p.id === c.peer)) return;
       conns[c.peer] = c;
       players.push({ id:c.peer, avatar:cleanAvatar(m.avatar), alive:true });
       const free = CHAT_COLORS.filter(x => !Object.values(playerColors).includes(x));
@@ -916,8 +893,12 @@ function hostOnConn(c){
       if (game.phase === 'play' && game.mode === 'hot' && players[game.turn]?.id === c.peer) passHot(c.peer);
     }
   });
-  c.on('close', () => { if (!conns[c.peer]) return; delete conns[c.peer]; dropPlayer(game, players, c.peer); broadcast(); });
-  c.on('error', () => {});
+  c.on('close', () => {
+    if (!conns[c.peer]) return;
+    delete conns[c.peer];
+    dropPlayer(game, players, c.peer);
+    broadcast();
+  });
 }
 
 function buildView(){
@@ -936,42 +917,37 @@ function broadcast(){
   view = v; render(); botThink();
 }
 
-function joinById(fullId, label){
-  if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
-  if (peer){ try { peer.destroy(); } catch(e){} }
-  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false; let stage = 'servidor de señalización'; const cands = new Set();
-  setHomeMsg('Conectando a ' + label + '…');
+function joinRoom(code){
+  if (!peerOk()) return;
+  code = String(code || '').toUpperCase().trim();
+  if (!/^[A-Z]{4}$/.test(code)){ setHomeMsg('El código tiene 4 letras.'); return; }
+  if (peer){ try { peer.destroy(); } catch(e){} peer = null; }
   clearTimeout(joinTimer);
-  joinTimer = setTimeout(() => {
-    if (peer !== p) return;
-    let ice = ''; try { ice = conn && conn.peerConnection ? conn.peerConnection.iceConnectionState : ''; } catch(e){}
-    leave('No se pudo conectar (falló en: ' + stage + (ice ? ' · ICE: ' + ice : '') + ' · candidatos: ' + ([...cands].join(',') || 'ninguno') + '). Verificá que ambos tengan la misma versión y probá de nuevo.');
-  }, 20000);
+  setHomeMsg('Conectando a ' + code + '…');
+  let p;
+  try { p = new Peer(); } catch(e){ setHomeMsg('No se pudo conectar.'); return; }
+  peer = p; isHost = false; roomCode = code; view = null;
+  p.on('call', handleCall);
   p.on('open', id => {
-    myId = id; stage = 'conexión con el anfitrión'; conn = p.connect(fullId, { reliable:true });
-    try { conn.peerConnection.addEventListener('icecandidate', e => { if (e.candidate) cands.add(e.candidate.type || 'otro'); }); } catch(e){}
-    conn.on('open', () => { opened = true; stage = 'respuesta del anfitrión'; conn.send({ t:'join', avatar:myAvatar() }); });
+    myId = id;
+    conn = p.connect(PREFIX + code, { reliable:true });
+    conn.on('open', () => conn.send({ t:'join', avatar:myAvatar() }));
     conn.on('data', m => {
-      if (!m) return;
+      if (!m || typeof m !== 'object') return;
       if (m.t === 'state' && m.v){
         clearTimeout(joinTimer); setHomeMsg('');
         m.v.hotDeadline = m.v.hotLeft ? Date.now() + m.v.hotLeft : 0;
         view = m.v; render();
-      } else if (m.t === 'denied') leave(m.reason || 'Acceso denegado.');
+      } else if (m.t === 'denied') leave(m.reason || 'No pudiste entrar.');
     });
-    conn.on('close', () => { if (opened && peer === p) leave('Se perdió la conexión con la sala.'); });
+    conn.on('close', () => { if (peer === p) leave('El anfitrión cerró la sala.'); });
+    joinTimer = setTimeout(() => { if (!view) leave('No se pudo conectar con la sala ' + code + '.'); }, 12000);
   });
   p.on('error', err => {
     if (peer !== p) return;
-    if (opened && !FATAL.includes(err.type)) return;
-    leave(err.type === 'peer-unavailable' ? 'No existe una sala con ese código.' : 'Error de conexión (' + err.type + ').');
+    if (err.type === 'peer-unavailable') leave('No existe una sala con el código ' + code + '.');
+    else if (!view) leave('No se pudo conectar (' + err.type + ').');
   });
-}
-
-function joinRoom(code){
-  code = String(code || '').toUpperCase().trim();
-  if (code.length !== 4){ setHomeMsg('El código tiene 4 letras.'); return; }
-  joinById(PREFIX + code, code);
 }
 
 function leave(msg){
@@ -985,7 +961,6 @@ function leave(msg){
 
 /* ══════════════════════════════════════════════════════════════════
    [J07] CHAT DE TEXTO
-   Enviar, retransmitir y dibujar los mensajes del chat (lobby y partida).
    ══════════════════════════════════════════════════════════════════ */
 function relayChat(id, raw){
   const p = players.find(x => x.id === id); if (!p) return;
@@ -1016,8 +991,6 @@ function paintChat(v){
 
 /* ══════════════════════════════════════════════════════════════════
    [J08] MODO PIPA CALIENTE
-   Temporizador, pasar la pistola, eliminación por tiempo agotado, panel de cuenta atrás.
-   Cambiar aquí: duración de la animación de disparo (2300 ms en startHotClock), reglas de pase (passHot).
    ══════════════════════════════════════════════════════════════════ */
 function hotSecs(v){ return Math.min((v.hotCfg && v.hotCfg.passSeconds) || 10, Math.max(0, Math.ceil((v.hotDeadline - Date.now())/1000))); }
 
@@ -1080,7 +1053,6 @@ function updateHotHud(v){
 
 /* ══════════════════════════════════════════════════════════════════
    [J09] MODO RULETA CLÁSICA: ACCIONES
-   Disparar / girar el tambor (las reglas puras están en el primer <script>, sección [L2]).
    ══════════════════════════════════════════════════════════════════ */
 function doShot(spin){
   if (game.phase !== 'play' || game.mode === 'hot') return;
@@ -1094,8 +1066,6 @@ function act(spin){
 
 /* ══════════════════════════════════════════════════════════════════
    [J10] BOTS
-   Cómo deciden y cuánto tardan los bots; crear partida de práctica.
-   Cambiar aquí: probabilidad de girar el tambor, tiempos de reacción.
    ══════════════════════════════════════════════════════════════════ */
 function botThink(){
   if (!botMode || !isHost || game.phase !== 'play' || botTimer) return;
@@ -1120,8 +1090,6 @@ function startBots(){
 
 /* ══════════════════════════════════════════════════════════════════
    [J11] PANTALLAS Y DIBUJO
-   render, sala de espera, mesa circular, arma, animación del disparo, pantalla de ganador.
-   Cambiar aquí: cómo se dibuja la mesa (drawCircle), animación de disparo (playShot), lobby (renderLobby).
    ══════════════════════════════════════════════════════════════════ */
 function resetScene(){
   clearTimers(); busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
@@ -1242,8 +1210,6 @@ function playShot(v){
 
 /* ══════════════════════════════════════════════════════════════════
    [J12] BOTONES Y EVENTOS
-   Todos los clics del menú, modales, lobby, partida y Discord.
-   Cambiar aquí: qué hace cada botón; empezar partida (#start) y revancha (#again).
    ══════════════════════════════════════════════════════════════════ */
 $('#playMenu').addEventListener('click', () => $('#modeModal').hidden = false);
 
@@ -1253,7 +1219,7 @@ $('#howBtn').addEventListener('click', () => $('#howModal').hidden = false);
 
 document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { selectedMode = b.dataset.mode; $('#setupTitle').textContent = (selectedMode === 'hot' ? 'Pipa Caliente' : 'Ruleta Rusa Classic') + ' · sala privada'; $('#modeModal').hidden = true; $('#setupModal').hidden = false; }));
 
-$('#create').addEventListener('click', () => { $('#setupModal').hidden = true; startHost(0); });
+$('#create').addEventListener('click', () => { $('#setupModal').hidden = true; setHomeMsg(''); startHost(0); });
 
 $('#botsBtn').addEventListener('click', () => { $('#setupModal').hidden = true; startBots(); });
 
@@ -1275,6 +1241,8 @@ $('#joinBtn').addEventListener('click', () => { const c = $('#code').value; $('#
 
 $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') $('#joinBtn').click(); });
 
+$('#code').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase(); });
+
 $('#passBtn').addEventListener('click', () => { if (isHost) passHot(myId); else if (conn && conn.open) conn.send({ t:'pass' }); });
 
 ['#leave1','#leave2','#leave3'].forEach(s => $(s).addEventListener('click', () => leave('')));
@@ -1290,6 +1258,7 @@ $('#copyDiscord').addEventListener('click', () => {
 
 $('#start').addEventListener('click', () => {
   if (!isHost || players.length < 2) return;
+  players = players.filter(p => !p.left);
   if ((game.mode || selectedMode) === 'hot'){
     players.forEach(p => { p.alive = true; });
     game = { phase:'play', mode:'hot', hotCfg:{ ...(game.hotCfg || hotCfg) }, bullets:game.bullets || 1,
@@ -1317,8 +1286,6 @@ $('#mute').addEventListener('click', e => { muted = !muted; e.target.textContent
 
 /* ══════════════════════════════════════════════════════════════════
    [J13] NIEVE
-   Copos animados de fondo.
-   Cambiar aquí: cantidad (35), velocidad y tamaño.
    ══════════════════════════════════════════════════════════════════ */
 for (let i = 0; i < 35; i++){
   const f = document.createElement('span'); f.className = 'snowflake'; f.textContent = Math.random() > .5 ? '❄' : '·';
@@ -1329,8 +1296,6 @@ for (let i = 0; i < 35; i++){
 
 /* ══════════════════════════════════════════════════════════════════
    [J14] MÚSICA
-   Reproductor del menú: lista de canciones (musicTracks), aleatorio, volumen.
-   Cambiar aquí: añadir canciones en musicTracks (y en el <select id="musicTrack"> del HTML).
    ══════════════════════════════════════════════════════════════════ */
 const player = $('#musicPlayer'), musicSelect = $('#musicTrack'), musicButton = $('#musicToggle');
 
