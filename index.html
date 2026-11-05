@@ -97,7 +97,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 @keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-7px,3px)}40%{transform:translate(6px,-4px)}60%{transform:translate(-5px,2px)}80%{transform:translate(3px,-2px)}}
 .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 .actions button{min-width:150px;padding:13px 16px}
-.table.hotmode .actions,.table.hotmode .gunwrap{display:none}
+.table.hotmode .actions{display:none}
 .log{margin:14px 0 0;padding:0;list-style:none;color:var(--muted);font-size:.9rem;display:grid;gap:3px;text-align:center}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
 .pill{font-size:.8rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
@@ -177,6 +177,13 @@ button:disabled{opacity:.4;cursor:not-allowed}
 #banner.bang span{color:var(--danger)}
 #banner.click span{color:var(--paper)}
 @keyframes pop{0%{opacity:0;transform:scale(.7)}12%{opacity:1;transform:scale(1.06)}20%{transform:scale(1)}80%{opacity:1}100%{opacity:0}}
+#game{max-width:1080px}
+.gamewrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.gamewrap .chatbox{position:sticky;top:12px;margin:0}
+.gamewrap .chat-messages{height:min(380px,45vh)}
+@media(max-width:900px){.gamewrap{grid-template-columns:1fr}.gamewrap .chatbox{position:static}.gamewrap .chat-messages{height:130px}}
+.room-sub{font-size:.75rem;color:var(--muted)}
+.public-room-item b{font-weight:600}
 </style>
 </head>
 <body>
@@ -218,32 +225,30 @@ button:disabled{opacity:.4;cursor:not-allowed}
   <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
   <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
 
-<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> creá una sala o jugá contra bots. En tu turno elegís una acción; gana quien quede al final.</p><p><b>Pipa Caliente:</b> la ficha pasa antes de que acabe el tiempo. Si llega a cero, el jugador queda fuera de la ronda.</p><p>Compartí el código de sala con tus amigos. El anfitrión configura la partida y puede iniciar cuando haya suficientes participantes.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
+<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> en tu turno disparás o girás el tambor y disparás. Gana quien quede al final.</p><p><b>Pipa Caliente:</b> la pistola es la «pipa»: quien la tiene debe pasarla al siguiente antes de que se acabe el tiempo. Si llega a cero, la pistola dispara y el jugador queda fuera.</p><p><b>Salas públicas:</b> hay 5 salas de Ruleta y 5 de Pipa Caliente. Entrá a cualquiera: si está vacía serás el anfitrión, y si ya hay alguien te unís. También podés crear una sala privada y compartir el código.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
-<div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí un modo</h2>
-  <div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse a una sala</button><button class="ghost closeModal">Volver</button></div>
+<div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí cómo jugar</h2>
+  <div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic (sala privada / bots)</button><button data-mode="hot" class="btn">Pipa Caliente ♨️ (sala privada / bots)</button><button id="openPublic" class="ghost">Salas públicas</button><button id="openJoin" class="ghost">Unirse con código</button></div>
+  <div id="publicPanel" hidden style="margin-top:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="label" style="margin:0">Salas públicas</span><button id="refreshPublic" class="ghost" type="button">Actualizar</button></div>
+    <div id="publicRoomList" class="public-room-list" style="max-height:300px"></div>
+    <p id="publicRoomStatus" class="msg" role="status"></p>
+  </div>
   <div id="joinPanel" hidden style="margin-top:12px">
     <label class="label" for="code">Unirse con código</label>
     <div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO" autocomplete="off"><button id="joinBtn" class="btn" type="button">Unirme</button></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:16px"><span class="label" style="margin:0">Salas públicas</span><button id="refreshPublic" class="ghost" type="button">Actualizar</button></div>
-    <div id="publicRoomList" class="public-room-list"><p class="sub">Pulsa «Actualizar» para buscar salas públicas disponibles.</p></div>
-    <p id="publicRoomStatus" class="msg" role="status"></p>
-  </div></div></div>
+  </div>
+  <button class="ghost closeModal" style="margin-top:12px" type="button">Volver</button></div></div>
 
 <div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2>
-  <div style="margin-bottom:14px">
-    <span class="label">Visibilidad de sala</span>
-    <div class="chips"><button id="roomPublic" class="chip txt" aria-pressed="true" type="button">Pública</button><button id="roomPrivate" class="chip txt" aria-pressed="false" type="button">Privada con código</button></div>
-  </div>
   <p>¿Cómo querés jugar?</p>
-  <div class="mode-grid"><button id="create" class="btn">Crear sala</button><button id="botsBtn" class="btn">Jugar con bots</button></div>
-  <button class="ghost closeModal" style="margin-top:12px">Volver</button></div></div>
+  <div class="mode-grid"><button id="create" class="btn">Crear sala privada</button><button id="botsBtn" class="btn">Jugar con bots</button></div>
+  <button class="ghost closeModal" style="margin-top:12px" type="button">Volver</button></div></div>
 
 <div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2>
-  <p><b>Online corregido:</b> unirse por código funciona con salas privadas y públicas, con mensajes de error claros y tiempo de espera.</p>
-  <p><b>Pipa Caliente reparado:</b> ya no aparece el arma, el temporizador se sincroniza entre dispositivos y los bots también juegan.</p>
-  <p><b>Chats reorganizados:</b> el chat ahora está dentro de la pantalla, sin tapar el juego, y el panel de voz es colapsable.</p>
-  <p><b>Pantalla de ganador y revancha</b> funcionando.</p>
+  <p><b>10 salas públicas fijas:</b> 5 de Ruleta Rusa y 5 de Pipa Caliente. La primera persona que entra a una sala vacía es el anfitrión; las demás se unen.</p>
+  <p><b>Pipa Caliente con pistola:</b> la pistola es la ficha. Se pasa de jugador en jugador y si el tiempo llega a cero, dispara al que la tiene.</p>
+  <p><b>Chat al costado</b> del tablero durante la partida (debajo en móvil).</p>
   <button class="btn closeModal" type="button">Cerrar</button></div></div>
 
 <!-- SALA DE ESPERA -->
@@ -287,6 +292,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
       <button id="leave2" class="ghost iconbtn" type="button">Salir</button>
     </div>
   </div>
+  <div class="gamewrap">
   <div class="table" id="table">
     <p class="status" id="status"></p>
     <p class="info" id="info"></p>
@@ -315,10 +321,11 @@ button:disabled{opacity:.4;cursor:not-allowed}
       <button id="shoot" class="btn danger" type="button">Disparar</button>
       <button id="spin" class="ghost" type="button">Girar el tambor y disparar</button>
     </div>
-    <div id="hotControls" hidden><p class="countdown" id="hotCountdown">—</p><p id="hotHolder" class="info" style="margin-bottom:10px"></p><button id="passBtn" class="btn" type="button">Pasar ficha</button><p id="passFeedback" class="tag"></p></div>
+    <div id="hotControls" hidden><p class="countdown" id="hotCountdown">—</p><p id="hotHolder" class="info" style="margin-bottom:10px"></p><button id="passBtn" class="btn" type="button">Pasar la pistola</button><p id="passFeedback" class="tag"></p></div>
     <ul class="log" id="log"></ul>
   </div>
   <div class="chatbox"><b>💬 Chat de sala</b><div id="gameChatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="gameChatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…" autocomplete="off"><button id="gameChatSend" class="btn" type="button">Enviar</button></div></div>
+  </div>
   <div class="over" id="over" hidden>
     <p class="wis" id="wis">Winner is…</p>
     <div class="reveal" id="winbox"><div id="winav"></div><h2 id="wname"></h2></div>
@@ -582,10 +589,11 @@ document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'v' && ptt
 window.addEventListener('blur', () => { pttHeld = false; updateMicState(); });
 
 /* Cuenta atrás de Pipa Caliente (todos los dispositivos) */
+function hotSecs(v){ return Math.min((v.hotCfg && v.hotCfg.passSeconds) || 10, Math.max(0, Math.ceil((v.hotDeadline - Date.now())/1000))); }
 setInterval(() => {
   if (view && view.mode === 'hot' && view.phase === 'play' && view.hotDeadline){
     const el = $('#hotCountdown');
-    if (el) el.textContent = Math.max(0, Math.ceil((view.hotDeadline - Date.now())/1000)) + ' s';
+    if (el) el.textContent = hotSecs(view) + ' s';
   }
 }, 150);
 
@@ -621,31 +629,49 @@ function snd(kind){
 function peerOk(){ return typeof Peer !== 'undefined'; }
 function myAvatar(){ return cleanAvatar(me); }
 
+const PUBLIC_ROOMS = [1,2,3,4,5].map(i => ({ id:'C'+i, mode:'classic', name:'🔫 Ruleta #'+i }))
+  .concat([1,2,3,4,5].map(i => ({ id:'H'+i, mode:'hot', name:'♨️ Pipa #'+i })));
+const FATAL = ['network','server-error','socket-error','socket-closed','browser-incompatible','invalid-id','invalid-key','ssl-unavailable'];
+
+function becomeHost(label){
+  isHost = true; myId = 'host'; roomCode = label; conns = {};
+  players = [{ id:'host', avatar:myAvatar(), alive:true }];
+  playerColors = { host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)] }; chatLog = [];
+  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{ ...hotCfg } };
+  lastSeq = 0; log = []; setHomeMsg('');
+  broadcast();
+}
+function hostError(p, err, onTaken){
+  if (peer !== p) return;
+  if (err.type === 'unavailable-id' && onTaken){ onTaken(); return; }
+  if (isHost && !FATAL.includes(err.type)) return;
+  leave('No se pudo crear la sala (' + err.type + ').');
+}
 function startHost(tries){
   if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
   tries = tries || 0; const code = randomCode(); let p;
-  try { p = newPeer(PREFIX + (isPublicRoom ? 'P-' : '') + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
-  peer = p;
-  setHomeMsg('Creando sala…');
-  p.on('open', () => {
-    setHomeMsg('');
-    isHost = true; myId = 'host'; roomCode = code; conns = {};
-    players = [{ id:'host', avatar:myAvatar(), alive:true }];
-    playerColors = { host:CHAT_COLORS[Math.floor(Math.random()*CHAT_COLORS.length)] }; chatLog = [];
-    game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{ ...hotCfg }, isPublic:isPublicRoom };
-    lastSeq = 0; log = [];
-    broadcast();
-  });
+  try { p = newPeer(PREFIX + code); } catch(e){ setHomeMsg('Error al crear sala.'); return; }
+  peer = p; setHomeMsg('Creando sala…');
+  p.on('open', () => becomeHost(code));
   p.on('connection', hostOnConn);
-  p.on('error', err => {
-    if (err.type === 'unavailable-id' && tries < 5){ try { p.destroy(); } catch(e){} startHost(tries + 1); return; }
-    if (peer === p) leave('No se pudo crear la sala (' + err.type + ').');
-  });
+  p.on('error', err => hostError(p, err, tries < 5 ? () => { try { p.destroy(); } catch(e){} peer = null; startHost(tries + 1); } : null));
+}
+/* Sala pública fija: si nadie la tiene, sos el anfitrión; si ya existe, te unís. */
+function enterPublic(rid){
+  const meta = PUBLIC_ROOMS.find(r => r.id === rid); if (!meta) return;
+  if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
+  if (peer){ try { peer.destroy(); } catch(e){} peer = null; }
+  selectedMode = meta.mode; $('#modeModal').hidden = true; setHomeMsg('Entrando a ' + meta.name + '…');
+  const p = newPeer(PREFIX + 'S-' + rid); peer = p;
+  p.on('open', () => becomeHost(meta.name));
+  p.on('connection', hostOnConn);
+  p.on('error', err => hostError(p, err, () => { try { p.destroy(); } catch(e){} peer = null; joinById(PREFIX + 'S-' + rid, meta.name); }));
 }
 
 function hostOnConn(c){
   c.on('data', m => {
     if (!m || typeof m !== 'object') return;
+    if (m.t === 'info'){ try { c.send({ t:'info', n:players.length, phase:game.phase, mode:game.mode || 'classic' }); } catch(e){} return; }
     if (m.t === 'join'){
       let why = '';
       if (game.phase !== 'lobby') why = 'Partida en curso.';
@@ -706,14 +732,18 @@ function startHotClock(){
     if (!isHost || game.phase !== 'play' || game.mode !== 'hot'){ clearInterval(hotTimer); return; }
     if (Date.now() >= hotDeadline){
       const expired = game.turn;
-      if (expired >= 0 && players[expired]) players[expired].alive = false;
+      if (expired >= 0 && players[expired]){
+        game.seq = (game.seq || 0) + 1;
+        game.last = { by:players[expired].id, hit:true, spun:false, seq:game.seq };
+        players[expired].alive = false;
+      }
       const alive = players.filter(p => p.alive);
       if (alive.length <= 1){
         game.phase = 'over'; game.winner = alive[0]?.id || null; game.turn = -1;
         clearInterval(hotTimer); hotDeadline = 0;
       } else {
         game.turn = nextAlive(players, expired);
-        hotDeadline = Date.now() + ((game.hotCfg || hotCfg).passSeconds * 1000);
+        hotDeadline = Date.now() + 2300 + ((game.hotCfg || hotCfg).passSeconds * 1000);
       }
       broadcast();
     }
@@ -736,10 +766,10 @@ function updateHotHud(v){
   $('#hotControls').hidden = !active;
   if (!active) return;
   const holder = v.players[v.turn];
-  $('#hotHolder').textContent = 'Tiene la ficha: ' + (holder?.avatar?.name || '—');
+  $('#hotHolder').textContent = 'Tiene la pistola: ' + (holder?.avatar?.name || '—');
   $('#passBtn').disabled = !holder || holder.id !== myId;
-  $('#hotCountdown').textContent = v.hotDeadline ? Math.max(0, Math.ceil((v.hotDeadline - Date.now())/1000)) + ' s' : '—';
-  $('#passFeedback').textContent = holder?.id === myId ? '¡Pasá la ficha antes de que termine!' : 'Esperando que pase la ficha…';
+  $('#hotCountdown').textContent = v.hotDeadline ? hotSecs(v) + ' s' : '—';
+  $('#passFeedback').textContent = holder?.id === myId ? '¡Pasá la pistola antes de que dispare!' : 'Esperando que pase la pistola…';
 }
 
 /* ---------- BOTS ---------- */
@@ -747,11 +777,14 @@ function botThink(){
   if (!botMode || !isHost || game.phase !== 'play' || botTimer) return;
   const p = players[game.turn]; if (!p || !p.bot) return;
   const hot = game.mode === 'hot';
+  const cd = (game.hotCfg || hotCfg).cooldown * 1000 + 300;
+  const delay = hot ? Math.max(cd, 1100) + Math.random()*1500 : 3500 + Math.random()*700;
   botTimer = setTimeout(() => {
     botTimer = null;
     if (!botMode || game.phase !== 'play' || players[game.turn] !== p){ botThink(); return; }
-    if (hot) passHot(p.id); else doShot(Math.random() < 0.3);
-  }, hot ? 1100 + Math.random()*1500 : 3500 + Math.random()*700);
+    if (hot){ passHot(p.id); if (game.phase === 'play' && players[game.turn] === p) botThink(); }
+    else doShot(Math.random() < 0.3);
+  }, delay);
 }
 
 /* ---------- CHAT ---------- */
@@ -769,54 +802,61 @@ function paintChat(v){
   });
 }
 
-/* ---------- SALAS PÚBLICAS (requiere PeerServer propio con --allow_discovery) ---------- */
-async function refreshPublicRooms(){
-  const list = $('#publicRoomList'), status = $('#publicRoomStatus');
-  list.innerHTML = '<p class="sub">Buscando salas públicas…</p>'; status.textContent = '';
+/* ---------- SALAS PÚBLICAS FIJAS ---------- */
+let probePeer = null;
+function renderRooms(state){
+  const list = $('#publicRoomList'); list.textContent = '';
+  PUBLIC_ROOMS.forEach(r => {
+    const st = state[r.id]; let can = true, txt;
+    if (st === undefined) txt = 'Consultando…';
+    else if (st === null) txt = 'Vacía · serás el anfitrión';
+    else if (st.unknown) txt = 'Sin respuesta · probá entrar';
+    else { txt = st.n + '/' + MAX_PLAYERS + ' jugadores · ' + (st.phase === 'lobby' ? 'esperando' : 'en partida'); can = st.phase === 'lobby' && st.n < MAX_PLAYERS; }
+    const item = document.createElement('div'); item.className = 'public-room-item';
+    const info = document.createElement('span');
+    const t = document.createElement('b'); t.textContent = r.name;
+    const sub = document.createElement('div'); sub.className = 'room-sub'; sub.textContent = txt;
+    info.append(t, sub);
+    const btn = document.createElement('button'); btn.className = 'btn'; btn.type = 'button';
+    btn.textContent = st === null ? 'Crear' : 'Entrar'; btn.disabled = !can;
+    btn.addEventListener('click', () => enterPublic(r.id));
+    item.append(info, btn); list.append(item);
+  });
+}
+function refreshPublicRooms(){
+  const status = $('#publicRoomStatus'); status.textContent = '';
+  const state = {}; renderRooms(state);
   if (!peerOk()){ status.textContent = 'El servicio de salas no está disponible.'; return; }
-  let scanner;
-  try {
-    scanner = newPeer();
-    scanner.on('open', () => {
-      if (typeof scanner.listAllPeers !== 'function'){
-        list.innerHTML = '<p class="sub">El servidor PeerJS no permite consultar salas públicas.</p>';
-        scanner.destroy(); return;
-      }
-      scanner.listAllPeers(ids => {
-        const rooms = (ids || []).filter(id => id.startsWith(PREFIX + 'P-'));
-        list.textContent = '';
-        if (!rooms.length) list.innerHTML = '<p class="sub">No hay salas públicas disponibles ahora.</p>';
-        rooms.forEach(id => {
-          const code = id.slice((PREFIX + 'P-').length);
-          const item = document.createElement('div'); item.className = 'public-room-item';
-          const label = document.createElement('span'); label.textContent = 'Sala ' + code;
-          const btn = document.createElement('button'); btn.className = 'btn'; btn.type = 'button'; btn.textContent = 'Unirme';
-          btn.addEventListener('click', () => { $('#modeModal').hidden = true; joinRoom(code, true); });
-          item.append(label, btn); list.append(item);
-        });
-        status.textContent = 'Salas encontradas: ' + rooms.length;
-        scanner.destroy();
-      });
+  if (probePeer){ try { probePeer.destroy(); } catch(e){} probePeer = null; }
+  const sc = newPeer(); probePeer = sc;
+  sc.on('open', () => {
+    PUBLIC_ROOMS.forEach(r => {
+      const c = sc.connect(PREFIX + 'S-' + r.id, { reliable:true });
+      c.on('open', () => c.send({ t:'info' }));
+      c.on('data', m => { if (m && m.t === 'info'){ state[r.id] = { n:m.n, phase:m.phase }; renderRooms(state); try { c.close(); } catch(e){} } });
     });
-    scanner.on('error', () => {
-      status.textContent = 'No se pudo consultar el directorio de salas.'; list.innerHTML = '';
-      try { scanner.destroy(); } catch(e){}
-    });
-  } catch(e){ status.textContent = 'No se pudo buscar salas.'; if (scanner) try { scanner.destroy(); } catch(_){} }
+  });
+  sc.on('error', err => {
+    const mm = /S-([CH]\d)/.exec(err.message || '');
+    if (err.type === 'peer-unavailable' && mm){ state[mm[1]] = null; renderRooms(state); }
+    else if (err.type !== 'peer-unavailable') status.textContent = 'No se pudo consultar el estado de las salas.';
+  });
+  setTimeout(() => {
+    if (probePeer !== sc) return;
+    PUBLIC_ROOMS.forEach(r => { if (state[r.id] === undefined) state[r.id] = { unknown:true }; });
+    renderRooms(state); try { sc.destroy(); } catch(e){} probePeer = null;
+  }, 6000);
 }
 
-function joinRoom(code, onlyPublic){
+function joinById(fullId, label){
   if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
-  code = String(code || '').toUpperCase().trim();
-  if (code.length !== 4){ setHomeMsg('El código tiene 4 letras.'); return; }
   if (peer){ try { peer.destroy(); } catch(e){} }
-  const p = newPeer(); peer = p; isHost = false; roomCode = code;
-  const prefixes = onlyPublic ? ['P-'] : ['', 'P-']; let ti = 0, opened = false;
-  setHomeMsg('Conectando…');
+  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false;
+  setHomeMsg('Conectando a ' + label + '…');
   clearTimeout(joinTimer);
   joinTimer = setTimeout(() => { if (peer === p) leave('No se pudo conectar a la sala.'); }, 12000);
-  function attempt(){
-    conn = p.connect(PREFIX + prefixes[ti] + code, { reliable:true });
+  p.on('open', id => {
+    myId = id; conn = p.connect(fullId, { reliable:true });
     conn.on('open', () => { opened = true; conn.send({ t:'join', avatar:myAvatar() }); });
     conn.on('data', m => {
       if (!m) return;
@@ -827,13 +867,16 @@ function joinRoom(code, onlyPublic){
       } else if (m.t === 'denied') leave(m.reason || 'Acceso denegado.');
     });
     conn.on('close', () => { if (opened && peer === p) leave('Se perdió la conexión con la sala.'); });
-  }
-  p.on('open', id => { myId = id; attempt(); });
+  });
   p.on('error', err => {
     if (peer !== p) return;
-    if (err.type === 'peer-unavailable' && ti < prefixes.length - 1){ ti++; attempt(); return; }
     leave(err.type === 'peer-unavailable' ? 'No existe una sala con ese código.' : 'Error de conexión (' + err.type + ').');
   });
+}
+function joinRoom(code){
+  code = String(code || '').toUpperCase().trim();
+  if (code.length !== 4){ setHomeMsg('El código tiene 4 letras.'); return; }
+  joinById(PREFIX + code, code);
 }
 
 function act(spin){
@@ -941,7 +984,7 @@ function drawScene(v){
   $('#status').textContent = v.phase === 'over' ? 'Fin' : (myTurn ? 'Es tu turno' : 'Turno de ' + (turnP ? turnP.avatar.name : '…'));
   $('#shoot').disabled = $('#spin').disabled = !myTurn;
   drawCircle(v, v.phase === 'play' ? v.turn : -1);
-  if (v.mode !== 'hot' && v.phase === 'play' && v.turn >= 0){ aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 }); gunReady = true; }
+  if (v.phase === 'play' && v.turn >= 0){ aimAt(seatAngle(v.turn, n), { instant:!gunReady, dur:0.9 }); gunReady = true; }
 }
 
 function showOver(v){
@@ -978,19 +1021,18 @@ function startBots(){
 $('#playMenu').addEventListener('click', () => $('#modeModal').hidden = false);
 $('#profileBtn').addEventListener('click', () => { $('#profileModal').hidden = false; drawEditor(); });
 $('#howBtn').addEventListener('click', () => $('#howModal').hidden = false);
-document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { selectedMode = b.dataset.mode; $('#modeModal').hidden = true; $('#setupModal').hidden = false; }));
-$('#roomPublic').addEventListener('click', () => { isPublicRoom = true; $('#roomPublic').setAttribute('aria-pressed','true'); $('#roomPrivate').setAttribute('aria-pressed','false'); });
-$('#roomPrivate').addEventListener('click', () => { isPublicRoom = false; $('#roomPrivate').setAttribute('aria-pressed','true'); $('#roomPublic').setAttribute('aria-pressed','false'); });
+document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { selectedMode = b.dataset.mode; $('#setupTitle').textContent = (selectedMode === 'hot' ? 'Pipa Caliente' : 'Ruleta Rusa Classic') + ' · sala privada'; $('#modeModal').hidden = true; $('#setupModal').hidden = false; }));
 $('#create').addEventListener('click', () => { $('#setupModal').hidden = true; startHost(0); });
 $('#botsBtn').addEventListener('click', () => { $('#setupModal').hidden = true; startBots(); });
-$('#openJoin').addEventListener('click', () => $('#joinPanel').hidden = false);
+$('#openJoin').addEventListener('click', () => { $('#joinPanel').hidden = false; $('#publicPanel').hidden = true; });
+$('#openPublic').addEventListener('click', () => { $('#publicPanel').hidden = false; $('#joinPanel').hidden = true; refreshPublicRooms(); });
 document.querySelectorAll('.closeModal').forEach(b => b.addEventListener('click', () => b.closest('.modal').hidden = true));
 $('#updatesBtn').addEventListener('click', () => $('#updatesModal').hidden = false);
 $('#chatSend').addEventListener('click', () => sendChat('chatInput'));
 $('#chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat('chatInput'); });
 $('#gameChatSend').addEventListener('click', () => sendChat('gameChatInput'));
 $('#gameChatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat('gameChatInput'); });
-$('#joinBtn').addEventListener('click', () => { const c = $('#code').value; $('#modeModal').hidden = true; joinRoom(c, false); });
+$('#joinBtn').addEventListener('click', () => { const c = $('#code').value; $('#modeModal').hidden = true; joinRoom(c); });
 $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') $('#joinBtn').click(); });
 $('#refreshPublic').addEventListener('click', refreshPublicRooms);
 $('#passBtn').addEventListener('click', () => { if (isHost) passHot(myId); else if (conn && conn.open) conn.send({ t:'pass' }); });
