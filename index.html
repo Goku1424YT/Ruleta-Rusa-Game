@@ -428,9 +428,13 @@ const PREFIX = 'ruletarusa-';
    Para móviles / redes restrictivas añadí un servidor TURN en iceServers. */
 const PEER_OPTS = { debug:1, config:{ iceServers:[
   { urls:'stun:stun.l.google.com:19302' },
-  { urls:'stun:global.stun.twilio.com:3478' }
-  // { urls:'turn:TU_TURN', username:'...', credential:'...' }
-]}};
+  { urls:'stun:global.stun.twilio.com:3478' },
+  // TURN gratuitos de PeerJS (los que trae por defecto; hacen falta entre redes distintas)
+  { urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'], username:'peerjs', credential:'peerjsp' },
+  // TURN público de respaldo (compartido, puede ser lento o caerse)
+  { urls:['turn:openrelay.metered.ca:80','turn:openrelay.metered.ca:443','turn:openrelay.metered.ca:443?transport=tcp'], username:'openrelayproject', credential:'openrelayproject' }
+  // Mejor aún: tu propio TURN { urls:'turn:TU_TURN', username:'...', credential:'...' }
+], sdpSemantics:'unified-plan' }};
 const newPeer = id => new Peer(id || undefined, PEER_OPTS);
 
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
@@ -810,7 +814,8 @@ function renderRooms(state){
     const st = state[r.id]; let can = true, txt;
     if (st === undefined) txt = 'Consultando…';
     else if (st === null) txt = 'Vacía · serás el anfitrión';
-    else if (st.unknown) txt = 'Sin respuesta · probá entrar';
+    else if (st.unknown && st.open) txt = 'Ocupada · entrá para unirte';
+    else if (st.unknown) txt = 'Sin respuesta · puede estar cerrándose';
     else { txt = st.n + '/' + MAX_PLAYERS + ' jugadores · ' + (st.phase === 'lobby' ? 'esperando' : 'en partida'); can = st.phase === 'lobby' && st.n < MAX_PLAYERS; }
     const item = document.createElement('div'); item.className = 'public-room-item';
     const info = document.createElement('span');
@@ -832,7 +837,7 @@ function refreshPublicRooms(){
   sc.on('open', () => {
     PUBLIC_ROOMS.forEach(r => {
       const c = sc.connect(PREFIX + 'S-' + r.id, { reliable:true });
-      c.on('open', () => c.send({ t:'info' }));
+      c.on('open', () => { if (state[r.id] === undefined){ state[r.id] = { unknown:true, open:true }; renderRooms(state); } c.send({ t:'info' }); });
       c.on('data', m => { if (m && m.t === 'info'){ state[r.id] = { n:m.n, phase:m.phase }; renderRooms(state); try { c.close(); } catch(e){} } });
     });
   });
@@ -845,7 +850,7 @@ function refreshPublicRooms(){
     if (probePeer !== sc) return;
     PUBLIC_ROOMS.forEach(r => { if (state[r.id] === undefined) state[r.id] = { unknown:true }; });
     renderRooms(state); try { sc.destroy(); } catch(e){} probePeer = null;
-  }, 6000);
+  }, 8000);
 }
 
 function joinById(fullId, label){
@@ -854,7 +859,7 @@ function joinById(fullId, label){
   const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false;
   setHomeMsg('Conectando a ' + label + '…');
   clearTimeout(joinTimer);
-  joinTimer = setTimeout(() => { if (peer === p) leave('No se pudo conectar a la sala.'); }, 12000);
+  joinTimer = setTimeout(() => { if (peer === p) leave('La sala no respondió. Puede estar cerrándose: probá de nuevo en unos segundos.'); }, 12000);
   p.on('open', id => {
     myId = id; conn = p.connect(fullId, { reliable:true });
     conn.on('open', () => { opened = true; conn.send({ t:'join', avatar:myAvatar() }); });
