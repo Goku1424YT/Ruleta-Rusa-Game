@@ -854,16 +854,17 @@ function refreshPublicRooms(){
 function joinById(fullId, label){
   if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
   if (peer){ try { peer.destroy(); } catch(e){} }
-  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false; let stage = 'servidor de señalización';
+  const p = newPeer(); peer = p; isHost = false; roomCode = label; let opened = false; let stage = 'servidor de señalización'; const cands = new Set();
   setHomeMsg('Conectando a ' + label + '…');
   clearTimeout(joinTimer);
   joinTimer = setTimeout(() => {
     if (peer !== p) return;
     let ice = ''; try { ice = conn && conn.peerConnection ? conn.peerConnection.iceConnectionState : ''; } catch(e){}
-    leave('No se pudo conectar (falló en: ' + stage + (ice ? ' · ICE: ' + ice : '') + '). Verificá que ambos tengan la misma versión y probá de nuevo.');
+    leave('No se pudo conectar (falló en: ' + stage + (ice ? ' · ICE: ' + ice : '') + ' · candidatos: ' + ([...cands].join(',') || 'ninguno') + '). Verificá que ambos tengan la misma versión y probá de nuevo.');
   }, 20000);
   p.on('open', id => {
     myId = id; stage = 'conexión con el anfitrión'; conn = p.connect(fullId, { reliable:true });
+    try { conn.peerConnection.addEventListener('icecandidate', e => { if (e.candidate) cands.add(e.candidate.type || 'otro'); }); } catch(e){}
     conn.on('open', () => { opened = true; stage = 'respuesta del anfitrión'; conn.send({ t:'join', avatar:myAvatar() }); });
     conn.on('data', m => {
       if (!m) return;
