@@ -1,4 +1,27 @@
 <!doctype html>
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  ÍNDICE DEL ARCHIVO — buscá con Ctrl+F el código entre corchetes  ║
+╚══════════════════════════════════════════════════════════════════╝
+ CSS (dentro de <style>)
+  [C01] Base y colores        [C02] Aviso flotante     [C03] Personaje
+  [C04] Sala y mesa           [C05] Pantalla final     [C06] Nieve
+  [C07] Modales               [C08] Menú principal     [C09] Música
+  [C10] Chat de texto         [C11] Panel de voz       [C12] Extras (Pipa, chat lateral)
+ HTML
+  [H01] Menú principal        [H02] Modales (H02a-H02e)  [H03] Sala de espera
+  [H04] Partida               [H05] Panel de voz         [H06] Audio y PeerJS
+ JAVASCRIPT — script 1 (reglas puras)
+  [L1] Constantes y avatares  [L2] Revólver y turnos
+ JAVASCRIPT — script 2 (interfaz y red)
+  [J01] Configuración (TURN, Discord, bots)   [J02] Estado global
+  [J03] Perfil y personaje                    [J04] Utilidades y sonidos
+  [J05] Chat de voz                           [J06] Online: salas y conexión
+  [J07] Chat de texto                         [J08] Modo Pipa Caliente
+  [J09] Ruleta clásica: acciones              [J10] Bots
+  [J11] Pantallas y dibujo                    [J12] Botones y eventos
+  [J13] Nieve                                 [J14] Música
+-->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -8,6 +31,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Rye&display=swap" rel="stylesheet">
 <style>
+/* ══════════════════════════════════════════════════════════════════
+   [C01] BASE — variables de color/fuentes, botones, chips, inputs (cambiá los colores en :root)
+   ══════════════════════════════════════════════════════════════════ */
 :root{
   --ink:#170709;--felt:#351016;--felt-2:#21090e;--paper:#f7e8df;--muted:#d0a9a5;--brass:#d8b4a0;--danger:#c52b32;--line:rgba(255,230,220,.18);
   --display:'Rye','Georgia',serif;--body:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:dark;
@@ -45,11 +71,17 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .join input{text-transform:uppercase;letter-spacing:.3em;text-align:center;font-weight:700}
 .msg{color:var(--danger);margin:0}
 
-/* Aviso flotante (visible siempre sobre el menú) */
+/* ══════════════════════════════════════════════════════════════════
+   [C02] AVISO FLOTANTE — #homeMsg: errores y avisos sobre el menú
+   ══════════════════════════════════════════════════════════════════ */
+
 #homeMsg{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:1300;background:#21090ef2;border:1px solid var(--danger);border-radius:10px;padding:8px 14px;max-width:calc(100vw - 24px);text-align:center;color:var(--paper)}
 #homeMsg:empty{display:none}
 
-/* Personaje */
+/* ══════════════════════════════════════════════════════════════════
+   [C03] PERSONAJE — avatar, sombreros, máscaras, X de eliminado
+   ══════════════════════════════════════════════════════════════════ */
+
 .av{--s:64px;width:var(--s);height:var(--s);font-size:var(--s);border-radius:50%;position:relative;display:grid;place-items:center;flex:none;box-shadow:0 0 0 2px rgba(0,0,0,.35) inset,0 0 0 2px var(--line);border:2px solid #d8b7a5;overflow:visible}
 .av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .av .face{font-size:calc(var(--s)*.6);line-height:1}
@@ -70,7 +102,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .av .xmark.fresh{animation:xin .4s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes xin{from{transform:scale(2.4);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* Pantallas Sala y Partida: ancho máximo y centradas */
+/* ══════════════════════════════════════════════════════════════════
+   [C04] SALA DE ESPERA Y MESA DE JUEGO — lobby, mesa circular, arma, animación de disparo
+   ══════════════════════════════════════════════════════════════════ */
+
 #lobby,#game{max-width:760px;margin:0 auto;padding:16px 14px 90px}
 .code{font-family:var(--display);font-size:clamp(2.6rem,12vw,4.4rem);letter-spacing:.18em;color:var(--brass);margin:6px 0 2px}
 .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:22px 12px;margin-top:14px;padding-top:12px}
@@ -104,7 +139,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .pill b{color:var(--brass);letter-spacing:.2em}
 .iconbtn{padding:6px 10px}
 
-/* Pantalla final */
+/* ══════════════════════════════════════════════════════════════════
+   [C05] PANTALLA FINAL — ganador y revancha
+   ══════════════════════════════════════════════════════════════════ */
+
 .over{position:fixed;inset:0;z-index:1100;background:radial-gradient(ellipse at 50% 40%,rgba(90,12,22,.96),rgba(9,4,6,.97));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px}
 .wis{font-family:var(--display);font-size:clamp(2.6rem,12vw,5.4rem);color:var(--paper);margin:0;animation:fadeup .8s ease both}
 .reveal{animation:fadeup .8s ease 1.6s both}
@@ -113,11 +151,17 @@ button:disabled{opacity:.4;cursor:not-allowed}
 #wname{font-family:var(--display);color:var(--brass);font-size:clamp(2.2rem,10vw,4.4rem);line-height:1.1;overflow-wrap:anywhere}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
 
-/* Nieve */
+/* ══════════════════════════════════════════════════════════════════
+   [C06] NIEVE
+   ══════════════════════════════════════════════════════════════════ */
+
 .snowflake{position:fixed;top:-20px;z-index:1000;pointer-events:none;color:#fff;text-shadow:0 0 6px #fff;animation:snowfall linear infinite;opacity:.85}
 @keyframes snowfall{to{transform:translate3d(var(--drift),110vh,0) rotate(360deg)}}
 
-/* Modales */
+/* ══════════════════════════════════════════════════════════════════
+   [C07] MODALES — ventanas emergentes
+   ══════════════════════════════════════════════════════════════════ */
+
 .modal{position:fixed;inset:0;background:#080306df;z-index:1250;display:grid;place-items:center;padding:18px}
 .modal-card{width:min(560px,100%);max-height:85vh;overflow:auto;background:linear-gradient(145deg,#5b111b,#17070b);border:1px solid #c18b76;border-radius:18px;padding:22px;box-shadow:0 20px 70px #000}
 .modal-card h2{font-family:var(--display);font-size:1.8rem;margin-bottom:12px}
@@ -126,7 +170,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .mode-grid button{min-height:74px;font-weight:700}
 @media(max-width:520px){.mode-grid{grid-template-columns:1fr}}
 
-/* Menú principal */
+/* ══════════════════════════════════════════════════════════════════
+   [C08] MENÚ PRINCIPAL — imagen de fondo y zonas clicables (.hs-*): ajustá posiciones aquí
+   ══════════════════════════════════════════════════════════════════ */
+
 .christmas-menu{position:relative;width:100vw;height:100vh;background:url("assets/menu-navidad.png") center/100% 100% no-repeat;overflow:hidden}
 .hotspot{position:absolute;display:block;padding:0;border:0;border-radius:12px;background:transparent;z-index:2;cursor:pointer}
 .hotspot:hover,.hotspot:focus-visible{background:rgba(255,230,210,.13);box-shadow:0 0 0 2px #f4d4c6,0 0 22px #f4d4c688;outline:none}
@@ -140,7 +187,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .hs-tiktok{left:53.5%;top:87%;width:6%;height:11%}
 .hs-twitch{left:62.5%;top:87%;width:6%;height:11%}
 
-/* Música (solo menú, abajo a la izquierda) */
+/* ══════════════════════════════════════════════════════════════════
+   [C09] BARRA DE MÚSICA
+   ══════════════════════════════════════════════════════════════════ */
+
 .musicbar{position:fixed;z-index:1200;left:12px;bottom:12px;display:flex;align-items:center;gap:5px;padding:5px 7px;border:1px solid #b88952;border-radius:12px;background:#21090ef2;color:#fff0e7;font-size:.72rem;width:max-content;max-width:calc(100vw - 24px);overflow:hidden}
 .musicbar select{background:#23080e;color:#fff;padding:4px;border:1px solid #a66a60;border-radius:6px;width:84px;min-width:0}
 .musicbar button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:6px;padding:5px 8px}
@@ -148,14 +198,20 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .volume-control input{width:50px;accent-color:#d8aa70}
 #volumeValue{font-size:.75rem;min-width:28px}
 
-/* Chat: dentro del flujo de la página, ya no flota encima de todo */
+/* ══════════════════════════════════════════════════════════════════
+   [C10] CHAT DE TEXTO — caja de chat
+   ══════════════════════════════════════════════════════════════════ */
+
 .chatbox{width:100%;margin:0 0 16px;border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(16,5,9,.96)}
 .chat-messages{height:130px;overflow:auto;display:flex;flex-direction:column;gap:6px;font-size:.9rem;margin-top:6px}
 .chat-line{overflow-wrap:anywhere}
 .chat-send{display:flex;gap:8px;margin-top:8px}
 .chat-send input{flex:1;min-width:0}
 
-/* Voz: botón pequeño colapsable abajo a la derecha */
+/* ══════════════════════════════════════════════════════════════════
+   [C11] PANEL DE VOZ — abajo a la derecha, colapsable
+   ══════════════════════════════════════════════════════════════════ */
+
 #voicePanel{position:fixed;z-index:1090;right:10px;bottom:10px;width:max-content;max-width:calc(100vw - 20px);padding:8px 10px;background:rgba(12,5,8,.95);border:1px solid #bd7969;border-radius:13px;box-shadow:0 8px 28px #000b;color:#fff0e7;font-size:.85rem}
 #voicePanel summary{cursor:pointer;font-weight:700}
 #voicePanel details[open]{width:min(300px,calc(100vw - 40px))}
@@ -166,9 +222,9 @@ button:disabled{opacity:.4;cursor:not-allowed}
 #voicePanel button{background:#5b111b;color:#fff;border:1px solid #c18b76;border-radius:7px;padding:6px;font-size:.8rem}
 #voiceStatus{font-size:.75rem;color:#e7c3b5;margin-top:5px}
 
-.public-room-list{display:grid;gap:8px;margin-top:10px;max-height:220px;overflow:auto}
-.public-room-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px;border:1px solid var(--line);border-radius:9px;background:#100509}
-.public-room-item span{min-width:0;overflow-wrap:anywhere;font-size:.88rem}
+/* ══════════════════════════════════════════════════════════════════
+   [C12] EXTRAS — HUD de Pipa Caliente (.countdown, #hotControls), cartel de disparo (#banner), layout de partida con chat lateral (.gamewrap), medidor de voz (.meter)
+   ══════════════════════════════════════════════════════════════════ */
 .countdown{font-family:var(--display);font-size:clamp(2rem,8vw,3rem);text-align:center;color:var(--brass);margin:10px 0}
 #hotControls{text-align:center;margin:16px auto;max-width:340px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#17070b}
 #hotSettings{margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px}
@@ -182,14 +238,15 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .gamewrap .chatbox{position:sticky;top:12px;margin:0}
 .gamewrap .chat-messages{height:min(380px,45vh)}
 @media(max-width:900px){.gamewrap{grid-template-columns:1fr}.gamewrap .chatbox{position:static}.gamewrap .chat-messages{height:130px}}
-.room-sub{font-size:.75rem;color:var(--muted)}
-.public-room-item b{font-weight:600}
+.meter{height:8px;background:#260b11;border-radius:99px;overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;width:0;background:#d8aa70;transition:width .08s}
+#voiceTalk{font-size:.75rem;min-height:1em;margin-top:4px;color:#f4d4c6}
 </style>
 </head>
 <body>
 <main>
 
-<!-- MENÚ PRINCIPAL -->
+<!-- ═══ [H01] MENÚ PRINCIPAL — imagen con zonas clicables, barra de música, aviso #homeMsg ═══ -->
 <section id="home" class="screen">
   <div class="christmas-menu" role="navigation" aria-label="Menú principal de Ruleta Rusa">
     <button id="updatesBtn" class="hotspot hs-updates" type="button" aria-label="Updates" title="Updates"></button>
@@ -218,40 +275,41 @@ button:disabled{opacity:.4;cursor:not-allowed}
   <p id="homeMsg" class="msg" role="status"></p>
 </section>
 
-<!-- MODALES -->
+<!-- ═══ [H02] MODALES — ventanas emergentes (perfil, cómo jugar, modo, preparar partida, actualizaciones) ═══ -->
+<!-- [H02a Modal: Personalizar personaje] -->
 <div id="profileModal" class="modal" hidden><div class="modal-card"><h2>🎅 Personalizar personaje</h2>
   <div class="editor"><div id="prev" aria-label="Vista previa de tu personaje"></div><div class="field"><label class="label" for="name">Tu nombre</label><input type="text" id="name" maxlength="14" autocomplete="off" placeholder="Jugador"></div></div>
   <span class="label">Personaje</span><div id="bases" class="chips"></div><span class="label">Sombrero / accesorio</span><div id="hats" class="chips"></div><span class="label">Máscara</span><div id="masks" class="chips"></div><span class="label">Color de fondo</span><div id="colors" class="chips"></div>
   <span class="label">Foto de perfil</span><div class="row"><button id="pick" class="ghost" type="button">Elegir foto del ordenador</button><button id="nophoto" class="ghost" type="button" hidden>Quitar foto</button><input type="file" id="file" accept="image/*" hidden></div>
   <button class="btn closeModal" style="margin-top:16px" type="button">Guardar y volver</button></div></div>
 
-<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> en tu turno disparás o girás el tambor y disparás. Gana quien quede al final.</p><p><b>Pipa Caliente:</b> la pistola es la «pipa»: quien la tiene debe pasarla al siguiente antes de que se acabe el tiempo. Si llega a cero, la pistola dispara y el jugador queda fuera.</p><p><b>Salas públicas:</b> hay 5 salas de Ruleta y 5 de Pipa Caliente. Entrá a cualquiera: si está vacía serás el anfitrión, y si ya hay alguien te unís. También podés crear una sala privada y compartir el código.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
+<!-- [H02b Modal: Cómo jugar (texto)] -->
+<div id="howModal" class="modal" hidden><div class="modal-card"><h2>🎄 Cómo jugar</h2><p><b>Ruleta Rusa Classic:</b> en tu turno disparás o girás el tambor y disparás. Gana quien quede al final.</p><p><b>Pipa Caliente:</b> la pistola es la «pipa»: quien la tiene debe pasarla antes de que se acabe el tiempo. Si llega a cero, dispara y el jugador queda fuera.</p><p><b>Online:</b> creá una sala, compartí el código de 4 letras con tus amigos y que usen «Unirse con código». También podés jugar con bots.</p><p><b>Voz:</b> dentro de la sala abrí «Voice Chat» (abajo a la derecha) y activá el micrófono.</p><button class="btn closeModal" type="button">Cerrar</button></div></div>
 
+<!-- [H02c Modal: Elegir modo / Unirse con código] -->
 <div id="modeModal" class="modal" hidden><div class="modal-card"><h2>Elegí cómo jugar</h2>
-  <div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic (sala privada / bots)</button><button data-mode="hot" class="btn">Pipa Caliente ♨️ (sala privada / bots)</button><button id="openPublic" class="ghost">Salas públicas</button><button id="openJoin" class="ghost">Unirse con código</button></div>
-  <div id="publicPanel" hidden style="margin-top:12px">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="label" style="margin:0">Salas públicas</span><button id="refreshPublic" class="ghost" type="button">Actualizar</button></div>
-    <div id="publicRoomList" class="public-room-list" style="max-height:300px"></div>
-    <p id="publicRoomStatus" class="msg" role="status"></p>
-  </div>
+  <div class="mode-grid"><button data-mode="classic" class="btn">Ruleta Rusa Classic</button><button data-mode="hot" class="btn">Pipa Caliente ♨️</button><button id="openJoin" class="ghost">Unirse con código</button><button class="ghost closeModal" type="button">Volver</button></div>
   <div id="joinPanel" hidden style="margin-top:12px">
-    <label class="label" for="code">Unirse con código</label>
+    <label class="label" for="code">Código de sala</label>
     <div class="join"><input type="text" id="code" maxlength="4" placeholder="CÓDIGO" autocomplete="off"><button id="joinBtn" class="btn" type="button">Unirme</button></div>
   </div>
-  <button class="ghost closeModal" style="margin-top:12px" type="button">Volver</button></div></div>
+  <a id="discordLink" class="btn" href="#" target="_blank" rel="noopener noreferrer" hidden style="display:block;text-align:center;margin-top:12px;padding:10px;text-decoration:none">💬 Unirse al Discord</a>
+</div></div>
 
+<!-- [H02d Modal: Crear sala o jugar con bots] -->
 <div id="setupModal" class="modal" hidden><div class="modal-card"><h2 id="setupTitle">Preparar partida</h2>
   <p>¿Cómo querés jugar?</p>
   <div class="mode-grid"><button id="create" class="btn">Crear sala privada</button><button id="botsBtn" class="btn">Jugar con bots</button></div>
   <button class="ghost closeModal" style="margin-top:12px" type="button">Volver</button></div></div>
 
+<!-- [H02e Modal: Actualizaciones (texto)] -->
 <div id="updatesModal" class="modal" hidden><div class="modal-card"><h2>🎄 Actualizaciones</h2>
-  <p><b>10 salas públicas fijas:</b> 5 de Ruleta Rusa y 5 de Pipa Caliente. La primera persona que entra a una sala vacía es el anfitrión; las demás se unen.</p>
-  <p><b>Pipa Caliente con pistola:</b> la pistola es la ficha. Se pasa de jugador en jugador y si el tiempo llega a cero, dispara al que la tiene.</p>
-  <p><b>Chat al costado</b> del tablero durante la partida (debajo en móvil).</p>
+  <p><b>Solo salas con código:</b> creá una sala, compartí el código y tus amigos se unen. Se quitaron las salas públicas.</p>
+  <p><b>Chat de voz real:</b> ahora el micrófono se transmite a los demás jugadores de la sala, con indicador de nivel y de quién está hablando.</p>
+  <p><b>Pipa Caliente con pistola</b> y chat al costado del tablero.</p>
   <button class="btn closeModal" type="button">Cerrar</button></div></div>
 
-<!-- SALA DE ESPERA -->
+<!-- ═══ [H03] SALA DE ESPERA — código, lista de jugadores, opciones del anfitrión, chat ═══ -->
 <section id="lobby" class="screen" hidden>
   <div class="top">
     <span class="pill">Sala <b id="roomcode">····</b></span>
@@ -261,7 +319,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
     <div id="codebox">
       <span class="label">Código para compartir</span>
       <div class="code" id="roomcodebig">····</div>
-      <button id="copy" class="ghost" type="button">Copiar código</button>
+      <div class="row"><button id="copy" class="ghost" type="button">Copiar código</button><button id="copyDiscord" class="ghost" type="button">Copiar mensaje para Discord</button></div>
     </div>
     <span class="label" id="botnote" hidden>Práctica contra 4 bots</span>
     <div id="plist" class="plist"></div>
@@ -283,7 +341,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
   <div class="chatbox"><b>💬 Chat de sala</b><div id="chatMessages" class="chat-messages" aria-live="polite"></div><div class="chat-send"><input id="chatInput" type="text" maxlength="180" placeholder="Escribí un mensaje…" autocomplete="off"><button id="chatSend" class="btn" type="button">Enviar</button></div></div>
 </section>
 
-<!-- PARTIDA -->
+<!-- ═══ [H04] PARTIDA — mesa, arma, botones de disparo, HUD de Pipa Caliente, chat lateral, pantalla final ═══ -->
 <section id="game" class="screen" hidden>
   <div class="top">
     <span class="pill"><span id="gpre">Sala </span><b id="gcode"></b></span>
@@ -338,6 +396,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 </section>
 </main>
 
+<!-- ═══ [H05] PANEL DE VOZ — micrófono, medidor, silenciar, PTT ═══ -->
 <div id="voicePanel" hidden aria-label="Controles de micrófono">
   <details>
     <summary>🎙️ Voice Chat</summary>
@@ -345,16 +404,23 @@ button:disabled{opacity:.4;cursor:not-allowed}
     <select id="voiceInput"><option value="">Micrófono predeterminado</option></select>
     <label for="micVolume">Nivel de entrada: <span id="micVolumeValue">70%</span></label>
     <input id="micVolume" type="range" min="0" max="1" step="0.05" value="0.7">
-    <div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>PTT (V)</button></div>
-    <div id="voiceStatus" role="status">Micrófono local sin retorno. La transmisión de voz entre jugadores aún no está conectada.</div>
+    <div class="meter"><i id="micMeterBar"></i></div><div id="voiceTalk"></div><div class="voice-actions"><button id="voiceEnable" type="button">🎤 Activar micrófono</button><button id="voiceMute" type="button" disabled>Silenciar</button><button id="pushToTalk" type="button" disabled>PTT (V)</button></div>
+    <div id="voiceStatus" role="status">Micrófono apagado.</div>
   </details>
 </div>
 
+<!-- ═══ [H06] AUDIO Y LIBRERÍA PEERJS ═══ -->
 <audio id="musicPlayer" preload="none"></audio>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
 
-<!-- Lógica pura del juego -->
+<!-- ═══ [SCRIPT 1] LÓGICA PURA DEL JUEGO — secciones L1 y L2 (no toca el DOM) ═══ -->
 <script id="logic">
+/* ══════════════════════════════════════════════════════════════════
+   [L1] CONSTANTES Y AVATARES
+   MAX_PLAYERS, CHAMBERS, y las listas de personajes/sombreros/máscaras/colores (BASES, HATS, MASKS, COLORS).
+   Cambiar aquí: máximo de jugadores, añadir emojis o colores nuevos.
+   ══════════════════════════════════════════════════════════════════ */
+
 const MAX_PLAYERS = 8, CHAMBERS = 6;
 const BASES = ['silueta','😀','😎','🤓','😈','👽','🤖','👻','🐵','🐱','🐸','🦊','🐼'];
 const HATS = ['','🎩','👑','🧢','🎓','🤠','👒','🪖','⛑️','🎅','🎄','🦌'];
@@ -374,6 +440,12 @@ function cleanAvatar(a){
   if (typeof a.photo === 'string' && a.photo.length < 40000 && /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(a.photo)) o.photo = a.photo;
   return o;
 }
+/* ══════════════════════════════════════════════════════════════════
+   [L2] REGLAS DEL REVÓLVER Y TURNOS
+   Cargar el tambor, siguiente jugador vivo, disparar, quitar jugadores que se van.
+   Cambiar aquí: reglas del disparo (pullTrigger), quién sigue (nextAlive).
+   ══════════════════════════════════════════════════════════════════ */
+
 function loadGun(bullets, rnd){
   const c = Array(CHAMBERS).fill(false);
   let n = 0;
@@ -419,25 +491,32 @@ function dropPlayer(g, players, id){
 }
 </script>
 
-<!-- Interfaz, red PeerJS y micrófono -->
+<!-- ═══ [SCRIPT 2] INTERFAZ, RED Y VOZ — secciones J01 a J14 (ver índice al inicio del archivo) ═══ -->
 <script>
+/* ══════════════════════════════════════════════════════════════════
+   [J01] CONFIGURACIÓN GENERAL
+   Conexión PeerJS/TURN (CUSTOM_ICE), enlace de Discord (DISCORD_URL), look de los bots (BOT_LOOKS).
+   Cambiar aquí: servidor TURN, URL de Discord, nombres/aspecto de los bots.
+   ══════════════════════════════════════════════════════════════════ */
 const $ = s => document.querySelector(s);
+
 const PREFIX = 'ruletarusa-';
 
-/* Con servidor propio: añadí host:'tu-servidor.com', port:443, path:'/', secure:true
-   Para móviles / redes restrictivas añadí un servidor TURN en iceServers. */
 /* Por defecto se usa la configuración de PeerJS (STUN + TURN gratuitos incluidos).
    Si tenés tu propio TURN, agregalo acá y se usará junto con los de PeerJS. */
 const CUSTOM_ICE = [ /* { urls:'turn:TU_TURN:3478', username:'...', credential:'...' } */ ];
+
 const PEER_OPTS = CUSTOM_ICE.length ? { debug:1, config:{ iceServers:[
   { urls:'stun:stun.l.google.com:19302' },
   { urls:['turn:eu-0.turn.peerjs.com:3478','turn:us-0.turn.peerjs.com:3478'], username:'peerjs', credential:'peerjsp' }
 ].concat(CUSTOM_ICE) } } : { debug:1 };
-const newPeer = id => new Peer(id || undefined, PEER_OPTS);
+
+const newPeer = id => { const p = new Peer(id || undefined, PEER_OPTS); p.on('call', handleCall); return p; };
 
 const SIL = c => '<svg class="face sil-svg" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="' + c
   + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="34" r="19"/>'
   + '<path d="M22 108V88C22 74 30 66 40 66C46 66 46 72 50 72C54 72 54 66 60 66C70 66 78 74 78 88V108Z"/></g></svg>';
+
 const BOT_LOOKS = [
   { name:'Bot Rex',  hat:'🎩', mask:'',   color:'#3f8fb5' },
   { name:'Bot Luna', hat:'',   mask:'🕶️', color:'#7a63c9' },
@@ -445,16 +524,36 @@ const BOT_LOOKS = [
   { name:'Bot Zeta', hat:'🤠', mask:'🥸', color:'#4f9d6b' }
 ];
 
+const DISCORD_URL = ''; // pegá acá el enlace de invitación de tu servidor de Discord
+
+/* ══════════════════════════════════════════════════════════════════
+   [J02] ESTADO GLOBAL
+   Variables de la partida: sala, jugadores, turno, temporizadores, modo elegido, perfil propio (me).
+   Cambiar aquí: valores iniciales (hotCfg = tiempo y cooldown de Pipa Caliente, CHAT_COLORS).
+   ══════════════════════════════════════════════════════════════════ */
 let peer = null, conn = null, conns = {};
+
 let isHost = false, myId = null, roomCode = '';
+
 let players = [], game = { phase:'lobby', bullets:1 }, view = null;
+
 let lastSeq = 0, log = [], muted = false, joinTimer = null;
+
 let busy = false, holdId = null, freshId = null, gunRot = 0, gunReady = false, timers = [];
+
 let botMode = false, botTimer = null;
+
 let selectedMode = 'classic', isPublicRoom = true, hotCfg = { passSeconds:10, cooldown:1 }, hotTimer = null, hotDeadline = 0, hotLastPass = {}, chatLog = [], playerColors = {};
+
 const CHAT_COLORS = ['#ff8a80','#80cbc4','#90caf9','#ce93d8','#fff176','#a5d6a7','#ffcc80','#80deea'];
+
 let me = loadProfile();
 
+/* ══════════════════════════════════════════════════════════════════
+   [J03] PERFIL Y PERSONAJE
+   Guardar/cargar perfil, dibujar avatares, editor de personaje (modal «Personalizar personaje»).
+   Cambiar aquí: cómo se ve un jugador, subida de foto.
+   ══════════════════════════════════════════════════════════════════ */
 function loadProfile(){
   try {
     let s = localStorage.getItem('ruleta-perfil-2');
@@ -464,6 +563,7 @@ function loadProfile(){
   } catch(e){}
   return cleanAvatar({});
 }
+
 function saveProfile(){ try { localStorage.setItem('ruleta-perfil-2', JSON.stringify(me)); } catch(e){} }
 
 function avatarEl(av, size, dead, fresh){
@@ -506,6 +606,7 @@ function chips(box, items, key, label){
     box.appendChild(b);
   });
 }
+
 function drawEditor(){
   const p = $('#prev'); p.textContent = ''; p.style.paddingTop = '14px';
   p.appendChild(avatarEl(me, 84));
@@ -516,10 +617,15 @@ function drawEditor(){
   $('#nophoto').hidden = !me.photo;
   $('#pick').textContent = me.photo ? 'Cambiar foto' : 'Elegir foto del ordenador';
 }
+
 $('#name').value = me.name === 'Jugador' ? '' : me.name;
+
 $('#name').addEventListener('input', e => { me.name = cleanAvatar({ ...me, name:e.target.value }).name; saveProfile(); });
+
 $('#pick').addEventListener('click', () => $('#file').click());
+
 $('#nophoto').addEventListener('click', () => { me.photo = ''; saveProfile(); drawEditor(); });
+
 $('#file').addEventListener('change', e => {
   const f = e.target.files && e.target.files[0]; if (!f) return;
   const rd = new FileReader();
@@ -537,72 +643,18 @@ $('#file').addEventListener('change', e => {
   rd.readAsDataURL(f); e.target.value = '';
 });
 
-/* Micrófono local sin monitorización (sin eco propio). */
-let localMicStream = null, voiceMuted = false, pttMode = false, pttHeld = false;
-async function refreshMicDevices(){
-  if (!navigator.mediaDevices?.enumerateDevices) return;
-  try {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const vi = $('#voiceInput'), old = vi.value;
-    vi.textContent = '';
-    devices.filter(d => d.kind === 'audioinput').forEach((d, i) => {
-      const o = document.createElement('option');
-      o.value = d.deviceId; o.textContent = d.label || ('Micrófono ' + (i + 1));
-      vi.append(o);
-    });
-    if ([...vi.options].some(o => o.value === old)) vi.value = old;
-  } catch(e){}
-}
-function updateMicState(){
-  if (localMicStream) localMicStream.getAudioTracks().forEach(t => { t.enabled = !voiceMuted && (!pttMode || pttHeld); });
-}
-async function enableMic(){
-  const status = $('#voiceStatus');
-  if (!navigator.mediaDevices?.getUserMedia){ status.textContent = 'Se requiere HTTPS y permiso del navegador.'; return; }
-  try {
-    if (localMicStream) localMicStream.getTracks().forEach(t => t.stop());
-    const constraints = { audio:{ ...($('#voiceInput').value ? { deviceId:{ exact:$('#voiceInput').value } } : {}), echoCancellation:true, noiseSuppression:true, autoGainControl:true } };
-    localMicStream = await navigator.mediaDevices.getUserMedia(constraints);
-    $('#voiceEnable').textContent = '🎤 Micrófono activo';
-    $('#voiceMute').disabled = false; $('#pushToTalk').disabled = false;
-    status.textContent = 'Entrada activa sin reproducir tu propia voz. La transmisión a otros jugadores no está conectada.';
-    await refreshMicDevices(); updateMicState();
-  } catch(e){
-    status.textContent = e.name === 'NotAllowedError' ? 'Permiso de micrófono denegado.' : 'No se pudo activar el micrófono.';
-  }
-}
-$('#voiceEnable').addEventListener('click', enableMic);
-$('#voiceMute').addEventListener('click', () => {
-  voiceMuted = !voiceMuted;
-  $('#voiceMute').textContent = voiceMuted ? 'Activar micrófono' : 'Silenciar';
-  updateMicState();
-});
-$('#pushToTalk').addEventListener('click', () => {
-  pttMode = !pttMode; pttHeld = false;
-  $('#pushToTalk').textContent = pttMode ? 'PTT activado (V)' : 'PTT desactivado';
-  updateMicState();
-});
-$('#micVolume').addEventListener('input', () => { $('#micVolumeValue').textContent = Math.round(Number($('#micVolume').value)*100) + '%'; });
-$('#voiceInput').addEventListener('change', () => { if (localMicStream) enableMic(); });
-document.addEventListener('keydown', e => {
-  if (e.key.toLowerCase() === 'v' && !e.repeat && pttMode && !e.target.matches('input,textarea,select')){ pttHeld = true; updateMicState(); }
-});
-document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'v' && pttMode){ pttHeld = false; updateMicState(); } });
-window.addEventListener('blur', () => { pttHeld = false; updateMicState(); });
-
-/* Cuenta atrás de Pipa Caliente (todos los dispositivos) */
-function hotSecs(v){ return Math.min((v.hotCfg && v.hotCfg.passSeconds) || 10, Math.max(0, Math.ceil((v.hotDeadline - Date.now())/1000))); }
-setInterval(() => {
-  if (view && view.mode === 'hot' && view.phase === 'play' && view.hotDeadline){
-    const el = $('#hotCountdown');
-    if (el) el.textContent = hotSecs(view) + ' s';
-  }
-}, 150);
-
+/* ══════════════════════════════════════════════════════════════════
+   [J04] UTILIDADES
+   Cambiar pantalla (show), mensajes del menú, código aleatorio, temporizadores, sonidos (snd), copiar al portapapeles.
+   ══════════════════════════════════════════════════════════════════ */
 function show(id){ ['home','lobby','game'].forEach(s => { $('#' + s).hidden = (s !== id); }); $('#voicePanel').hidden = (id === 'home'); }
+
 function setHomeMsg(t){ $('#homeMsg').textContent = t || ''; }
+
 function randomCode(){ const L = 'ABCDEFGHJKMNPQRSTUVWXYZ'; let s = ''; for (let i = 0; i < 4; i++) s += L[Math.floor(Math.random()*L.length)]; return s; }
+
 function later(fn, ms){ const id = setTimeout(() => { timers = timers.filter(x => x !== id); fn(); }, ms); timers.push(id); }
+
 function clearTimers(){ timers.forEach(clearTimeout); timers = []; clearTimeout(botTimer); botTimer = null; }
 
 function snd(kind){
@@ -627,12 +679,195 @@ function snd(kind){
   } catch(e){}
 }
 
-/* ---------- ONLINE ---------- */
+function copyText(txt, btn, label){
+  const done = () => { btn.textContent = '¡Copiado!'; setTimeout(() => btn.textContent = label, 1500); };
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, () => {}); else done();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   [J05] CHAT DE VOZ
+   Micrófono, llamadas WebRTC entre jugadores, medidor de nivel, silenciar y PTT (tecla V).
+   Cambiar aquí: calidad del micrófono (enableMic), volumen, comportamiento de las llamadas (syncVoice).
+   ══════════════════════════════════════════════════════════════════ */
+let localMicStream = null, sendStream = null, voiceAC = null, micGain = null, micAnalyser = null, micSrc = null, meterRAF = 0;
+
+let voiceMuted = false, pttMode = false, pttHeld = false;
+
+const voiceCalls = {}, voiceSendsTo = {}, remoteAudio = {}, remoteAn = {};
+
+function realId(pid){ return pid === 'host' ? (conn && conn.peer) : pid; }
+
+function getVoiceAC(){ if (!voiceAC){ const AC = window.AudioContext || window.webkitAudioContext; voiceAC = new AC(); } return voiceAC; }
+
+function updateVoiceStatus(){
+  const n = Object.keys(remoteAudio).length;
+  $('#voiceStatus').textContent = (localMicStream ? 'Micrófono activo' : 'Micrófono apagado') + ' · recibiendo voz de ' + n + ' jugador' + (n === 1 ? '' : 'es') + '.';
+}
+
+function level(an){ const d = new Uint8Array(an.fftSize); an.getByteTimeDomainData(d); let m = 0; for (let i = 0; i < d.length; i++) m = Math.max(m, Math.abs(d[i] - 128)); return m/128; }
+
+function meterLoop(){
+  meterRAF = requestAnimationFrame(meterLoop);
+  $('#micMeterBar').style.width = micAnalyser ? Math.min(100, level(micAnalyser)*160) + '%' : '0%';
+  const talking = [];
+  for (const k in remoteAn){ if (level(remoteAn[k]) > 0.04){ const p = view && view.players.find(x => realId(x.id) === k); talking.push(p ? p.avatar.name : '?'); } }
+  $('#voiceTalk').textContent = talking.length ? '🔊 Hablando: ' + talking.join(', ') : '';
+}
+
+function playRemote(pid, st){
+  let a = remoteAudio[pid];
+  if (!a){ a = document.createElement('audio'); a.autoplay = true; a.playsInline = true; document.body.appendChild(a); remoteAudio[pid] = a; }
+  a.srcObject = st; const pr = a.play(); if (pr && pr.catch) pr.catch(() => {});
+  try {
+    const ac = getVoiceAC(); if (remoteAn[pid]) { try { remoteAn[pid]._src.disconnect(); } catch(e){} }
+    const src = ac.createMediaStreamSource(st), an = ac.createAnalyser(); an.fftSize = 256; src.connect(an); an._src = src; remoteAn[pid] = an;
+    if (!meterRAF) meterLoop();
+  } catch(e){}
+  updateVoiceStatus();
+}
+
+function dropRemote(pid){
+  const a = remoteAudio[pid]; if (a){ a.srcObject = null; a.remove(); delete remoteAudio[pid]; }
+  if (remoteAn[pid]){ try { remoteAn[pid]._src.disconnect(); } catch(e){} delete remoteAn[pid]; }
+  updateVoiceStatus();
+}
+
+function handleCall(call){
+  try { call.answer(sendStream || undefined); if (sendStream) voiceSendsTo[call.peer] = true; } catch(e){ return; }
+  voiceCalls[call.peer] = call;
+  call.on('stream', st => playRemote(call.peer, st));
+  call.on('close', () => dropRemote(call.peer));
+  call.on('error', () => dropRemote(call.peer));
+}
+
+function syncVoice(){
+  if (!peer || !view) return;
+  const ids = view.players.filter(p => p.id !== myId && !String(p.id).startsWith('bot')).map(p => realId(p.id)).filter(Boolean);
+  Object.keys(voiceCalls).forEach(k => {
+    if (!ids.includes(k)){ try { voiceCalls[k].close(); } catch(e){} delete voiceCalls[k]; delete voiceSendsTo[k]; dropRemote(k); }
+  });
+  if (!sendStream) return;
+  ids.forEach(rid => {
+    if (voiceSendsTo[rid]) return;
+    try {
+      const c = peer.call(rid, sendStream); if (!c) return;
+      voiceSendsTo[rid] = true; voiceCalls[rid] = c;
+      c.on('stream', st => playRemote(rid, st));
+      c.on('close', () => dropRemote(rid));
+      c.on('error', () => { delete voiceSendsTo[rid]; });
+    } catch(e){}
+  });
+}
+
+function closeAllCalls(){
+  Object.keys(voiceCalls).forEach(k => { try { voiceCalls[k].close(); } catch(e){} delete voiceCalls[k]; });
+  Object.keys(voiceSendsTo).forEach(k => delete voiceSendsTo[k]);
+  Object.keys(remoteAudio).forEach(dropRemote);
+}
+
+function stopVoice(){
+  closeAllCalls();
+  if (localMicStream){ localMicStream.getTracks().forEach(t => t.stop()); localMicStream = null; }
+  try { if (micSrc) micSrc.disconnect(); } catch(e){}
+  sendStream = null; micGain = null; micAnalyser = null; micSrc = null;
+  if (meterRAF){ cancelAnimationFrame(meterRAF); meterRAF = 0; }
+  $('#micMeterBar').style.width = '0%'; $('#voiceTalk').textContent = '';
+  $('#voiceEnable').textContent = '🎤 Activar micrófono'; $('#voiceMute').disabled = true; $('#pushToTalk').disabled = true;
+  updateVoiceStatus();
+}
+
+async function refreshMicDevices(){
+  if (!navigator.mediaDevices?.enumerateDevices) return;
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const vi = $('#voiceInput'), old = vi.value;
+    vi.textContent = '';
+    devices.filter(d => d.kind === 'audioinput').forEach((d, i) => {
+      const o = document.createElement('option');
+      o.value = d.deviceId; o.textContent = d.label || ('Micrófono ' + (i + 1));
+      vi.append(o);
+    });
+    if ([...vi.options].some(o => o.value === old)) vi.value = old;
+  } catch(e){}
+}
+
+function updateMicState(){
+  if (localMicStream) localMicStream.getAudioTracks().forEach(t => { t.enabled = !voiceMuted && (!pttMode || pttHeld); });
+}
+
+async function enableMic(){
+  const status = $('#voiceStatus');
+  if (!navigator.mediaDevices?.getUserMedia){ status.textContent = 'Se requiere HTTPS y permiso del navegador.'; return; }
+  try {
+    closeAllCalls();
+    if (localMicStream) localMicStream.getTracks().forEach(t => t.stop());
+    try { if (micSrc) micSrc.disconnect(); } catch(e){}
+    const constraints = { audio:{ ...($('#voiceInput').value ? { deviceId:{ exact:$('#voiceInput').value } } : {}), echoCancellation:true, noiseSuppression:true, autoGainControl:true } };
+    localMicStream = await navigator.mediaDevices.getUserMedia(constraints);
+    sendStream = localMicStream;
+    try {
+      const ac = getVoiceAC(); if (ac.state === 'suspended') await ac.resume();
+      micSrc = ac.createMediaStreamSource(localMicStream);
+      micGain = ac.createGain(); micGain.gain.value = Number($('#micVolume').value) * 1.5;
+      const dest = ac.createMediaStreamDestination();
+      micSrc.connect(micGain); micGain.connect(dest);
+      micAnalyser = ac.createAnalyser(); micAnalyser.fftSize = 256; micGain.connect(micAnalyser);
+      sendStream = dest.stream;
+    } catch(e){ sendStream = localMicStream; micGain = null; }
+    $('#voiceEnable').textContent = '🎤 Micrófono activo';
+    $('#voiceMute').disabled = false; $('#pushToTalk').disabled = false;
+    if (!meterRAF) meterLoop();
+    await refreshMicDevices(); updateMicState(); updateVoiceStatus(); syncVoice();
+  } catch(e){
+    status.textContent = e.name === 'NotAllowedError' ? 'Permiso de micrófono denegado.' : 'No se pudo activar el micrófono.';
+  }
+}
+
+$('#voiceEnable').addEventListener('click', enableMic);
+
+$('#voiceMute').addEventListener('click', () => {
+  voiceMuted = !voiceMuted;
+  $('#voiceMute').textContent = voiceMuted ? 'Activar micrófono' : 'Silenciar';
+  updateMicState();
+});
+
+$('#pushToTalk').addEventListener('click', () => {
+  pttMode = !pttMode; pttHeld = false;
+  $('#pushToTalk').textContent = pttMode ? 'PTT activado (V)' : 'PTT desactivado';
+  updateMicState();
+});
+
+$('#micVolume').addEventListener('input', () => {
+  const v = Number($('#micVolume').value);
+  $('#micVolumeValue').textContent = Math.round(v*100) + '%';
+  if (micGain) micGain.gain.value = v * 1.5;
+});
+
+$('#voiceInput').addEventListener('change', () => { if (localMicStream) enableMic(); });
+
+document.addEventListener('keydown', e => {
+  if (e.key.toLowerCase() === 'v' && !e.repeat && pttMode && !e.target.matches('input,textarea,select')){ pttHeld = true; updateMicState(); }
+});
+
+document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'v' && pttMode){ pttHeld = false; updateMicState(); } });
+
+window.addEventListener('blur', () => { pttHeld = false; updateMicState(); });
+
+/* Los navegadores bloquean audio hasta que haya un clic: reintentar reproducir al hacer clic */
+document.addEventListener('click', () => {
+  Object.values(remoteAudio).forEach(a => { const pr = a.play(); if (pr && pr.catch) pr.catch(() => {}); });
+  if (voiceAC && voiceAC.state === 'suspended') voiceAC.resume().catch(() => {});
+});
+
+/* ══════════════════════════════════════════════════════════════════
+   [J06] ONLINE: SALAS Y CONEXIÓN (PeerJS)
+   Crear sala (anfitrión), unirse con código, recibir jugadores, enviar el estado a todos (broadcast), salir.
+   Cambiar aquí: límites de sala, mensajes de error, qué hace el anfitrión con cada mensaje (hostOnConn).
+   ══════════════════════════════════════════════════════════════════ */
 function peerOk(){ return typeof Peer !== 'undefined'; }
+
 function myAvatar(){ return cleanAvatar(me); }
 
-const PUBLIC_ROOMS = [1,2,3,4,5].map(i => ({ id:'C'+i, mode:'classic', name:'🔫 Ruleta #'+i }))
-  .concat([1,2,3,4,5].map(i => ({ id:'H'+i, mode:'hot', name:'♨️ Pipa #'+i })));
 const FATAL = ['network','server-error','socket-error','socket-closed','browser-incompatible','invalid-id','invalid-key','ssl-unavailable'];
 
 function becomeHost(label){
@@ -643,12 +878,14 @@ function becomeHost(label){
   lastSeq = 0; log = []; setHomeMsg('');
   broadcast();
 }
+
 function hostError(p, err, onTaken){
   if (peer !== p) return;
   if (err.type === 'unavailable-id' && onTaken){ onTaken(); return; }
   if (isHost && !FATAL.includes(err.type)) return;
   leave('No se pudo crear la sala (' + err.type + ').');
 }
+
 function startHost(tries){
   if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
   tries = tries || 0; const code = randomCode(); let p;
@@ -658,22 +895,10 @@ function startHost(tries){
   p.on('connection', hostOnConn);
   p.on('error', err => hostError(p, err, tries < 5 ? () => { try { p.destroy(); } catch(e){} peer = null; startHost(tries + 1); } : null));
 }
-/* Sala pública fija: si nadie la tiene, sos el anfitrión; si ya existe, te unís. */
-function enterPublic(rid){
-  const meta = PUBLIC_ROOMS.find(r => r.id === rid); if (!meta) return;
-  if (!peerOk()){ setHomeMsg('PeerJS no cargó. Revisá tu conexión.'); return; }
-  if (peer){ try { peer.destroy(); } catch(e){} peer = null; }
-  selectedMode = meta.mode; $('#modeModal').hidden = true; setHomeMsg('Entrando a ' + meta.name + '…');
-  const p = newPeer(PREFIX + 'S-' + rid); peer = p;
-  p.on('open', () => becomeHost(meta.name));
-  p.on('connection', hostOnConn);
-  p.on('error', err => hostError(p, err, () => { try { p.destroy(); } catch(e){} peer = null; joinById(PREFIX + 'S-' + rid, meta.name); }));
-}
 
 function hostOnConn(c){
   c.on('data', m => {
     if (!m || typeof m !== 'object') return;
-    if (m.t === 'info'){ try { c.send({ t:'info', n:players.length, phase:game.phase, mode:game.mode || 'classic' }); } catch(e){} return; }
     if (m.t === 'join'){
       let why = '';
       if (game.phase !== 'lobby') why = 'Partida en curso.';
@@ -704,151 +929,11 @@ function buildView(){
     players:players.map(p => ({ id:p.id, avatar:p.avatar, alive:p.alive, left:!!p.left, chatColor:playerColors[p.id] || '#fff' }))
   };
 }
+
 function broadcast(){
   const v = buildView();
   Object.values(conns).forEach(c => { try { c.send({ t:'state', v }); } catch(e){} });
   view = v; render(); botThink();
-}
-function doShot(spin){
-  if (game.phase !== 'play' || game.mode === 'hot') return;
-  pullTrigger(game, players, spin, Math.random); broadcast();
-}
-function relayChat(id, raw){
-  const p = players.find(x => x.id === id); if (!p) return;
-  const msg = String(raw || '').replace(/[<>]/g,'').trim().slice(0,180); if (!msg) return;
-  chatLog.push({ id, name:p.avatar.name, text:msg, color:playerColors[id] || '#fff' });
-  chatLog = chatLog.slice(-40); broadcast();
-}
-function sendChat(inputId){
-  const val = $('#' + inputId).value.trim(); if (!val) return;
-  if (isHost) relayChat(myId, val); else if (conn && conn.open) conn.send({ t:'chat', text:val });
-  $('#' + inputId).value = '';
-}
-
-/* ---------- PIPA CALIENTE ---------- */
-function startHotClock(){
-  clearInterval(hotTimer);
-  hotDeadline = Date.now() + ((game.hotCfg || hotCfg).passSeconds * 1000);
-  hotLastPass = {};
-  hotTimer = setInterval(() => {
-    if (!isHost || game.phase !== 'play' || game.mode !== 'hot'){ clearInterval(hotTimer); return; }
-    if (Date.now() >= hotDeadline){
-      const expired = game.turn;
-      if (expired >= 0 && players[expired]){
-        game.seq = (game.seq || 0) + 1;
-        game.last = { by:players[expired].id, hit:true, spun:false, seq:game.seq };
-        players[expired].alive = false;
-      }
-      const alive = players.filter(p => p.alive);
-      if (alive.length <= 1){
-        game.phase = 'over'; game.winner = alive[0]?.id || null; game.turn = -1;
-        clearInterval(hotTimer); hotDeadline = 0;
-      } else {
-        game.turn = nextAlive(players, expired);
-        hotDeadline = Date.now() + 2300 + ((game.hotCfg || hotCfg).passSeconds * 1000);
-      }
-      broadcast();
-    }
-  }, 100);
-}
-function passHot(id){
-  if (!isHost || game.phase !== 'play' || game.mode !== 'hot') return;
-  const from = players.findIndex(p => p.id === id);
-  if (from < 0 || from !== game.turn || !hotDeadline || Date.now() >= hotDeadline) return;
-  const now = Date.now(), cooldown = (game.hotCfg || hotCfg).cooldown * 1000;
-  if (now - (hotLastPass[id] || 0) < cooldown){ $('#passFeedback').textContent = 'Esperá un momento antes de volver a pasar.'; return; }
-  const next = nextAlive(players, from); if (next < 0) return;
-  hotLastPass[id] = now; game.turn = next;
-  broadcast();
-}
-function updateHotHud(v){
-  const hot = v.mode === 'hot';
-  $('#table').classList.toggle('hotmode', hot);
-  const active = hot && v.phase === 'play';
-  $('#hotControls').hidden = !active;
-  if (!active) return;
-  const holder = v.players[v.turn];
-  $('#hotHolder').textContent = 'Tiene la pistola: ' + (holder?.avatar?.name || '—');
-  $('#passBtn').disabled = !holder || holder.id !== myId;
-  $('#hotCountdown').textContent = v.hotDeadline ? hotSecs(v) + ' s' : '—';
-  $('#passFeedback').textContent = holder?.id === myId ? '¡Pasá la pistola antes de que dispare!' : 'Esperando que pase la pistola…';
-}
-
-/* ---------- BOTS ---------- */
-function botThink(){
-  if (!botMode || !isHost || game.phase !== 'play' || botTimer) return;
-  const p = players[game.turn]; if (!p || !p.bot) return;
-  const hot = game.mode === 'hot';
-  const cd = (game.hotCfg || hotCfg).cooldown * 1000 + 300;
-  const delay = hot ? Math.max(cd, 1100) + Math.random()*1500 : 3500 + Math.random()*700;
-  botTimer = setTimeout(() => {
-    botTimer = null;
-    if (!botMode || game.phase !== 'play' || players[game.turn] !== p){ botThink(); return; }
-    if (hot){ passHot(p.id); if (game.phase === 'play' && players[game.turn] === p) botThink(); }
-    else doShot(Math.random() < 0.3);
-  }, delay);
-}
-
-/* ---------- CHAT ---------- */
-function paintChat(v){
-  ['chatMessages','gameChatMessages'].forEach(id => {
-    const box = $('#' + id); if (!box) return;
-    box.textContent = '';
-    (v.chat || []).forEach(m => {
-      const line = document.createElement('div'); line.className = 'chat-line';
-      const name = document.createElement('b'); name.textContent = m.name + ': '; name.style.color = m.color;
-      const msg = document.createElement('span'); msg.textContent = m.text;
-      line.append(name, msg); box.appendChild(line);
-    });
-    box.scrollTop = box.scrollHeight;
-  });
-}
-
-/* ---------- SALAS PÚBLICAS FIJAS ---------- */
-let probePeer = null;
-function renderRooms(state){
-  const list = $('#publicRoomList'); list.textContent = '';
-  PUBLIC_ROOMS.forEach(r => {
-    const st = state[r.id]; let can = true, txt;
-    if (st === undefined) txt = 'Consultando…';
-    else if (st === null) txt = 'Vacía · serás el anfitrión';
-    else if (st.unknown && st.open) txt = 'Ocupada · entrá para unirte';
-    else if (st.unknown) txt = 'Sin respuesta · puede estar cerrándose';
-    else { txt = st.n + '/' + MAX_PLAYERS + ' jugadores · ' + (st.phase === 'lobby' ? 'esperando' : 'en partida'); can = st.phase === 'lobby' && st.n < MAX_PLAYERS; }
-    const item = document.createElement('div'); item.className = 'public-room-item';
-    const info = document.createElement('span');
-    const t = document.createElement('b'); t.textContent = r.name;
-    const sub = document.createElement('div'); sub.className = 'room-sub'; sub.textContent = txt;
-    info.append(t, sub);
-    const btn = document.createElement('button'); btn.className = 'btn'; btn.type = 'button';
-    btn.textContent = st === null ? 'Crear' : 'Entrar'; btn.disabled = !can;
-    btn.addEventListener('click', () => enterPublic(r.id));
-    item.append(info, btn); list.append(item);
-  });
-}
-function refreshPublicRooms(){
-  const status = $('#publicRoomStatus'); status.textContent = '';
-  const state = {}; renderRooms(state);
-  if (!peerOk()){ status.textContent = 'El servicio de salas no está disponible.'; return; }
-  if (probePeer){ try { probePeer.destroy(); } catch(e){} probePeer = null; }
-  const sc = newPeer(); probePeer = sc;
-  sc.on('open', () => {
-    PUBLIC_ROOMS.forEach(r => {
-      const c = sc.connect(PREFIX + 'S-' + r.id, { reliable:true });
-      c.on('open', () => { if (state[r.id] === undefined){ state[r.id] = { unknown:true, open:true }; renderRooms(state); } c.send({ t:'info' }); });
-      c.on('data', m => { if (m && m.t === 'info'){ state[r.id] = { n:m.n, phase:m.phase }; renderRooms(state); try { c.close(); } catch(e){} } });
-    });
-  });
-  sc.on('error', err => {
-    const mm = /S-([CH]\d)/.exec(err.message || '');
-    if (err.type === 'peer-unavailable' && mm){ state[mm[1]] = null; renderRooms(state); }
-    else if (err.type !== 'peer-unavailable') status.textContent = 'No se pudo consultar el estado de las salas.';
-  });
-  setTimeout(() => {
-    if (probePeer !== sc) return;
-    PUBLIC_ROOMS.forEach(r => { if (state[r.id] === undefined) state[r.id] = { unknown:true }; });
-    renderRooms(state); try { sc.destroy(); } catch(e){} probePeer = null;
-  }, 8000);
 }
 
 function joinById(fullId, label){
@@ -878,18 +963,15 @@ function joinById(fullId, label){
   });
   p.on('error', err => {
     if (peer !== p) return;
+    if (opened && !FATAL.includes(err.type)) return;
     leave(err.type === 'peer-unavailable' ? 'No existe una sala con ese código.' : 'Error de conexión (' + err.type + ').');
   });
 }
+
 function joinRoom(code){
   code = String(code || '').toUpperCase().trim();
   if (code.length !== 4){ setHomeMsg('El código tiene 4 letras.'); return; }
   joinById(PREFIX + code, code);
-}
-
-function act(spin){
-  if (busy) return;
-  if (isHost) doShot(spin); else if (conn && conn.open) conn.send({ t:'shoot', spin });
 }
 
 function leave(msg){
@@ -897,11 +979,150 @@ function leave(msg){
   const p = peer; peer = null; conn = null; conns = {};
   try { if (p) p.destroy(); } catch(e){}
   players = []; view = null; isHost = false; botMode = false; resetScene();
-  if (localMicStream){ localMicStream.getTracks().forEach(t => t.stop()); localMicStream = null; }
-  $('#voiceEnable').textContent = '🎤 Activar micrófono'; $('#voiceMute').disabled = true; $('#pushToTalk').disabled = true;
+  stopVoice();
   show('home'); setHomeMsg(msg || '');
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   [J07] CHAT DE TEXTO
+   Enviar, retransmitir y dibujar los mensajes del chat (lobby y partida).
+   ══════════════════════════════════════════════════════════════════ */
+function relayChat(id, raw){
+  const p = players.find(x => x.id === id); if (!p) return;
+  const msg = String(raw || '').replace(/[<>]/g,'').trim().slice(0,180); if (!msg) return;
+  chatLog.push({ id, name:p.avatar.name, text:msg, color:playerColors[id] || '#fff' });
+  chatLog = chatLog.slice(-40); broadcast();
+}
+
+function sendChat(inputId){
+  const val = $('#' + inputId).value.trim(); if (!val) return;
+  if (isHost) relayChat(myId, val); else if (conn && conn.open) conn.send({ t:'chat', text:val });
+  $('#' + inputId).value = '';
+}
+
+function paintChat(v){
+  ['chatMessages','gameChatMessages'].forEach(id => {
+    const box = $('#' + id); if (!box) return;
+    box.textContent = '';
+    (v.chat || []).forEach(m => {
+      const line = document.createElement('div'); line.className = 'chat-line';
+      const name = document.createElement('b'); name.textContent = m.name + ': '; name.style.color = m.color;
+      const msg = document.createElement('span'); msg.textContent = m.text;
+      line.append(name, msg); box.appendChild(line);
+    });
+    box.scrollTop = box.scrollHeight;
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   [J08] MODO PIPA CALIENTE
+   Temporizador, pasar la pistola, eliminación por tiempo agotado, panel de cuenta atrás.
+   Cambiar aquí: duración de la animación de disparo (2300 ms en startHotClock), reglas de pase (passHot).
+   ══════════════════════════════════════════════════════════════════ */
+function hotSecs(v){ return Math.min((v.hotCfg && v.hotCfg.passSeconds) || 10, Math.max(0, Math.ceil((v.hotDeadline - Date.now())/1000))); }
+
+setInterval(() => {
+  if (view && view.mode === 'hot' && view.phase === 'play' && view.hotDeadline){
+    const el = $('#hotCountdown');
+    if (el) el.textContent = hotSecs(view) + ' s';
+  }
+}, 150);
+
+function startHotClock(){
+  clearInterval(hotTimer);
+  hotDeadline = Date.now() + ((game.hotCfg || hotCfg).passSeconds * 1000);
+  hotLastPass = {};
+  hotTimer = setInterval(() => {
+    if (!isHost || game.phase !== 'play' || game.mode !== 'hot'){ clearInterval(hotTimer); return; }
+    if (Date.now() >= hotDeadline){
+      const expired = game.turn;
+      if (expired >= 0 && players[expired]){
+        game.seq = (game.seq || 0) + 1;
+        game.last = { by:players[expired].id, hit:true, spun:false, seq:game.seq };
+        players[expired].alive = false;
+      }
+      const alive = players.filter(p => p.alive);
+      if (alive.length <= 1){
+        game.phase = 'over'; game.winner = alive[0]?.id || null; game.turn = -1;
+        clearInterval(hotTimer); hotDeadline = 0;
+      } else {
+        game.turn = nextAlive(players, expired);
+        hotDeadline = Date.now() + 2300 + ((game.hotCfg || hotCfg).passSeconds * 1000);
+      }
+      broadcast();
+    }
+  }, 100);
+}
+
+function passHot(id){
+  if (!isHost || game.phase !== 'play' || game.mode !== 'hot') return;
+  const from = players.findIndex(p => p.id === id);
+  if (from < 0 || from !== game.turn || !hotDeadline || Date.now() >= hotDeadline) return;
+  const now = Date.now(), cooldown = (game.hotCfg || hotCfg).cooldown * 1000;
+  if (now - (hotLastPass[id] || 0) < cooldown){ $('#passFeedback').textContent = 'Esperá un momento antes de volver a pasar.'; return; }
+  const next = nextAlive(players, from); if (next < 0) return;
+  hotLastPass[id] = now; game.turn = next;
+  broadcast();
+}
+
+function updateHotHud(v){
+  const hot = v.mode === 'hot';
+  $('#table').classList.toggle('hotmode', hot);
+  const active = hot && v.phase === 'play';
+  $('#hotControls').hidden = !active;
+  if (!active) return;
+  const holder = v.players[v.turn];
+  $('#hotHolder').textContent = 'Tiene la pistola: ' + (holder?.avatar?.name || '—');
+  $('#passBtn').disabled = !holder || holder.id !== myId;
+  $('#hotCountdown').textContent = v.hotDeadline ? hotSecs(v) + ' s' : '—';
+  $('#passFeedback').textContent = holder?.id === myId ? '¡Pasá la pistola antes de que dispare!' : 'Esperando que pase la pistola…';
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   [J09] MODO RULETA CLÁSICA: ACCIONES
+   Disparar / girar el tambor (las reglas puras están en el primer <script>, sección [L2]).
+   ══════════════════════════════════════════════════════════════════ */
+function doShot(spin){
+  if (game.phase !== 'play' || game.mode === 'hot') return;
+  pullTrigger(game, players, spin, Math.random); broadcast();
+}
+
+function act(spin){
+  if (busy) return;
+  if (isHost) doShot(spin); else if (conn && conn.open) conn.send({ t:'shoot', spin });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   [J10] BOTS
+   Cómo deciden y cuánto tardan los bots; crear partida de práctica.
+   Cambiar aquí: probabilidad de girar el tambor, tiempos de reacción.
+   ══════════════════════════════════════════════════════════════════ */
+function botThink(){
+  if (!botMode || !isHost || game.phase !== 'play' || botTimer) return;
+  const p = players[game.turn]; if (!p || !p.bot) return;
+  const hot = game.mode === 'hot';
+  const cd = (game.hotCfg || hotCfg).cooldown * 1000 + 300;
+  const delay = hot ? Math.max(cd, 1100) + Math.random()*1500 : 3500 + Math.random()*700;
+  botTimer = setTimeout(() => {
+    botTimer = null;
+    if (!botMode || game.phase !== 'play' || players[game.turn] !== p){ botThink(); return; }
+    if (hot){ passHot(p.id); if (game.phase === 'play' && players[game.turn] === p) botThink(); }
+    else doShot(Math.random() < 0.3);
+  }, delay);
+}
+
+function startBots(){
+  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null;
+  players = [{ id:'host', avatar:myAvatar(), alive:true }].concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
+  playerColors = {}; chatLog = [];
+  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{ ...hotCfg } }; broadcast();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   [J11] PANTALLAS Y DIBUJO
+   render, sala de espera, mesa circular, arma, animación del disparo, pantalla de ganador.
+   Cambiar aquí: cómo se dibuja la mesa (drawCircle), animación de disparo (playShot), lobby (renderLobby).
+   ══════════════════════════════════════════════════════════════════ */
 function resetScene(){
   clearTimers(); busy = false; holdId = null; freshId = null; lastSeq = 0; log = [];
   $('#banner').className = ''; $('#table').classList.remove('shake'); $('#flash').classList.remove('fire');
@@ -913,6 +1134,7 @@ function render(){
   const v = view; if (!v) return;
   if (v.phase === 'lobby'){ resetScene(); show('lobby'); renderLobby(v); }
   else { show('game'); renderGame(v); }
+  syncVoice();
 }
 
 function renderLobby(v){
@@ -1018,36 +1240,52 @@ function playShot(v){
   later(() => { busy = false; holdId = null; render(); }, (L.spun ? 1300 : 550) + 1700);
 }
 
-function startBots(){
-  botMode = true; isHost = true; myId = 'host'; roomCode = 'BOTS'; conns = {}; peer = null;
-  players = [{ id:'host', avatar:myAvatar(), alive:true }].concat(BOT_LOOKS.map((b, i) => ({ id:'bot' + (i + 1), avatar:cleanAvatar(b), alive:true, bot:true })));
-  playerColors = {}; chatLog = [];
-  game = { phase:'lobby', bullets:1, mode:selectedMode, hotCfg:{ ...hotCfg } }; broadcast();
-}
-
-/* ---------- Botones ---------- */
+/* ══════════════════════════════════════════════════════════════════
+   [J12] BOTONES Y EVENTOS
+   Todos los clics del menú, modales, lobby, partida y Discord.
+   Cambiar aquí: qué hace cada botón; empezar partida (#start) y revancha (#again).
+   ══════════════════════════════════════════════════════════════════ */
 $('#playMenu').addEventListener('click', () => $('#modeModal').hidden = false);
+
 $('#profileBtn').addEventListener('click', () => { $('#profileModal').hidden = false; drawEditor(); });
+
 $('#howBtn').addEventListener('click', () => $('#howModal').hidden = false);
+
 document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { selectedMode = b.dataset.mode; $('#setupTitle').textContent = (selectedMode === 'hot' ? 'Pipa Caliente' : 'Ruleta Rusa Classic') + ' · sala privada'; $('#modeModal').hidden = true; $('#setupModal').hidden = false; }));
+
 $('#create').addEventListener('click', () => { $('#setupModal').hidden = true; startHost(0); });
+
 $('#botsBtn').addEventListener('click', () => { $('#setupModal').hidden = true; startBots(); });
-$('#openJoin').addEventListener('click', () => { $('#joinPanel').hidden = false; $('#publicPanel').hidden = true; });
-$('#openPublic').addEventListener('click', () => { $('#publicPanel').hidden = false; $('#joinPanel').hidden = true; refreshPublicRooms(); });
+
+$('#openJoin').addEventListener('click', () => { $('#joinPanel').hidden = false; $('#code').focus(); });
+
 document.querySelectorAll('.closeModal').forEach(b => b.addEventListener('click', () => b.closest('.modal').hidden = true));
+
 $('#updatesBtn').addEventListener('click', () => $('#updatesModal').hidden = false);
+
 $('#chatSend').addEventListener('click', () => sendChat('chatInput'));
+
 $('#chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat('chatInput'); });
+
 $('#gameChatSend').addEventListener('click', () => sendChat('gameChatInput'));
+
 $('#gameChatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat('gameChatInput'); });
+
 $('#joinBtn').addEventListener('click', () => { const c = $('#code').value; $('#modeModal').hidden = true; joinRoom(c); });
+
 $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') $('#joinBtn').click(); });
-$('#refreshPublic').addEventListener('click', refreshPublicRooms);
+
 $('#passBtn').addEventListener('click', () => { if (isHost) passHot(myId); else if (conn && conn.open) conn.send({ t:'pass' }); });
+
 ['#leave1','#leave2','#leave3'].forEach(s => $(s).addEventListener('click', () => leave('')));
-$('#copy').addEventListener('click', () => {
-  const c = roomCode; const done = () => { $('#copy').textContent = '¡Copiado!'; setTimeout(() => $('#copy').textContent = 'Copiar código', 1500); };
-  if (navigator.clipboard) navigator.clipboard.writeText(c).then(done, () => {}); else done();
+
+$('#copy').addEventListener('click', () => copyText(roomCode, $('#copy'), 'Copiar código'));
+
+if (DISCORD_URL){ $('#discordLink').href = DISCORD_URL; $('#discordLink').hidden = false; }
+
+$('#copyDiscord').addEventListener('click', () => {
+  const modo = view && view.mode === 'hot' ? 'Pipa Caliente' : 'Ruleta Rusa Classic';
+  copyText('🔫 Sala de ' + modo + ' · código: ' + roomCode, $('#copyDiscord'), 'Copiar mensaje para Discord');
 });
 
 $('#start').addEventListener('click', () => {
@@ -1062,6 +1300,7 @@ $('#start').addEventListener('click', () => {
     game = newGame(players, game.bullets || 1, Math.random); game.mode = 'classic'; Object.assign(game, keep); broadcast();
   }
 });
+
 $('#again').addEventListener('click', () => {
   if (!isHost) return;
   clearInterval(hotTimer); hotDeadline = 0; clearTimeout(botTimer); botTimer = null;
@@ -1069,11 +1308,18 @@ $('#again').addEventListener('click', () => {
   game = { phase:'lobby', bullets:game.bullets || 1, mode:game.mode, hotCfg:{ ...(game.hotCfg || hotCfg) }, isPublic:game.isPublic };
   broadcast();
 });
+
 $('#shoot').addEventListener('click', () => act(false));
+
 $('#spin').addEventListener('click', () => act(true));
+
 $('#mute').addEventListener('click', e => { muted = !muted; e.target.textContent = 'Sonido: ' + (muted ? 'no' : 'sí'); });
 
-/* Nieve */
+/* ══════════════════════════════════════════════════════════════════
+   [J13] NIEVE
+   Copos animados de fondo.
+   Cambiar aquí: cantidad (35), velocidad y tamaño.
+   ══════════════════════════════════════════════════════════════════ */
 for (let i = 0; i < 35; i++){
   const f = document.createElement('span'); f.className = 'snowflake'; f.textContent = Math.random() > .5 ? '❄' : '·';
   f.style.left = Math.random()*100 + 'vw'; f.style.fontSize = (8 + Math.random()*15) + 'px';
@@ -1081,10 +1327,17 @@ for (let i = 0; i < 35; i++){
   f.style.setProperty('--drift', (Math.random()*100 - 50) + 'px'); document.body.appendChild(f);
 }
 
-/* Reproductor de música */
+/* ══════════════════════════════════════════════════════════════════
+   [J14] MÚSICA
+   Reproductor del menú: lista de canciones (musicTracks), aleatorio, volumen.
+   Cambiar aquí: añadir canciones en musicTracks (y en el <select id="musicTrack"> del HTML).
+   ══════════════════════════════════════════════════════════════════ */
 const player = $('#musicPlayer'), musicSelect = $('#musicTrack'), musicButton = $('#musicToggle');
+
 const musicTracks = ['assets/music/jingle-bells.mp3','assets/music/burrito-sabanero.mp3','assets/music/all-i-want-for-christmas-acoustic.mp3'];
+
 let lastTrack = '';
+
 function chooseTrack(){
   const chosen = musicSelect.value;
   if (chosen){ player.src = chosen; return; }
@@ -1092,16 +1345,24 @@ function chooseTrack(){
   const next = choices[Math.floor(Math.random()*choices.length)] || musicTracks[0];
   lastTrack = next; player.src = next;
 }
+
 async function playMusic(){
   if (!player.src) chooseTrack();
   try { await player.play(); musicButton.textContent = '⏸'; } catch(e){ musicButton.textContent = '▶'; }
 }
+
 musicButton.addEventListener('click', () => { if (player.paused) playMusic(); else { player.pause(); musicButton.textContent = '▶'; } });
+
 $('#musicNext').addEventListener('click', () => { chooseTrack(); playMusic(); });
+
 musicSelect.addEventListener('change', () => { if (musicSelect.value){ player.src = musicSelect.value; lastTrack = musicSelect.value; if (!player.paused) playMusic(); } });
+
 player.addEventListener('ended', () => { chooseTrack(); playMusic(); });
+
 player.addEventListener('error', () => { musicButton.textContent = '▶'; musicButton.title = 'No se encontró el archivo MP3 en assets/music/'; });
+
 player.volume = Number($('#musicVolume').value);
+
 $('#musicVolume').addEventListener('input', e => { player.volume = Number(e.target.value); $('#volumeValue').textContent = Math.round(player.volume*100) + '%'; });
 </script>
 </body>
